@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>李昌焕（Align Partners）持仓周报 v3（2026-09-07）</title>
+  <style>
+    :root {
+      --bg: #f5f6f8; --card: #fff; --text: #1a1a2e; --muted: #6b7280;
+      --border: #e5e7eb; --primary: #1677ff; --success: #389e0d; --warning: #d48806;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
+      background: var(--bg); color: var(--text); line-height: 1.65; font-size: 15px;
+    }
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 24px 16px 80px; }
+    header {
+      background: linear-gradient(135deg, #0f172a 0%, #3b1f2b 100%);
+      color: #fff; padding: 32px 24px; border-radius: 12px; margin-bottom: 20px;
+    }
+    header h1 { margin: 0 0 8px; font-size: 1.65rem; font-weight: 600; }
+    header p { margin: 0 0 6px; opacity: 0.92; font-size: 0.95rem; }
+    .badge {
+      display: inline-block; padding: 3px 11px; border-radius: 999px; font-size: 12px;
+      background: rgba(255,255,255,0.14); margin-right: 8px; margin-top: 12px;
+    }
+    nav.toc {
+      background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+      padding: 14px 18px; margin-bottom: 20px; font-size: 14px;
+    }
+    nav.toc a { color: var(--primary); text-decoration: none; margin-right: 14px; }
+    nav.toc a:hover { text-decoration: underline; }
+    section {
+      background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+      padding: 20px 24px; margin-bottom: 18px;
+    }
+    h2 { margin: 0 0 14px; font-size: 1.15rem; border-left: 4px solid var(--primary); padding-left: 12px; }
+    h3 { margin: 16px 0 8px; font-size: 1rem; color: #374151; }
+    ul, ol { margin: 8px 0; padding-left: 22px; }
+    li { margin-bottom: 7px; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; margin: 10px 0; }
+    th, td { border: 1px solid var(--border); padding: 9px 11px; text-align: left; vertical-align: top; }
+    th { background: #f9fafb; font-weight: 600; }
+    tr:nth-child(even) td { background: #fafafa; }
+    .tag { display: inline-block; padding: 1px 8px; border-radius: 4px; font-size: 12px; font-weight: 500; }
+    .tag-ok { background: #d9f7be; color: #135200; }
+    .tag-warn { background: #ffe58f; color: #874d00; }
+    .tag-kr { background: #e6f4ff; color: #0958d9; }
+    .tag-new { background: #ffd6e7; color: #9d2152; }
+    .callout { border-radius: 8px; padding: 13px 15px; margin: 12px 0; font-size: 14px; }
+    .callout-info { background: #e6f4ff; border-left: 4px solid var(--primary); }
+    .callout-warn { background: #fffbe6; border-left: 4px solid var(--warning); }
+    .timeline { list-style: none; padding: 0; margin: 0; }
+    .timeline li { padding: 11px 0 11px 18px; border-left: 2px solid var(--border); margin-left: 8px; }
+    .timeline .date { font-size: 12px; color: var(--muted); }
+    .timeline .title { font-weight: 600; margin: 3px 0; }
+    .timeline .desc { font-size: 14px; color: #4b5563; }
+    a { color: var(--primary); }
+    footer { text-align: center; color: var(--muted); font-size: 13px; padding: 22px 0; }
+    .version-nav {
+      background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px;
+      padding: 12px 16px; margin-bottom: 16px; font-size: 14px;
+    }
+    .version-nav strong { color: #166534; }
+    .version-nav a { color: #166534; margin-right: 16px; }
+    @media (max-width: 768px) {
+      .wrap { max-width: 100%; padding: 0 0 72px; }
+      header { border-radius: 0; padding: 20px 10px; margin-bottom: 12px; }
+      nav.toc {
+        border-radius: 0; border-left: none; border-right: none;
+        padding: 12px 10px; margin-bottom: 12px;
+      }
+      section {
+        border-radius: 0; border-left: none; border-right: none;
+        padding: 14px 10px; margin-bottom: 12px;
+      }
+      h2 { padding-left: 10px; }
+      table { font-size: 12px; }
+      th, td { padding: 6px 8px; }
+      th:first-child, td:first-child { padding-left: 6px; }
+      th:last-child, td:last-child { padding-right: 6px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="version-nav" id="version-nav"></div>
+
+    <header>
+      <h1>李昌焕（Align Partners）持仓周报</h1>
+      <p><strong>第 3 期</strong> · 数据截止 2026-09-07 · 每周一 09:01 由 WorkBuddy AI 定时任务重新生成</p>
+      <p style="opacity:0.8;font-size:13px">公开信息整理，不构成投资建议。覆盖：李昌焕 / 이창환 / Align Partners（얼라인파트너스자산운용）持仓与 campaign 动态、韩国 Value Up 政策</p>
+      <span class="badge">v3.0</span>
+      <span class="badge">静态页</span>
+      <span class="badge">韩国行动主义基金</span>
+    </header>
+
+    <nav class="toc">
+      <strong>目录</strong>
+      <a href="#summary">本期结论</a>
+      <a href="#profile">人物与基金</a>
+      <a href="#focus">本期焦点</a>
+      <a href="#holdings">持仓与 Campaign</a>
+      <a href="#valueup">Value Up 动态</a>
+      <a href="#blind">数据盲区</a>
+      <a href="#refs">参考链接</a>
+    </nav>
+
+    <section id="summary">
+      <h2>本期结论</h2>
+      <ol>
+        <li><strong>本周（8/31–9/7）李昌焕 / Align Partners 无新增 DART 5% 大量保有报告、无新 campaign、无新公开动作。</strong>JB·BNK 合并提案仍处「被两董事会拒绝后的长线拉锯」阶段：公开层面最新动作仍是 7/28 宣布的「索取两家董事会会议记录」及 8/7 前要求回应的「是否启动合并审查」，此后无后续公开披露；下一关键节点仍指向 <strong>2027 年 3 月定期股东大会</strong>。核心持仓不变（JB 金融集团 <strong>14.83%</strong>、BNK 金融集团 &gt;1%）。</li>
+        <li><strong>本期最大看点落在 Value Up 侧：韩国交易所 9/3 发布 8 月「企业价值提升」月度数据。</strong>累计 <strong>756 家</strong>上市公司披露价值提升计划（较 7 月的 747 家净增 9 家，8 月新增名单含 <strong>Kakao</strong>、<strong>Daewon Gang-up</strong> 等），披露公司合计市值 <strong>5,074 万亿韩元</strong>，占 KOSPI+KOSDAQ 总市值 <strong>83.4%</strong>（KOSPI 单独口径 87.7%）。</li>
+        <li><strong>Korea Value-Up 指数 8 月底收于 3,240.84，年内上涨 80.3%，跑赢 KOSPI（+61.8%）约 18.5 个百分点</strong>；13 只 Value-up 相关 ETF 净资产合计 3.5 万亿韩元，约为发行时的 7 倍。政策驱动的「价值修复」主线延续，为 Align 主打的低 PB 逻辑持续提供宏观顺风。</li>
+        <li><strong>KRX 自 9/11 起在首尔、大邱、釜山、板桥、大田、光州六城巡回举办企业说明会</strong>，重点辅导高股息、低 PBR 及特别上市企业提前理解税收与监管改进、系统化准备披露——这是 Value Up 从「自愿披露」走向「辅导催熟」的制度推进。</li>
+        <li><strong>补充历史线索（非本周新增）：</strong>媒体披露 Gabia 股东会后 Align 的下一步关注名单为 <strong>Coway（021240.KS）、A-Plus Asset（244920.KQ）、Dentium（145720.KQ）</strong>；另有 <strong>Doosan Enerbility</strong>（阻止 Bobcat/Robotics 分拆合并）、<strong>Coway</strong>（推动目标资本结构与股东回报）两起历史 campaign。以上均属背景，本周无确认的新进展。</li>
+      </ol>
+      <div class="callout callout-info">
+        <strong>读法提示：</strong>Align 的打法是「小比例持股 + 高强度治理施压」。本周 Align 处于静默期，判断动向的关键仍是：①是否正式行权（提案权 / 委任状征求）；②SoluM、Dentium 2026 年股东会结果；③2027 年 3 月 JB/BNK 定期股东大会；④DART 5% 大量保有报告的新增披露。Value Up 侧则应紧盯 8 月月度数据的后续解读与 KRX 六城巡回说明会带来的新披露增量。
+      </div>
+    </section>
+
+    <section id="profile">
+      <h2>人物与基金简介</h2>
+      <table>
+        <tr><th style="width:130px">项目</th><th>内容</th></tr>
+        <tr><td>李昌焕（이창환）</td><td>Align Partners 创始人兼 CEO。出身贫寒（韩国媒体称「土勺」/흙수저，靠救济金长大），以小比例持股发起股东维权著称</td></tr>
+        <tr><td>Align Partners</td><td>2021 年创立，初始资金约 1,600 万美元，五年发展至 AUM 约 1.4 万亿韩元（约 10 亿美元）。最大股东为 Align Holdings（持股 100%），后者由李昌焕 100% 持有</td></tr>
+        <tr><td>代表战役</td><td>仅持 SM 娱乐约 1% 股份即质疑财务乱象、推动治理改革；后续在保险类、地方金融类、医疗器械/电子元器件等低 PB 标的上连续获胜，其治理理念影响了韩国 2024 年「Value Up」计划</td></tr>
+        <tr><td>2025 年分红</td><td>净利润约 239 亿韩元中分红 151 亿韩元（分红率 63%），经 Align Holdings 全部归李昌焕个人（亚洲日报，2026-04-30）</td></tr>
+        <tr><td>风格</td><td>专注低 PB 价值标的，不跟风 AI 热点；公开信 + 新闻发布会 + 股东大会「三板斧」</td></tr>
+      </table>
+    </section>
+
+    <section id="focus">
+      <h2>本期焦点：Value Up 8 月月度数据出炉，Align 静默期</h2>
+      <p style="margin-top:0">本周 Align 无新动作，市场焦点落在韩国交易所 9 月 3 日发布的 8 月「企业价值提升」月度数据与随之而来的六城巡回说明会——这是 Value Up 从头部巨头「示范性回购」向更广泛中小公司「披露催熟」推进的信号。</p>
+      <ul class="timeline">
+        <li>
+          <div class="date">2026-09-03</div>
+          <div class="title">KRX 发布 8 月「企业价值提升」月度数据</div>
+          <div class="desc">累计 756 家上市公司披露价值提升计划（KOSPI 354 家 + KOSDAQ 402 家），较 7 月净增 9 家，8 月新增名单含 Kakao、Daewon Gang-up 等。披露公司合计市值 5,074 万亿韩元，占 KOSPI+KOSDAQ 总市值 83.4%（KOSPI 单独 87.7%）。</div>
+        </li>
+        <li>
+          <div class="date">2026-08 月底</div>
+          <div class="title">Korea Value-Up 指数收于 3,240.84，年内 +80.3%</div>
+          <div class="desc">自 2025 年底 1,797.52 点上行 80.3%，同期 KOSPI +61.8%，指数跑赢基准约 18.5 个百分点；13 只 Value-up ETF 净资产合计 3.5 万亿韩元，较发行时增长逾 600%。</div>
+        </li>
+        <li>
+          <div class="date">2026-09-11 起</div>
+          <div class="title">KRX 六城巡回企业说明会（首尔 → 大邱 → 釜山 → 板桥 → 大田 → 光州）</div>
+          <div class="desc">通过小型圆桌会等形式，主动辅导高股息、低 PBR 及特别上市企业，帮助其提前理解税收与监管改进、系统化准备价值提升披露。Value Up 从「自愿」走向「辅导催熟」。</div>
+        </li>
+        <li>
+          <div class="date">对 Align 的意义</div>
+          <div class="title">政策顺风延续，但 Align 本周无直接动作</div>
+          <div class="desc">披露覆盖面扩大、指数继续跑赢，客观上强化「低 PB 价值修复」叙事，为 Align 的地方金融、保险类持仓逻辑提供宏观支撑；但 Align 本周在 JB/BNK、SoluM、Dentium 等条线上均无新公开进展。</div>
+        </li>
+      </ul>
+      <div class="callout callout-warn">
+        <strong>风险提示：</strong>8 月月度数据、指数表现与 ETF 规模均为政策层面宏观指标，与 Align 具体持仓无直接关联。Value-Up 指数年内涨幅已较高，市场对「估值修复是否已部分兑现」存在分歧（参考上期三星「110 万亿 vs 预期 150 万亿」的失望反应），本报告仅作政策动态呈现，不作任何价值判断或投资建议。
+      </div>
+    </section>
+
+    <section id="holdings">
+      <h2>持仓与 Campaign 一览</h2>
+      <h3>已知主要持仓与 campaign（截至 2026-09-07，环比上期）</h3>
+      <table>
+        <tr><th>标的</th><th>持股</th><th>状态</th><th>环比变动</th><th>备注</th></tr>
+        <tr><td>JB 金融集团（1750.KS）</td><td><strong>14.83%</strong></td><td><span class="tag tag-ok">重仓持有</span></td><td>持平</td><td>合并提案 campaign 核心持仓；光州/全罗南道地方金融控股，第二大股东</td></tr>
+        <tr><td>BNK 金融集团（138930.KS）</td><td>&gt;1%</td><td><span class="tag tag-kr">持有</span></td><td>持平</td><td>合并提案另一当事方；釜山/庆南地方金融控股；少数股东合计 58.72%</td></tr>
+        <tr><td>DB Insurance（005830.KS）</td><td>—</td><td><span class="tag tag-ok">已获监事席位</span></td><td>持平</td><td>股东大会选出股东提名监事，韩国首例（市值超 10 万亿韩元公司）</td></tr>
+        <tr><td>Gabia（079940.KQ）</td><td>—</td><td><span class="tag tag-ok">已获 2 董事席位</span></td><td>持平</td><td>KOSDAQ 上市，1 名非常勤董事 + 1 名社外董事入选（上期代码 079900.KQ 有误，已更正，见盲区）</td></tr>
+        <tr><td>Stic Investments（305090.KQ）</td><td>曾增至 7.6%</td><td><span class="tag tag-warn">campaign 已收官</span></td><td>持平</td><td>创始人向 Miri Capital 转让股份，新大股东接受大部分 value-up 提案</td></tr>
+        <tr><td>SoluM（248070.KQ）</td><td>待核实</td><td><span class="tag tag-new">新增（待核实）</span></td><td>持平</td><td>2026-02 递交正式股东提案：治理整改、ESL 软件升级、精简业务组合、CEO 薪酬改革；2026 年 AGM 表决结果待核实</td></tr>
+        <tr><td>Dentium（145720.KQ）</td><td>待核实</td><td><span class="tag tag-new">新增（待核实）</span></td><td>持平</td><td>2026-02 递交正式股东提案：提高独立董事占比、独立董事长、稽核委员会全独立、薪酬上限；2026 年 AGM 表决结果待核实</td></tr>
+        <tr><td>SM 娱乐（041510.KS）</td><td>曾持约 1%</td><td><span class="tag tag-warn">历史案例</span></td><td>持平</td><td>成名作：质疑财务乱象、硬刚财阀、推动治理改革</td></tr>
+      </table>
+      <h3>近一年公开 campaign 成果</h3>
+      <ul>
+        <li><strong>DB Insurance</strong>：10 万亿韩元市值以上上市公司中，股东提案董事候选人首次当选（监事/审计委员），亦为保险业首例。</li>
+        <li><strong>Gabia</strong>：董事会扩容，Align 提名的非常勤董事与社外董事双双入选（2026-03-26，赞成率 60.7% / 61.4%）。</li>
+        <li><strong>Stic Investments</strong>：增持至 7.6% 后提出 6 项要求，最终与新大股东 Miri Capital 和解收官。</li>
+        <li><strong>JB + BNK</strong>：进行中的地方金融合并提案，两董事会 7/28 已拒绝，进入长线拉锯。</li>
+        <li><strong>SoluM / Dentium</strong>：2026 年 2 月递交的正式股东提案，治理整改方向一致，AGM 结果待核实。</li>
+        <li><strong>Doosan Enerbility</strong>（历史）：推动阻止 Bobcat 与 Robotics 的分拆合并提案。</li>
+        <li><strong>Coway</strong>（历史）：推动目标资本结构设定与股东回报扩张，后获公司采纳。</li>
+        <li>李昌焕自评：「过去一年 7 次公开 campaign 均有产出，能力上了一个台阶」；中期目标做大 AUM，成为更大市值低估值公司的 major shareholder。</li>
+      </ul>
+    </section>
+
+    <section id="valueup">
+      <h2>Value Up 政策动态</h2>
+      <h3>8 月披露进展（韩国交易所，2026-09-03 发布）</h3>
+      <ul>
+        <li>累计 <strong>756 家</strong>上市公司披露价值提升计划（KOSPI 354 家 + KOSDAQ 402 家），较 7 月 747 家净增 9 家；8 月新增披露名单含 <strong>Kakao</strong>、<strong>Daewon Gang-up</strong> 等。</li>
+        <li>披露公司合计市值 <strong>5,074 万亿韩元</strong>，占 KOSPI+KOSDAQ 总市值 <strong>83.4%</strong>；KOSPI 单独口径下占比达 <strong>87.7%</strong>。</li>
+      </ul>
+      <h3>指数与资金面</h3>
+      <ul>
+        <li>Korea Value-Up 指数 8 月底收于 <strong>3,240.84</strong>，较 2025 年底 1,797.52 上涨 <strong>80.3%</strong>；同期 KOSPI +61.8%，指数跑赢基准约 18.5 个百分点。</li>
+        <li>13 只 Value-up ETF 净资产合计 <strong>3.5 万亿韩元</strong>，较发行时增长逾 <strong>600%</strong>。</li>
+      </ul>
+      <h3>制度推进</h3>
+      <ul>
+        <li><strong>KRX 六城巡回说明会</strong>：9 月 11 日首尔出发，依次覆盖首尔、大邱、釜山、板桥、大田、光州，通过小型圆桌会辅导高股息、低 PBR 及特别上市企业准备披露。</li>
+        <li><strong>税收与监管激励延续</strong>：高股息企业须在年度股东大会通过分红决议次日前，通过 KRX KIND 系统披露 Value-up 计划，方可继续享受股息分离课税优惠；公司扩大股东回报（分红 + 注销）同比增幅超 5% 可获企业税抵免。</li>
+        <li><strong>商法一年内三次修订</strong>：董事信义义务扩展至全体股东；资产 2 万亿韩元以上大型上市公司引入累计投票制。</li>
+      </ul>
+    </section>
+
+    <section id="blind">
+      <h2>数据盲区说明</h2>
+      <ul>
+        <li>DART 5% 大量保有报告以韩国金融监督院系统为准，本报告依赖公开媒体转述，未经 DART 原文逐条核对；本周未检索到 Align 新增大量保有报告，但不能排除「有披露但未被英文/中文媒体覆盖」的情况。</li>
+        <li><strong>代码更正：</strong>上期（v1/v2）将 Gabia 代码写作 079900.KQ，经查首尔经济日报口径为 <strong>079940.KQ</strong>，本期已更正；仍有待 DART 原文最终确认。</li>
+        <li>SoluM（248070.KQ）与 Dentium（145720.KQ）的持股比例、2026 年股东会表决结果均未核实，来源为 Align 官方 Business Wire 新闻稿（2026-02），可能滞后于最新进展，已标「待核实」。</li>
+        <li>Coway（021240.KS）、A-Plus Asset（244920.KQ）为媒体披露的「下一步关注名单」（2026 年 3 月 Gabia 股东会前后），属历史背景，持股与最新进展均无本周确认信息。</li>
+        <li>Align 各基金（契约型）对单一标的的精确持股以各基金公示为准，媒体口径（14.83%、&gt;1%、7.6%）为合计或时点数据。</li>
+        <li>合并提案被拒后 Align 是否已正式行权（提案权、委任状征求）、是否已取得两家董事会会议记录，均无公开披露。</li>
+      </ul>
+    </section>
+
+    <section id="refs">
+      <h2>参考链接</h2>
+      <ol>
+        <li><a href="https://en.fnnews.com/news/202609031109240613" target="_blank" rel="noreferrer">金融新闻（Fnnews）| Value-Up 披露达 756 家上市公司，占市值 83%（2026-09-03）</a></li>
+        <li><a href="https://engkind.krx.co.kr/valueup/idx.do?method=valueupIdxMain" target="_blank" rel="noreferrer">KRX 官网 | Korea Value-up Index（8 月底 3,240.84）</a></li>
+        <li><a href="https://www.asiae.co.kr/en/article/2026071410382071139" target="_blank" rel="noreferrer">亚洲经济 | Align Partners 提议 JB·BNK 金融集团合并（2026-07-14）</a></li>
+        <li><a href="https://en.infomaxai.com/news/articleView.html?idxno=130020" target="_blank" rel="noreferrer">Yonhap Infomax | Align 提议组建超大型地方金融控股，总资产 234 万亿韩元（2026-07）</a></li>
+        <li><a href="https://www.koreatimes.co.kr/business/banking-finance/20260724/align-partners-bnk-jb-merger-proposal-draws-fierce-regional-opposition" target="_blank" rel="noreferrer">Korea Times | Align 的 BNK–JB 合并提案遭遇地方强烈反弹（2026-07-24）</a></li>
+        <li><a href="https://en.nocutnews.co.kr/news/6554667" target="_blank" rel="noreferrer">No Cut News | BNK 董事会拒绝 Align 提案（2026-07-28）</a></li>
+        <li><a href="https://en.sedaily.com/signal/article/align-partners-ran-7-activist-campaigns-in-a-year-now-eyes" target="_blank" rel="noreferrer">首尔经济日报 CEO 专访 | 一年 7 次 activist campaign，瞄准更大基金（2026-08-12）</a></li>
+        <li><a href="https://en.sedaily.com/signal/article/align-partners-wins-second-straight-shareholder-vote-elects" target="_blank" rel="noreferrer">首尔经济日报 | Align 在 Gabia 连赢第二场股东投票，当选 2 董事（2026-03）</a></li>
+        <li><a href="https://secure.businesswire.com/news/home/20260212697382/zh-HK" target="_blank" rel="noreferrer">Business Wire（Align 官方）| 向 SoluM 递交正式股东提案（2026-02-12）</a></li>
+        <li><a href="https://www.businesswire.com/news/home/20260212900573/zh-CN" target="_blank" rel="noreferrer">Business Wire（Align 官方）| 向 Dentium 递交正式股东提案（2026-02-12）</a></li>
+        <li><a href="https://stockhub.kr/en/news/news_c6f7c8752ae2" target="_blank" rel="noreferrer">StockHub | Align CEO：做大管理资产将加速价值创造（2026）</a></li>
+      </ol>
+    </section>
+
+    <footer>
+      Equation · 李昌焕（Align Partners）持仓周报 <strong>v3</strong> · 生成于 2026-09-07<br />
+      入口：观察中心 → <em>李昌焕持仓周报</em>
+    </footer>
+  </div>
+<script>
+(function() {
+  var currentFile = document.location.pathname.split('/').pop();
+  var nav = document.getElementById('version-nav');
+  fetch('align-partners-report-latest.json', { cache: 'no-store' })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      if (!nav || !data.versions) return;
+      var bust = encodeURIComponent(data.updated || data.latest || '');
+      var html = '<strong>📚 历史版本：</strong>';
+      data.versions.forEach(function(v) {
+        if (v.file === currentFile) {
+          html += '<span style="color:#166534;font-weight:600">' + v.label + ' ← 当前</span> ';
+        } else {
+          html += '<a href="' + v.file + '?v=' + bust + '">' + v.label + '</a> ';
+        }
+      });
+      nav.innerHTML = html;
+    })
+    .catch(function() { nav.style.display = 'none'; });
+})();
+</script>
+</body>
+</html>

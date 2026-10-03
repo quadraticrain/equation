@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="DeepSeek 如何减少对 HBM 与 SSD 依赖：从 MLA / DSA / CSA+HCA 到 HiCache / HiSparse / Engram 的结构化整理" />
+  <title>DeepSeek 如何减少对 HBM / SSD 的依赖</title>
+  <style>
+    :root {
+      --bg: #F2F2F7;
+      --card: #FFFFFF;
+      --text: #1C1C1E;
+      --muted: #8E8E93;
+      --border: #E5E5EA;
+      --primary: #007AFF;
+      --success: #34C759;
+      --warning: #FF9500;
+      --danger: #FF3B30;
+      --shadow: 0 2px 8px rgba(0,0,0,0.06);
+      --radius: 14px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
+        "PingFang SC", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      font-size: 15px;
+    }
+    .wrap { max-width: 980px; margin: 0 auto; padding: 24px 16px 88px; }
+    header.hero {
+      background: linear-gradient(145deg, #0B1220 0%, #12315A 48%, #1B4F8A 100%);
+      color: #fff;
+      padding: 36px 28px;
+      border-radius: var(--radius);
+      margin-bottom: 18px;
+      box-shadow: var(--shadow);
+    }
+    header.hero h1 {
+      margin: 0 0 10px;
+      font-size: 1.7rem;
+      font-weight: 650;
+      letter-spacing: -0.02em;
+    }
+    header.hero p { margin: 0 0 8px; opacity: 0.92; font-size: 0.96rem; }
+    .badge {
+      display: inline-block;
+      padding: 4px 11px;
+      border-radius: 999px;
+      font-size: 12px;
+      background: rgba(255,255,255,0.14);
+      margin: 10px 8px 0 0;
+    }
+    nav.toc {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 18px;
+      margin-bottom: 16px;
+      font-size: 14px;
+      box-shadow: var(--shadow);
+    }
+    nav.toc strong { display: block; margin-bottom: 8px; }
+    nav.toc a {
+      color: var(--primary);
+      text-decoration: none;
+      margin-right: 12px;
+      white-space: nowrap;
+      display: inline-block;
+      margin-bottom: 6px;
+    }
+    nav.toc a:hover { text-decoration: underline; }
+    section {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px 22px;
+      margin-bottom: 16px;
+      box-shadow: var(--shadow);
+    }
+    h2 {
+      margin: 0 0 12px;
+      font-size: 1.12rem;
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+    }
+    h3 { margin: 18px 0 8px; font-size: 1rem; color: #3A3A3C; }
+    p { margin: 8px 0; }
+    ul, ol { margin: 8px 0; padding-left: 22px; }
+    li { margin-bottom: 7px; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      margin: 10px 0;
+      overflow: hidden;
+      border-radius: 8px;
+    }
+    th, td {
+      border: 1px solid var(--border);
+      padding: 9px 11px;
+      text-align: left;
+      vertical-align: top;
+    }
+    th { background: #F9F9FB; font-weight: 600; }
+    tr:nth-child(even) td { background: #FAFAFA; }
+    .callout {
+      border-radius: 10px;
+      padding: 13px 15px;
+      margin: 12px 0;
+      font-size: 14px;
+    }
+    .callout-info { background: #EAF3FF; border-left: 4px solid var(--primary); }
+    .callout-warn { background: #FFF6E5; border-left: 4px solid var(--warning); }
+    .callout-ok { background: #EAF9EF; border-left: 4px solid var(--success); }
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin: 12px 0 4px;
+    }
+    .kpi {
+      background: #F8FAFC;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 12px;
+      text-align: center;
+    }
+    .kpi .num {
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: var(--primary);
+      letter-spacing: -0.03em;
+    }
+    .kpi .label { font-size: 12px; color: var(--muted); margin-top: 4px; }
+    .flow {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      background: #0B1220;
+      color: #E8EEF8;
+      border-radius: 12px;
+      padding: 16px 18px;
+      font-size: 12.5px;
+      line-height: 1.7;
+      overflow-x: auto;
+      white-space: pre;
+    }
+    .tag {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .tag-high { background: #D9F7BE; color: #135200; }
+    .tag-mid { background: #FFF1B8; color: #874D00; }
+    .tag-low { background: #FFCCC7; color: #A8071A; }
+    a { color: var(--primary); }
+    footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+      padding: 18px 0 8px;
+    }
+    .src-list li code {
+      font-size: 12px;
+      background: #F2F2F7;
+      padding: 1px 6px;
+      border-radius: 4px;
+    }
+    @media (max-width: 768px) {
+      .wrap { padding: 0 0 80px; }
+      header.hero {
+        border-radius: 0;
+        padding: 24px 14px;
+        margin-bottom: 10px;
+      }
+      nav.toc, section {
+        border-radius: 0;
+        border-left: none;
+        border-right: none;
+        margin-bottom: 10px;
+      }
+      .kpi-grid { grid-template-columns: 1fr; }
+      table { font-size: 12px; display: block; overflow-x: auto; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="hero">
+      <h1>DeepSeek 如何减少对 HBM / SSD 的依赖</h1>
+      <p>从 MLA → DSA → CSA/HCA，到 HiCache / HiSparse / Engram：压缩工作集，再把冷数据放到更便宜的存储层。</p>
+      <p style="opacity:0.78;font-size:13px">整理日期 2026-09-10 · 覆盖 DeepSeek-V2/V3、V3.2、V4、V4.1-Flash 公开信息</p>
+      <span class="badge">静态研究页</span>
+      <span class="badge">HBM / DRAM / SSD</span>
+      <span class="badge">Equation 观察中心</span>
+    </header>
+
+    <nav class="toc">
+      <strong>目录</strong>
+      <a href="#tldr">结论</a>
+      <a href="#two-axes">两条压力轴</a>
+      <a href="#algo">算法压缩</a>
+      <a href="#serving">服务分层</a>
+      <a href="#engram">Engram</a>
+      <a href="#timeline">版本演进</a>
+      <a href="#v41">V4.1-Flash</a>
+      <a href="#evidence">证据分级</a>
+      <a href="#refs">参考来源</a>
+    </nav>
+
+    <section id="tldr">
+      <h2>一句话结论</h2>
+      <p>DeepSeek <strong>不是不用 HBM/SSD</strong>，而是：</p>
+      <ol>
+        <li><strong>先把上下文 KV Cache 压到极小</strong>（算法 + 低精度）；</li>
+        <li><strong>再把冷数据放到 Host DRAM / SSD</strong>（只让 GPU 常驻热工作集）。</li>
+      </ol>
+      <div class="kpi-grid">
+        <div class="kpi">
+          <div class="num">1/4</div>
+          <div class="label">V4.1-Flash 相对上代 · HBM 需求</div>
+        </div>
+        <div class="kpi">
+          <div class="num">1/8</div>
+          <div class="label">V4.1-Flash 相对上代 · SSD 需求</div>
+        </div>
+        <div class="kpi">
+          <div class="num">~437×</div>
+          <div class="label">相对初代 · KV Cache 缩小</div>
+        </div>
+      </div>
+      <div class="callout callout-info">
+        <strong>读法提示：</strong>「减少对 SSD 的依赖」更准确是指：同样 Agent / 前缀缓存业务下，需要的 <em>SSD 容量、带宽与命中成本</em>显著下降；不是废弃 SSD。
+      </div>
+    </section>
+
+    <section id="two-axes">
+      <h2>先分清两件事：HBM 压力从哪来</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>压力来源</th>
+            <th>是什么</th>
+            <th>DeepSeek 主要手段</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>KV Cache（上下文记忆）</strong></td>
+            <td>长上下文 / Agent 多轮时随 token 线性膨胀</td>
+            <td>MLA → DSA → CSA/HCA + 低精度 + HiCache/HiSparse</td>
+          </tr>
+          <tr>
+            <td><strong>模型参数 / 外部记忆表</strong></td>
+            <td>大模型权重、Engram N-gram 表</td>
+            <td>MoE 稀疏激活 + Engram 确定性查找 offload</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>宣传口径里的「减少 HBM/SSD 依赖」主要指 <strong>KV Cache</strong>；Engram 是并行的「参数/知识表」故事。</p>
+    </section>
+
+    <section id="algo">
+      <h2>机制 1：从根上压缩 KV（最关键）</h2>
+
+      <h3>1) MLA（V2 / V3）：头维度低秩压缩</h3>
+      <ul>
+        <li>不存完整多头 K/V，只缓存低维 latent。</li>
+        <li>DeepSeek-V3 量级约 <strong>~70 KB/token</strong>，远低于同代大模型。</li>
+        <li>直接降低 <strong>HBM 容量与带宽</strong> 压力。</li>
+      </ul>
+
+      <h3>2) DSA（V3.2-Exp）：稀疏注意力</h3>
+      <ul>
+        <li>DeepSeek Sparse Attention：长上下文只对关键 token 做细粒度注意力。</li>
+        <li>算力开销下降；但 latent cache 仍随长度增长，因此后续出现 ESS / HiSparse 等 offload 方案。</li>
+      </ul>
+
+      <h3>3) CSA + HCA（V4 核心）</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>机制</th>
+            <th>压缩比</th>
+            <th>作用</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>CSA</strong>（Compressed Sparse Attention）</td>
+            <td>约 <strong>4:1</strong></td>
+            <td>先按块压缩，再用 Lightning Indexer 做 top-k 精读</td>
+          </tr>
+          <tr>
+            <td><strong>HCA</strong>（Heavily Compressed Attention）</td>
+            <td>约 <strong>128:1</strong></td>
+            <td>重度压缩后做稠密「全局摘要」注意力</td>
+          </tr>
+          <tr>
+            <td><strong>SWA</strong></td>
+            <td>局部窗口</td>
+            <td>最近若干原始 token，保证近因细节</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>再叠加存储精度：多数 KV 用 <strong>FP8</strong>，RoPE 相关用 <strong>BF16</strong>，CSA indexer 用 <strong>FP4</strong>。</p>
+      <div class="callout callout-ok">
+        公开解读给出的量级：V4-Pro 相对 V3.2 约 <strong>10% KV / 27% 单 token FLOPs</strong>；V4-Flash 约 <strong>7% KV / 10% FLOPs</strong>；相对传统 GQA+BF16 可到约 <strong>2% KV cache</strong>。
+      </div>
+      <p><strong>对 HBM：</strong>同样 1M 上下文，显存常驻 KV 小一个数量级以上。<br />
+         <strong>对 SSD：</strong>若用磁盘做 prefix / 跨请求缓存，落盘体积也按同样比例缩小——这是「SSD 需求降到 1/8」的核心合理解释。</p>
+    </section>
+
+    <section id="serving">
+      <h2>机制 2：服务侧分层存储（HBM ← DRAM ← SSD）</h2>
+
+      <h3>Prefill：HiCache（含 L3 Storage / SSD）</h3>
+      <ol>
+        <li><strong>L1 GPU HBM</strong>：热 prefix / 当前工作集</li>
+        <li><strong>L2 Host DRAM</strong>：更大可复用前缀</li>
+        <li><strong>L3 Storage（常落 NVMe/SSD）</strong>：跨请求、跨会话冷 prefix</li>
+      </ol>
+      <p>目标：Agent / RAG 多轮提高前缀命中，少做重复 prefill。KV 越小 → 同样 SSD 容量能缓存更多会话 → 等效「更少依赖大 SSD」。</p>
+
+      <h3>Decode：HiSparse（主要卸到 Host）</h3>
+      <ul>
+        <li>GPU 只留固定大小的 hot buffer（如数千 token 槽位）。</li>
+        <li>完整 C4（CSA 压缩历史）放 CPU pinned mirror。</li>
+        <li>每步 indexer 选出 top-k，miss 才 Host→GPU 拷回。</li>
+        <li>PD 分离时，Prefill 甚至可经 RDMA 直写 Decode 的 Host 池，避开 Decode GPU 尖峰。</li>
+      </ul>
+
+      <div class="flow">HBM（热工作集）
+  ↑ on-demand swap-in / prefetch
+DRAM（完整压缩历史 / prefix mirror）
+  ↑ cold prefix / 跨会话复用
+SSD / Storage（L3 冷层）</div>
+    </section>
+
+    <section id="engram">
+      <h2>机制 3：Engram——减少「参数级」HBM 依赖</h2>
+      <p>官方论文 <em>Conditional Memory via Scalable Lookup</em>：</p>
+      <ul>
+        <li>用确定性 N-gram 查找，把静态知识表与动态计算解耦。</li>
+        <li>推理时大表可放 Host DRAM，用前序层计算做 <strong>prefetch + overlap PCIe</strong>。</li>
+        <li>利用 Zipf：热项进 HBM/DRAM，长尾进 <strong>NVMe SSD</strong>。</li>
+        <li>实验：把 <strong>100B</strong> 参数表全放 host，吞吐损失约 <strong>2.8%</strong>。</li>
+      </ul>
+      <div class="callout callout-warn">
+        Engram 是 <strong>主动利用 SSD 作为廉价冷层</strong> 来换 HBM；与 V4.1「减少 SSD 需求」（因为 KV 更小）是不同维度，不要混为一谈。
+      </div>
+    </section>
+
+    <section id="timeline">
+      <h2>版本演进：谁在解决什么</h2>
+      <div class="flow">V2/V3   MLA            → 单 token KV 变小（HBM）
+  ↓
+V3.2    DSA            → 长上下文稀疏算力 + 为分层卸载创造条件
+  ↓
+V4      CSA+HCA+低精度  → KV 再压一个数量级（HBM + 盘上缓存体积）
+        + HiCache/HiSparse → 热冷分层（HBM / DRAM / SSD）
+  ↓
+V4.1-Flash 公告        → 相对上代：HBM 1/4，SSD 1/8；相对初代 ~437×
+        Causal Encoder–Decoder（输入激活 8B / 输出 16B，552B MoE）</div>
+    </section>
+
+    <section id="v41">
+      <h2>关于 DeepSeek-V4.1-Flash</h2>
+      <ul>
+        <li>约 <strong>552B MoE</strong>，原生多模态，API 模型名 <code>deepseek-flash</code>。</li>
+        <li>采用新的 <strong>Causal Encoder–Decoder</strong> 非对称结构：输入激活约 8B，输出激活约 16B。</li>
+        <li>官方结果陈述：相对上一代，KV Cache 对 <strong>HBM 需求降至 1/4</strong>、对 <strong>SSD 需求降至 1/8</strong>。</li>
+        <li>机制上应视为 <strong>V4 压缩路线的产品化 / 结构升级</strong>；4.1 专属完整 tech report 目前不如 V4 清晰，细节仍以官方后续文档为准。</li>
+      </ul>
+      <p>社区里的 <strong>FlashMemory / LSA</strong>（如 arXiv:2606.09079）是在 V4 上进一步「只召回关键 CSA chunk」的第三方/合作研究，<strong>不是</strong> DeepSeek 4.1 官方同名产品。</p>
+    </section>
+
+    <section id="evidence">
+      <h2>证据与可信度分级</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>内容</th>
+            <th>可信度</th>
+            <th>来源类型</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>MLA 降 KV</td>
+            <td><span class="tag tag-high">高</span></td>
+            <td>DeepSeek-V2/V3 论文</td>
+          </tr>
+          <tr>
+            <td>CSA/HCA、FP8/FP4、~2%–10% KV</td>
+            <td><span class="tag tag-high">高</span></td>
+            <td>V4 技术报告脉络 + HF Transformers / HF Blog / LMSYS</td>
+          </tr>
+          <tr>
+            <td>HiCache / HiSparse / L3 Storage</td>
+            <td><span class="tag tag-high">高</span></td>
+            <td>SGLang 文档、LMSYS、Tair+SGLang 工程文</td>
+          </tr>
+          <tr>
+            <td>Engram HBM/DRAM/SSD 分层</td>
+            <td><span class="tag tag-high">高</span></td>
+            <td>DeepSeek Engram 论文与仓库</td>
+          </tr>
+          <tr>
+            <td>V4.1-Flash：HBM 1/4、SSD 1/8、437×</td>
+            <td><span class="tag tag-mid">中高</span></td>
+            <td>官方发布口径；机制细节中等（缺 4.1 完整 tech report）</td>
+          </tr>
+          <tr>
+            <td>FlashMemory「压到 ~10–13.5%」</td>
+            <td><span class="tag tag-mid">中</span></td>
+            <td>第三方论文，需单独评估维护状态</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>可落地理解框架</h3>
+      <div class="flow">减少 HBM 依赖
+  ├─ 算法压缩（MLA / CSA / HCA / 低精度）
+  └─ 运行时只留 hot set（HiSparse / 稀疏 top-k）
+
+减少 SSD 依赖
+  ├─ 同样缓存占用的字节数变小（压缩后的 KV）
+  └─ 更多冷数据可放 DRAM；SSD 只存真正跨会话长尾</div>
+    </section>
+
+    <section id="refs">
+      <h2>参考来源（节选）</h2>
+      <ul class="src-list">
+        <li>DeepSeek-V2/V3 论文 · MLA 与 KV 压缩</li>
+        <li>DeepSeek-V3.2-Exp · DeepSeek Sparse Attention</li>
+        <li>DeepSeek-V4 技术报告脉络 / Hugging Face Blog · CSA + HCA</li>
+        <li>SGLang HiSparse 文档 · Decode 侧 Host 分层</li>
+        <li>LMSYS · DeepSeek-V4 Day 0 服务侧解读</li>
+        <li>DeepSeek Engram · Conditional Memory / 多级缓存</li>
+        <li>DeepSeek-V4.1-Flash 官方发布转述（2026-09-10）· HBM 1/4、SSD 1/8</li>
+      </ul>
+      <div class="callout callout-info">
+        本页为公开信息结构化整理，不构成投资建议或部署承诺。线上访问路径：Equation 观察中心 →「DeepSeek 内存分层」，或直接打开本静态文件。
+      </div>
+    </section>
+
+    <footer>
+      Equation · DeepSeek HBM / SSD 研究页 · 本地静态文件
+      <code>web/public/deepseek-hbm-ssd-memory.html</code>
+    </footer>
+  </div>
+</body>
+</html>

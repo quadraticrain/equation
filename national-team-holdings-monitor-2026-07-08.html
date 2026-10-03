@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>国家队持仓监控周报 v2（2026-07-08）</title>
+  <style>
+    :root {
+      --bg: #f5f6f8; --card: #fff; --text: #1a1a2e; --muted: #6b7280;
+      --border: #e5e7eb; --primary: #1677ff; --success: #389e0d; --warning: #d48806;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
+      background: var(--bg); color: var(--text); line-height: 1.65; font-size: 15px;
+    }
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 24px 16px 80px; }
+    header {
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%);
+      color: #fff; padding: 32px 24px; border-radius: 12px; margin-bottom: 20px;
+    }
+    header h1 { margin: 0 0 8px; font-size: 1.65rem; font-weight: 600; }
+    header p { margin: 0 0 6px; opacity: 0.92; font-size: 0.95rem; }
+    .badge {
+      display: inline-block; padding: 3px 11px; border-radius: 999px; font-size: 12px;
+      background: rgba(255,255,255,0.14); margin-right: 8px; margin-top: 12px;
+    }
+    nav.toc {
+      background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+      padding: 14px 18px; margin-bottom: 20px; font-size: 14px;
+    }
+    nav.toc a { color: var(--primary); text-decoration: none; margin-right: 14px; }
+    nav.toc a:hover { text-decoration: underline; }
+    section {
+      background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+      padding: 20px 24px; margin-bottom: 18px;
+    }
+    h2 { margin: 0 0 14px; font-size: 1.15rem; border-left: 4px solid var(--primary); padding-left: 12px; }
+    h3 { margin: 16px 0 8px; font-size: 1rem; color: #374151; }
+    ul, ol { margin: 8px 0; padding-left: 22px; }
+    li { margin-bottom: 7px; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; margin: 10px 0; }
+    th, td { border: 1px solid var(--border); padding: 9px 11px; text-align: left; vertical-align: top; }
+    th { background: #f9fafb; font-weight: 600; }
+    tr:nth-child(even) td { background: #fafafa; }
+    .tag { display: inline-block; padding: 1px 8px; border-radius: 4px; font-size: 12px; font-weight: 500; }
+    .tag-ok { background: #d9f7be; color: #135200; }
+    .tag-warn { background: #ffe58f; color: #874d00; }
+    .callout { border-radius: 8px; padding: 13px 15px; margin: 12px 0; font-size: 14px; }
+    .callout-info { background: #e6f4ff; border-left: 4px solid var(--primary); }
+    .callout-warn { background: #fffbe6; border-left: 4px solid var(--warning); }
+    .timeline { list-style: none; padding: 0; margin: 0; }
+    .timeline li { padding: 11px 0 11px 18px; border-left: 2px solid var(--border); margin-left: 8px; }
+    .timeline .date { font-size: 12px; color: var(--muted); }
+    .timeline .title { font-weight: 600; margin: 3px 0; }
+    .timeline .desc { font-size: 14px; color: #4b5563; }
+    a { color: var(--primary); }
+    footer { text-align: center; color: var(--muted); font-size: 13px; padding: 22px 0; }
+    .version-nav {
+      background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px;
+      padding: 12px 16px; margin-bottom: 16px; font-size: 14px;
+    }
+    .version-nav strong { color: #166534; }
+    .version-nav a { color: #166534; margin-right: 16px; }
+    @media (max-width: 768px) {
+      .wrap { max-width: 100%; padding: 0 0 72px; }
+      header { border-radius: 0; padding: 20px 10px; margin-bottom: 12px; }
+      nav.toc {
+        border-radius: 0; border-left: none; border-right: none;
+        padding: 12px 10px; margin-bottom: 12px;
+      }
+      section {
+        border-radius: 0; border-left: none; border-right: none;
+        padding: 14px 0; margin-bottom: 12px;
+      }
+      h2 { padding-left: 10px; }
+      table { font-size: 12px; }
+      th, td { padding: 6px 8px; }
+      th:first-child, td:first-child { padding-left: 6px; }
+      th:last-child, td:last-child { padding-right: 6px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="version-nav" id="version-nav"></div>
+
+    <header>
+      <h1>国家队持仓监控周报</h1>
+      <p><strong>第二版</strong> · 数据截止 2026-07-08 · 每周由 Cursor 云端 Agent 重新生成</p>
+      <p style="opacity:0.8;font-size:13px">公开信息整理，不构成投资建议。覆盖：中央汇金、汇金资管、证金、中国国新、中国诚通</p>
+      <span class="badge">v2.0</span>
+      <span class="badge">静态页</span>
+      <span class="badge">报告期 2026-Q1 → Q2 预披露</span>
+    </header>
+
+    <nav class="toc">
+      <strong>目录</strong>
+      <a href="#summary">本周结论</a>
+      <a href="#entities">监控主体</a>
+      <a href="#baseline">底账快照</a>
+      <a href="#events">已核实事件</a>
+      <a href="#signals">舆情待核实</a>
+      <a href="#blind">数据盲区</a>
+      <a href="#refs">参考链接</a>
+    </nav>
+
+    <section id="summary">
+      <h2>本周结论（可执行摘要）</h2>
+      <ol>
+        <li><strong>ETF 减持进入尾声：</strong>2026 年上半年汇金系合计减持宽基 ETF 约 <strong>1 万亿元</strong>，6 月末全市场 ETF 规模降至 4.74 万亿元（较年初减少 1.28 万亿）；至 5 月末主要宽基 ETF 中国家队持仓比例已降至较低水平，"封顶降温"目标基本达成。</li>
+        <li><strong>中央汇金个股零调仓：</strong>Q1 汇金在工行、农行、中行等核心金融股<strong>持股数量连续多季度未变</strong>，压舱石地位稳固；上半年减持仅限于宽基 ETF，未涉及个股层面。</li>
+        <li><strong>证金有序退出权重标的：</strong>Q1 证金退出 <strong>5 家银行</strong>（招商、兴业、华夏、光大、北京银行）前十大股东行列，同时减持浦发、平安、中信等股份制银行；大秦铁路（持仓十年）亦退出十大股东；累计退出规模超 2,800 亿元。</li>
+        <li><strong>社保基金逆势加仓：</strong>Q2 社保与养老基金合计新进 / 增持 <strong>14 只个股</strong>，方向聚焦<strong>医药生物、化工、机械</strong>三大领域；Q2 新进 71 家公司前十大流通股东（较 Q1 增长 42%），创 2026 年单季新高。</li>
+        <li><strong>中金「三合一」重组推进：</strong>6 月 8 日股东大会高票通过，<strong>6 月 15 日获上交所受理</strong>，正式进入监管审核阶段；参考国泰君安—海通案例，审核通过或需约 20 天；交易金额约 1,138 亿元。</li>
+        <li><strong>低估值龙头池曝光：</strong>机构统计 128 只「细分行业龙头 + PE&lt;25 倍 + 高股息」标的中，国家队/社保合计覆盖近半；7 月 1 日 44 只社保重仓股单日涨幅超 7%，显示长线资金埋伏方向集中暴露。</li>
+      </ol>
+      <div class="callout callout-info">
+        <strong>读法提示：</strong>国家队不是单一账户，不宜机械「抄作业」。本页区分<strong>已核实公告</strong>与<strong>媒体估算</strong>，后者仅供舆情参考。
+      </div>
+    </section>
+
+    <section id="entities">
+      <h2>监控主体分览</h2>
+      <table>
+        <thead>
+          <tr><th>主体</th><th>角色</th><th>本期要点（截至 2026-07-08）</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>中央汇金</strong></td>
+            <td>国有金融资本持股平台</td>
+            <td>Q1 个股零调仓，压舱石未动；持股市值约 3.42 万亿（金融板块）；主导中金吸收合并东兴、信达（上交所受理中）</td>
+          </tr>
+          <tr>
+            <td><strong>汇金资管</strong></td>
+            <td>汇金旗下资管主体</td>
+            <td>与汇金投资并列 ETF 大持有人；上半年宽基 ETF 减持主力之一；持有平安、茅台等蓝筹</td>
+          </tr>
+          <tr>
+            <td><strong>证金</strong></td>
+            <td>两融与维稳相关持股</td>
+            <td>66.7% 股权划转汇金；Q1 系统性减持银行股（退出 5 家股份制银行十大股东），累计规模 2,800+ 亿；Q2 加仓伊利 200 万股</td>
+          </tr>
+          <tr>
+            <td><strong>中国国新</strong></td>
+            <td>国务院国资委国有资本运营平台（平准 2.0）</td>
+            <td>宣布超 500 亿元增持央国企及 ETF；定向买入央企核心资产与硬科技赛道</td>
+          </tr>
+          <tr>
+            <td><strong>中国诚通</strong></td>
+            <td>国有资本运营平台（平准 2.0）</td>
+            <td>与国新协同增持，已买入近百亿央企 ETF 与个股</td>
+          </tr>
+          <tr>
+            <td><strong>社保基金</strong></td>
+            <td>长线资金（广义国家队关联）</td>
+            <td>Q2 新进 71 家公司十大流通股东（同比 +42%）；加仓方向：医药生物、化工、机械；7 月 1 日 44 只重仓股涨幅超 7%</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="baseline">
+      <h2>底账快照（2026 年一季度 · 十大流通股东口径）</h2>
+      <table>
+        <thead><tr><th>指标</th><th>数值</th><th>来源口径</th></tr></thead>
+        <tbody>
+          <tr><td>现身 A 股公司数</td><td>861 家</td><td>Choice / 私募排排网</td></tr>
+          <tr><td>合计持股市值</td><td>约 4.40 万亿元</td><td>Choice</td></tr>
+          <tr><td>持股总股数（Wind）</td><td>约 5,746 亿股</td><td>Wind / 财新</td></tr>
+          <tr><td>较 2024 年末市值变化</td><td>−5,041 亿元</td><td>Choice</td></tr>
+          <tr><td>变动结构</td><td>新进 207 · 加仓 206 · 减仓 260 · 不变 188</td><td>Choice</td></tr>
+          <tr><td>汇金持股市值</td><td>约 3.37 → 3.42 万亿元</td><td>Choice / 百度财经</td></tr>
+          <tr><td>金融板块占比</td><td>超过八成（约 3.42 万亿）</td><td>百度财经（2026-07-08）</td></tr>
+          <tr><td>社保基金覆盖</td><td>707 家公司</td><td>Choice</td></tr>
+        </tbody>
+      </table>
+
+      <h3>行业配置（申万二级 · Q1）</h3>
+      <table>
+        <thead><tr><th>方向</th><th>行业 / 标的</th><th>说明</th></tr></thead>
+        <tbody>
+          <tr><td>重仓前五</td><td>国有大行、保险、证券、煤炭开采、白酒</td><td>国有大行市值逾 3 万亿，绝对压舱石</td></tr>
+          <tr><td>增持前五（数量）</td><td>煤炭开采、通用设备、玻璃玻纤、特钢、医疗器械</td><td>科技相关占增持前列多数席位</td></tr>
+          <tr><td>代表新进</td><td>剑桥科技、生益科技、恒逸石化等</td><td>剑桥科技为社保基金组合新进，Q2 涨幅显著</td></tr>
+          <tr><td>汇金系金融市值</td><td>约 3.27 → 3.42 万亿元</td><td>占国家队 A 股市值约 74%–78%（Wind / 百度财经）</td></tr>
+        </tbody>
+      </table>
+
+      <h3>证金 Q1 主要减持明细（部分）</h3>
+      <table>
+        <thead><tr><th>标的</th><th>操作</th><th>规模</th><th>备注</th></tr></thead>
+        <tbody>
+          <tr><td>紫金矿业</td><td>减持</td><td>25,365.71 万股</td><td>Q1 最大减持个股</td></tr>
+          <tr><td>中海油服</td><td>减持</td><td>6,863.99 万股</td><td>—</td></tr>
+          <tr><td>恒瑞医药</td><td>减持</td><td>5,315.68 万股</td><td>医药龙头</td></tr>
+          <tr><td>歌尔股份</td><td>减持</td><td>4,738.48 万股</td><td>消费电子</td></tr>
+          <tr><td>万华化学</td><td>减持</td><td>3,818.92 万股</td><td>化工龙头</td></tr>
+          <tr><td>同花顺</td><td>减持</td><td>301.78 万股</td><td>时隔 8 年再次减持</td></tr>
+          <tr><td>招商银行等 5 家</td><td>退出十大股东</td><td>—</td><td>含兴业、华夏、光大、北京银行</td></tr>
+          <tr><td>大秦铁路</td><td>退出十大股东</td><td>—</td><td>持仓长达十年（2015 年起）</td></tr>
+        </tbody>
+      </table>
+
+      <h3>代表性个股（国家队重仓 · Q1）</h3>
+      <table>
+        <thead><tr><th>标的</th><th>主体</th><th>要点</th></tr></thead>
+        <tbody>
+          <tr><td>中国银行</td><td>汇金 / 证金 / 汇金资管</td><td>汇金为第一大股东，股数稳定（1,887.92 亿股，58.59%）</td></tr>
+          <tr><td>农业银行</td><td>汇金 / 社保 / 证金 / 汇金资管</td><td>汇金持股约 1,405 亿股</td></tr>
+          <tr><td>工商银行</td><td>汇金 / 证金 / 社保</td><td>汇金持股比例 &gt;34%，市值约 9,834 亿元</td></tr>
+          <tr><td>中国平安</td><td>汇金资管</td><td>约 4.7 亿股，第五大股东</td></tr>
+          <tr><td>贵州茅台</td><td>汇金资管 / 证金</td><td>约 1,040 万股 / 404 万股</td></tr>
+          <tr><td>伊利股份</td><td>证金</td><td>Q2 加仓 200 万股 → 合计 1.26 亿股（中报预披露）</td></tr>
+          <tr><td>中金公司</td><td>中央汇金</td><td>约 19.36 亿股，第一大股东；三合一重组上交所受理中</td></tr>
+          <tr><td>格力电器</td><td>证金 / 汇金 / 社保</td><td>PE 7.11 倍，股息率 5.40%，证金持股 &gt;1.2 亿股（2018 年起）</td></tr>
+        </tbody>
+      </table>
+
+      <h3>128 只低估值龙头池中国家队覆盖情况</h3>
+      <table>
+        <thead><tr><th>统计维度</th><th>数值</th><th>说明</th></tr></thead>
+        <tbody>
+          <tr><td>中央汇金覆盖</td><td>37 只</td><td>以金融、高端制造为主</td></tr>
+          <tr><td>证金覆盖</td><td>52 只</td><td>分布最广</td></tr>
+          <tr><td>社保基金覆盖</td><td>68 只</td><td>覆盖面最大</td></tr>
+          <tr><td>三者共同持仓</td><td>29 只</td><td>重叠度最高：银行 + 高端制造</td></tr>
+          <tr><td>整体 PE 中位数</td><td>14.7 倍</td><td>高于沪深300 的 12.3 倍</td></tr>
+          <tr><td>整体股息率中位数</td><td>3.2%</td><td>跑赢 10Y 国债（2.28%）约 92 bp</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="events">
+      <h2>近期已核实事件</h2>
+      <ul class="timeline">
+        <li>
+          <div class="date">2026-06-15</div>
+          <div class="title"><span class="tag tag-ok">已核实</span> 汇金系 · 中金公司「三合一」重组获上交所受理</div>
+          <div class="desc">中金换股吸收合并东兴证券、信达证券申请文件获上海证券交易所受理，正式进入监管审核阶段。交易金额约 1,138.54 亿元。参考国泰君安—海通案例，从受理到通过或需约 20 天。合并后中金营收将由 285 亿增至 372 亿，行业排名第五升至第三。</div>
+        </li>
+        <li>
+          <div class="date">2026-06-08</div>
+          <div class="title"><span class="tag tag-ok">已核实</span> 汇金系 · 中金「三合一」股东大会高票通过</div>
+          <div class="desc">中金公司召开 2026 年第一次临时股东会及类别股东会议，换股吸收合并东兴、信达证券多项议案均获高票通过。标志重组内部治理决策程序全面收官。</div>
+        </li>
+        <li>
+          <div class="date">2026-Q2（中报预披露）</div>
+          <div class="title"><span class="tag tag-ok">已核实</span> 证金 · 伊利股份加仓 200 万股</div>
+          <div class="desc">伊利股份中报预披露公告显示，证金二季度加仓 200 万股，合计持股升至 1.26 亿股，位居第六大流通股东。牛散陈发树持仓未变（6,043 万股）。</div>
+        </li>
+        <li>
+          <div class="date">2026-Q1（一季报）</div>
+          <div class="title"><span class="tag tag-ok">已核实</span> 证金 · 系统性减持银行股 + 权重标的</div>
+          <div class="desc">Q1 证金退出 5 家股份制银行（招行、兴业、华夏、光大、北京银行）前十大股东；减持浦发、平安、中信等 7 家股份制银行及 1 家城商行；大秦铁路（持仓十年）亦退出十大股东。个股层面最大减持为紫金矿业（25,365.71 万股）。累计退出规模超 2,800 亿元。</div>
+        </li>
+        <li>
+          <div class="date">2026-01 ~ 06</div>
+          <div class="title"><span class="tag tag-ok">已核实</span> 汇金系 · 宽基 ETF 大幅减持（上半年合计约 1 万亿元）</div>
+          <div class="desc">据 Wind 统计，6 月末全市场 ETF 规模 4.74 万亿元，较年初减少 1.28 万亿元，「千亿级」ETF 集体消失。汇金系为代表的国家队资金大幅减持沪深300、上证50 等宽基 ETF 是主要推手。至 5 月末，相关主体在主要宽基 ETF 中的份额已降至较低水平。</div>
+        </li>
+        <li>
+          <div class="date">2026-05-18</div>
+          <div class="title"><span class="tag tag-ok">已核实</span> 汇金系 · 中金公司「三合一」重组草案</div>
+          <div class="desc">中金换股吸收合并东兴证券、信达证券；交易金额约 1,138.54 亿元；换股后汇金直接持股约 24.41%，仍为控股股东，承诺锁定 36 个月。</div>
+        </li>
+        <li>
+          <div class="date">2025-02-14</div>
+          <div class="title"><span class="tag tag-ok">已核实</span> 证金 · 66.7% 股权划转汇金</div>
+          <div class="desc">证金公司公告称股东拟将 66.7% 股权划转至中央汇金，统一国有金融资本管理（财新）。</div>
+        </li>
+      </ul>
+    </section>
+
+    <section id="signals">
+      <h2>舆情 · 待核实</h2>
+      <div class="callout callout-warn">媒体报道与机构估算，<strong>非公告精确持仓</strong>，请勿与底账混读。</div>
+      <ul class="timeline">
+        <li>
+          <div class="date">2026-07-01</div>
+          <div class="title"><span class="tag tag-warn">市场观察</span> 社保重仓股集中异动</div>
+          <div class="desc">7 月 1 日上证微涨 0.44%（4,112.45 点），44 只社保基金重仓标的单日涨幅超 7%。方向集中在顺周期（猪周期、物流、保险、化工）、科技制造（半导体设备、光模块 PCB、光伏设备）、医药与困境反转三大板块。（来源：百度财经 / 证券时报）</div>
+        </li>
+        <li>
+          <div class="date">2026-06-24 ~ 07-01</div>
+          <div class="title"><span class="tag tag-warn">机构统计</span> 128 只低估值龙头国家队的布局</div>
+          <div class="desc">机构筛选出 128 只「细分行业龙头 + PE(TTM)&lt;25 倍 + 股息率&gt;10Y 国债」标的，其中中央汇金持 37 只、证金持 52 只、社保持 68 只（29 只三者共同持仓）。代表标的包括：宁德时代（PE 22.32x）、海康威视（~20x）、潍柴动力（~11x）、格力电器（7.11x / 股息率 5.4%）、伊利、中国中车、双汇发展等。（来源：百家号，数据源自 Choice/Wind）</div>
+        </li>
+        <li>
+          <div class="date">2026-07-04</div>
+          <div class="title"><span class="tag tag-warn">市场观察</span> A 股尾盘波动与国家队入场讨论</div>
+          <div class="desc">7 月 8 日下午 A 股出现尾盘下跌，市场讨论国家队是否入场托底。截至 Q1，国家队持有国有大行股票市值已达 3.42 万亿，占全部持仓一半以上。（来源：百家号）</div>
+        </li>
+        <li>
+          <div class="date">2026-01 ~ 02</div>
+          <div class="title"><span class="tag tag-warn">待核实</span> Bloomberg / BI 转述</div>
+          <div class="desc">估算国家队在 1–2 月卖出 ETF 约 $67.5–80B；策略从单边托市转向双向「降温」。</div>
+        </li>
+      </ul>
+    </section>
+
+    <section id="blind">
+      <h2>数据盲区与下次更新</h2>
+      <div class="callout callout-info">
+        <ul>
+          <li><strong>2026 二季度完整持仓：</strong>上市公司 2026 年中报预计 8 月底前陆续披露完毕，届时 Q2 国家队/社保完整调仓名单方可确认。当前仅有少量中报预披露信息（如伊利股份）。</li>
+          <li><strong>ETF 精确仓位：</strong>跌破 20% 单一持有人披露线后，需等<strong>基金 2026 年中报（约 7–8 月）</strong>才能精确还原剩余仓位。</li>
+          <li><strong>低于 5% 的分散交易</strong>通常无强制公告，本页无法完整覆盖。</li>
+          <li><strong>国新/诚通增持明细：</strong>目前公告仅披露总金额，未披露个股与 ETF 清单。盘面反推存在不确定性。</li>
+          <li><strong>下周报计划：</strong>Cursor Agent 按 <code>docs/国家队持仓-每周静态页生成任务.md</code> 全量重写本页。</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="refs">
+      <h2>参考链接</h2>
+      <ul>
+        <li><a href="https://baijiahao.baidu.com/s?id=1869799094651531998" target="_blank" rel="noopener">百家号：128个A股龙头低估值，国家队/社保布局梳理（2026-07-04）</a></li>
+        <li><a href="https://baijiahao.baidu.com/s?id=1869504689482362225" target="_blank" rel="noopener">百家号：社保基金二季度持仓动向曝光（2026-07-01）</a></li>
+        <li><a href="https://baijiahao.baidu.com/s?id=1868074145268186315" target="_blank" rel="noopener">新浪/百家号：上交所受理！中金「三合一」重组再进一步（2026-06-15）</a></li>
+        <li><a href="https://www.cnstock.com/commonDetail/727309" target="_blank" rel="noopener">中国证券网：中金公司「三合一」重组获股东会通过（2026-06-10）</a></li>
+        <li><a href="http://finance.sina.com.cn/wm/2026-06-09/doc-iniauvax1875450.shtml" target="_blank" rel="noopener">新浪财经：中金换股吸收合并东兴、信达获股东会通过（2026-06-09）</a></li>
+        <li><a href="https://xueqiu.com/3542551394/392871541" target="_blank" rel="noopener">雪球：国家队减持 ETF 对你的影响（2026-06-04）</a></li>
+        <li><a href="https://news.tianyancha.com/ll_hxpvo8cu4t.html" target="_blank" rel="noopener">天眼查：证金公司 2026Q1 退出多家银行股东（2026-06-10）</a></li>
+        <li><a href="https://xueqiu.com/3910506137/385800889" target="_blank" rel="noopener">雪球：证金 2026Q1 减持情况汇总（2026-04-25）</a></li>
+        <li><a href="https://xueqiu.com/9602802821/390640108" target="_blank" rel="noopener">雪球：证金十年，退出大秦十大股东（2026-05-24）</a></li>
+        <li><a href="http://stock.caijing.com.cn/20260511/5158975.shtml" target="_blank" rel="noopener">财新：A股重回4200点，国家队买了谁？（2026-05-11）</a></li>
+        <li><a href="https://www.stcn.com/article/detail/3607554.html" target="_blank" rel="noopener">证券时报：基金季报印证国家队调仓</a></li>
+        <li><a href="https://finance.sina.com.cn/wm/2026-05-18/doc-inhyirni8013201.shtml" target="_blank" rel="noopener">新浪：中金吸收合并东兴、信达草案（2026-05-18）</a></li>
+        <li><a href="http://static.cninfo.com.cn/finalpage/2026-04-30/1225261331.PDF" target="_blank" rel="noopener">巨潮：中国银行 2026 一季报</a></li>
+        <li><a href="https://data.eastmoney.com/gdfx/shareholder/10061230.html" target="_blank" rel="noopener">东方财富：中央汇金持股列表</a></li>
+        <li><a href="https://finance.caixin.com/2025-02-14/102288448.html" target="_blank" rel="noopener">财新：证金 66.7% 股权划转汇金（2025-02-14）</a></li>
+      </ul>
+    </section>
+
+    <footer>
+      Equation · 国家队持仓监控周报 <strong>v2</strong> · 生成于 2026-07-08<br />
+      入口：指标大盘 → <em>A 股市场温度 → 国家队持仓</em>
+    </footer>
+  </div>
+<script>
+(function() {
+  var currentFile = document.location.pathname.split('/').pop();
+  var nav = document.getElementById('version-nav');
+  fetch('national-team-holdings-latest.json', { cache: 'no-store' })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      if (!nav || !data.versions) return;
+      var bust = encodeURIComponent(data.updated || data.latest || '');
+      var html = '<strong>📚 历史版本：</strong>';
+      data.versions.forEach(function(v) {
+        if (v.file === currentFile) {
+          html += '<span style="color:#166534;font-weight:600">' + v.label + ' ← 当前</span> ';
+        } else {
+          html += '<a href="' + v.file + '?v=' + bust + '">' + v.label + '</a> ';
+        }
+      });
+      nav.innerHTML = html;
+    })
+    .catch(function() { nav.style.display = 'none'; });
+})();
+</script>
+</body>
+</html>

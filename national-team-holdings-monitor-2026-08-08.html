@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>国家队持仓监控周报 v4（2026-08-08）</title>
+  <style>
+    :root {
+      --bg: #f5f6f8; --card: #fff; --text: #1a1a2e; --muted: #6b7280;
+      --border: #e5e7eb; --primary: #1677ff; --success: #389e0d; --warning: #d48806;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
+      background: var(--bg); color: var(--text); line-height: 1.65; font-size: 15px;
+    }
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 24px 16px 80px; }
+    header {
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%);
+      color: #fff; padding: 32px 24px; border-radius: 12px; margin-bottom: 20px;
+    }
+    header h1 { margin: 0 0 8px; font-size: 1.65rem; font-weight: 600; }
+    header p { margin: 0 0 6px; opacity: 0.92; font-size: 0.95rem; }
+    .badge {
+      display: inline-block; padding: 3px 11px; border-radius: 999px; font-size: 12px;
+      background: rgba(255,255,255,0.14); margin-right: 8px; margin-top: 12px;
+    }
+    nav.toc {
+      background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+      padding: 14px 18px; margin-bottom: 20px; font-size: 14px;
+    }
+    nav.toc a { color: var(--primary); text-decoration: none; margin-right: 14px; }
+    nav.toc a:hover { text-decoration: underline; }
+    section {
+      background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+      padding: 20px 24px; margin-bottom: 18px;
+    }
+    h2 { margin: 0 0 14px; font-size: 1.15rem; border-left: 4px solid var(--primary); padding-left: 12px; }
+    h3 { margin: 16px 0 8px; font-size: 1rem; color: #374151; }
+    ul, ol { margin: 8px 0; padding-left: 22px; }
+    li { margin-bottom: 7px; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; margin: 10px 0; }
+    th, td { border: 1px solid var(--border); padding: 9px 11px; text-align: left; vertical-align: top; }
+    th { background: #f9fafb; font-weight: 600; }
+    tr:nth-child(even) td { background: #fafafa; }
+    .tag { display: inline-block; padding: 1px 8px; border-radius: 4px; font-size: 12px; font-weight: 500; }
+    .tag-ok { background: #d9f7be; color: #135200; }
+    .tag-warn { background: #ffe58f; color: #874d00; }
+    .callout { border-radius: 8px; padding: 13px 15px; margin: 12px 0; font-size: 14px; }
+    .callout-info { background: #e6f4ff; border-left: 4px solid var(--primary); }
+    .callout-warn { background: #fffbe6; border-left: 4px solid var(--warning); }
+    .timeline { list-style: none; padding: 0; margin: 0; }
+    .timeline li { padding: 11px 0 11px 18px; border-left: 2px solid var(--border); margin-left: 8px; }
+    .timeline .date { font-size: 12px; color: var(--muted); }
+    .timeline .title { font-weight: 600; margin: 3px 0; }
+    .timeline .desc { font-size: 14px; color: #4b5563; }
+    a { color: var(--primary); }
+    footer { text-align: center; color: var(--muted); font-size: 13px; padding: 22px 0; }
+    .version-nav {
+      background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px;
+      padding: 12px 16px; margin-bottom: 16px; font-size: 14px;
+    }
+    .version-nav strong { color: #166534; }
+    .version-nav a { color: #166534; margin-right: 16px; }
+    @media (max-width: 768px) {
+      .wrap { max-width: 100%; padding: 0 0 72px; }
+      header { border-radius: 0; padding: 20px 10px; margin-bottom: 12px; }
+      nav.toc {
+        border-radius: 0; border-left: none; border-right: none;
+        padding: 12px 10px; margin-bottom: 12px;
+      }
+      section {
+        border-radius: 0; border-left: none; border-right: none;
+        padding: 14px 10px; margin-bottom: 12px;
+      }
+      h2 { padding-left: 10px; }
+      table { font-size: 12px; }
+      th, td { padding: 6px 8px; }
+      th:first-child, td:first-child { padding-left: 6px; }
+      th:last-child, td:last-child { padding-right: 6px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="version-nav" id="version-nav"></div>
+
+    <header>
+      <h1>国家队持仓监控周报</h1>
+      <p><strong>第四版</strong> · 数据截止 2026-08-08 · 每周由 Cursor 云端 Agent 重新生成</p>
+      <p style="opacity:0.8;font-size:13px">公开信息整理，不构成投资建议。覆盖：中央汇金、汇金资管、证金、中国国新、中国诚通</p>
+      <span class="badge">v4.0</span>
+      <span class="badge">静态页</span>
+      <span class="badge">报告期 2026-Q1 / Q2 中报密集披露中</span>
+    </header>
+
+    <nav class="toc">
+      <strong>目录</strong>
+      <a href="#summary">本周结论</a>
+      <a href="#entities">监控主体</a>
+      <a href="#etf">ETF通道快照</a>
+      <a href="#baseline">底账快照</a>
+      <a href="#events">已核实事件</a>
+      <a href="#signals">舆情待核实</a>
+      <a href="#blind">数据盲区</a>
+      <a href="#refs">参考链接</a>
+    </nav>
+
+    <section id="summary">
+      <h2>本周结论（可执行摘要）</h2>
+      <ol>
+        <li><strong>8 月首周全面反弹，科创综指涨逾 10%：</strong>经历 7 月深跌后，A 股进入修复模式。上证指数周涨 2.81%（3940 点）、沪深 300 涨 2.32%（4694 点）、科创 50 涨 6.61%（1744 点）、科创综指周涨 10.96%、创业板指涨 6.55%。全周超 4200 只个股上涨，主力资金净流入 943 亿元，终结此前连续多周净流出。信息技术板块领涨逾 11%，电子行业周涨幅 12.62%。</li>
+        <li><strong>ETF 资金面完成「流入—获利了结」转换：</strong>7 月全市场 ETF 净流入 4778 亿元后，8 月首周因反弹获利了结出现 789 亿元净流出。但关键信号是——汇金系宽基 ETF 净赎回大幅收窄（从单日 107 亿降至 56 亿，基本归零），显示国家队并未在反弹中大规模离场。科创 50ETF 赎回同样收窄但未转正，机构对科技方向仍偏谨慎。</li>
+        <li><strong>国资增持回购潮继续扩大，120+ 家上市公司密集行动：</strong>7 月 19 日至 8 月 5 日，全市场超 120 家次披露回购或增持预案，预案合计金额上限近 300 亿元。其中国有控股上市公司 20 家（7 家央企 + 13 家地方国企），京东方、燕东微、重庆港等地方国企接力增持。中国国新已使用再贷款超 500 亿元，中国诚通累计买入近百亿元，形成「国家级央企—地方国资—民企龙头」三层稳市格局。</li>
+        <li><strong>中报业绩验证窗口开启，国家队重仓方向盈利强劲：</strong>中报密集披露期，汇金重仓的 AI 硬件方向业绩兑现亮眼——中际旭创上半年净利润预增 262%、新易盛预增 78%–103%、半导体设备板块 Q1 净利润同比增长 60.42%。首批中报中 8 家社保基金、42 家 QFII 现身，社保二季度继续加仓资源周期与智能制造方向。</li>
+        <li><strong>政治局会议定调改革，稳市机制常态化推进：</strong>7 月底中央政治局会议明确「深化资本市场投融资综合改革，提升资本市场韧性和信心」。证监会系列座谈会稳定预期，类平准基金制度框架持续落地。两融风险可控（融资余额回落至 2.7 万亿），杠杆资金压力已基本释放，市场底部区域的机构承接力得到验证。</li>
+        <li><strong>风格再平衡进行中，科技反弹不再一枝独秀：</strong>本周科技股大幅反弹的同时，医药（周涨 4%、七连阳）、有色（+10.95%）等板块同步走强，金融消费板块回调。TMT 成交占比从 7 月中旬的 51.71% 回落至 42%，资金正从极端抱团走向均衡配置。创新药 ETF 连续多日净申购，证券、电网设备 ETF 持续获机构流入。</li>
+      </ol>
+      <div class="callout callout-info">
+        <strong>读法提示：</strong>本周最大的变化不是涨跌，而是资金结构的调整。7 月恐慌性出逃的杠杆资金（1700 亿）已被机构配置盘承接，国家队 ETF 净卖出基本归零。中报窗口（8 月底截止）将是接下来两周最关键的信息源，届时 Q2 完整持仓可以确认国家队调仓方向。
+      </div>
+    </section>
+
+    <section id="entities">
+      <h2>监控主体说明</h2>
+      <div class="callout callout-info">
+        <strong>平准机制背景：</strong>国家队非单一账户，而是分层协同的逆周期调节体系。<strong>平准 1.0</strong>（2015–2025）：汇金直接买个股/ETF 托市，资金来源临时协调；<strong>平准 2.0</strong>（2026 起）：央行股票回购增持专项再贷款 → 商业银行 → 国新/诚通等国资平台，定向输血而非大水漫灌，低估值央企 + 错杀硬科技双主线。<br />
+        <strong>分工差异：</strong>汇金是逆周期调节的「温度计」（高位减持降温、低位申购托底）；国新/诚通是产业资本的「精准注射器」（官宣增持、定向买入央企核心资产与硬科技赛道）。
+      </div>
+      <table>
+        <thead>
+          <tr><th>主体</th><th>全称 / 角色</th><th>本期要点（截至 2026-08-08）</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>中央汇金</strong></td>
+            <td>中央汇金投资有限责任公司<br />国有金融资本持股平台 / 类平准基金</td>
+            <td>7 月中旬逆势净买入宽基 ETF 约 1762 亿元（兴业证券口径）；8 月首周汇金系宽基净赎回基本归零，未在反弹中大规模离场；个股底仓（国有大行等）连续多季度未变；主导中金「三合一」重组（证监会受理中）</td>
+          </tr>
+          <tr>
+            <td><strong>汇金资管</strong></td>
+            <td>中央汇金资产管理有限责任公司<br />汇金旗下资管主体</td>
+            <td>上半年宽基 ETF 减持主力之一；7 月中旬同步参与 ETF 回购；Q2 重仓海康威视（新进 6470 万股）、隆基绿能（增持 2578 万股）；持有平安、茅台等蓝筹底仓稳定</td>
+          </tr>
+          <tr>
+            <td><strong>证金</strong></td>
+            <td>中国证券金融股份有限公司<br />66.7% 股权拟划转汇金</td>
+            <td>Q1 退出 5 家股份制银行十大股东；Q2 近乎清仓中石化（23.25→4.26 亿股）；Q2 继续减持五粮液（8716→7604 万股，-12.76%）；国有大行持仓稳定；2015 年救市自主盘基本出清</td>
+          </tr>
+          <tr>
+            <td><strong>中国国新</strong></td>
+            <td>中国国新控股有限责任公司<br />国务院国资委国有资本运营平台（平准 2.0）</td>
+            <td>7 月 19 日官宣已使用再贷款超 500 亿元增持央企股票，表态「坚决维护资本市场核心资产战略价值」；后续继续使用再贷款 + 自有资金增持</td>
+          </tr>
+          <tr>
+            <td><strong>中国诚通</strong></td>
+            <td>中国诚通控股集团有限公司<br />国务院国资委国有资本运营平台（平准 2.0）</td>
+            <td>7 月 19 日官宣及所属诚通资本、诚旸投资累计买入近百亿元；后续继续使用自有资金和再贷款增持国资央企和科技企业股票及 ETF</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="callout callout-info" style="margin-top:12px">
+        <strong>协同动向：</strong>社保基金与险资作为长线资金配合平准 2.0 机制。7 月 20 日中国平安、中国人保、中国太保、新华保险四大险企集体表态加大权益配置。社保二季度新进盛屯矿业、富春股份等，继续布局资源周期 + 智能制造方向。
+      </div>
+    </section>
+
+    <section id="etf">
+      <h2>ETF 通道快照</h2>
+
+      <h3>7 月全月 → 8 月首周 ETF 资金全景</h3>
+      <table>
+        <thead><tr><th>时间窗口</th><th>ETF 资金动向</th><th>关键数据</th></tr></thead>
+        <tbody>
+          <tr><td>2026-07 全月</td><td>股票型 ETF 天量净流入</td><td>净流入 4,778 亿元（单月历史新高）；宽基 ETF 一家 3,157 亿；科创 50ETF 华夏单月净流入 402.87 亿</td></tr>
+          <tr><td>2026-07 全月</td><td>汇金系重点持仓 ETF 净流入</td><td>兴业证券测算约 1,762 亿元，占股票型 ETF 净流入 37%；申购方向高度集中在双创板块（科创 50、创业板、中证 1000）</td></tr>
+          <tr><td>2026-07 全月</td><td>两融净流出</td><td>融资余额月净流出约 4,080 亿元，终结此前连续三个月净流入；7 月下旬单日净流出超 700 亿创历史纪录</td></tr>
+          <tr><td>2026-08-03（周一）</td><td>单日净流入 307 亿</td><td>科创 50ETF 华夏 +39.97 亿、沪深 300ETF 华泰柏瑞 +27.25 亿、科创半导体 ETF 华夏 +18.35 亿</td></tr>
+          <tr><td>2026-08-04~07（周二~五）</td><td>反弹后获利了结</td><td>全周股票型 ETF 净流出 789 亿元；宽基 ETF 净流出 472 亿；创业板 ETF 易方达 -72 亿、沪深 300ETF 华泰柏瑞 -63 亿</td></tr>
+          <tr><td>2026-08-04~07</td><td>汇金系净赎回大幅收窄</td><td>单日净赎回从 107 亿降至 56 亿，基本归零；仅中证 1000 方向有大额赎回（约 32 亿）</td></tr>
+          <tr><td>2026-08-04~07</td><td>行业主题 ETF 结构性流入</td><td>黄金股 ETF +21 亿、证券 ETF +12 亿、电网设备 ETF +10 亿；科创半导体 ETF -50 亿、通信 ETF -30 亿</td></tr>
+        </tbody>
+      </table>
+
+      <h3>本周核心宽基 ETF 净流入/流出 TOP 5（8 月 4–7 日）</h3>
+      <table>
+        <thead><tr><th>排名</th><th>ETF</th><th>本周净流入（亿元）</th><th>方向</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>科创 50ETF 华夏（588000）</td><td>8/3 单日 +39.97 亿，本周整体净赎回收窄</td><td>抄底→减仓过渡</td></tr>
+          <tr><td>2</td><td>沪深 300ETF 华泰柏瑞（510300）</td><td>−63.38</td><td>获利了结</td></tr>
+          <tr><td>3</td><td>创业板 ETF 易方达（159915）</td><td>−72.02</td><td>获利了结</td></tr>
+          <tr><td>4</td><td>黄金股 ETF 永赢（517520）</td><td>+21.05</td><td>避险配置</td></tr>
+          <tr><td>5</td><td>证券 ETF 国泰（512880）</td><td>+12.29</td><td>博弈突破</td></tr>
+        </tbody>
+      </table>
+      <div class="callout callout-info">
+        <strong>统计口径说明：</strong>ETF 份额与净申赎数据综合自东方财富 Choice、同花顺、Wind 及媒体公开统计。汇金系口径为兴业证券研究院跟踪的汇金重点持仓 ETF 清单；注：不同数据源对同一窗口的统计口径（产品数、份额调整方式）可能存在差异，交叉引用时已标注来源。
+      </div>
+    </section>
+
+    <section id="baseline">
+      <h2>底账快照（2026 年一季度 · 十大流通股东口径）</h2>
+      <div class="callout callout-info">
+        <strong>说明：</strong>二季度完整持仓待上市公司中报披露（8 月底截止）。以下 Q1 底账为最新完整快照；Q2 增量信息（ETF 流向、中报预披露）单独标注来源。截至 8 月 8 日，中报仍在密集披露中，已有约 50+ 家公司披露中报。
+      </div>
+      <table>
+        <thead><tr><th>指标</th><th>数值</th><th>来源口径</th></tr></thead>
+        <tbody>
+          <tr><td>现身 A 股公司数</td><td>861 家</td><td>Choice / 私募排排网</td></tr>
+          <tr><td>合计持股市值（Q1 末）</td><td>约 4.40 万亿元</td><td>Choice</td></tr>
+          <tr><td>持股总股数（Wind）</td><td>约 5,746 亿股</td><td>Wind / 财新</td></tr>
+          <tr><td>较 2024 年末市值变化</td><td>−5,041 亿元</td><td>Choice</td></tr>
+          <tr><td>变动结构</td><td>新进 207 · 加仓 206 · 减仓 260 · 不变 188</td><td>Choice</td></tr>
+          <tr><td>汇金持股市值（Q2 末）</td><td>约 2.85 万亿元（较 Q1 +820 亿）</td><td>证券时报</td></tr>
+          <tr><td>汇金系金融板块占比</td><td>超过八成</td><td>百度财经 / 证券时报</td></tr>
+          <tr><td>社保基金覆盖</td><td>707 家公司（Q1）；中报新进盛屯矿业、富春股份等</td><td>Choice / 中报预披露</td></tr>
+        </tbody>
+      </table>
+
+      <h3>行业配置（申万二级 · Q1）</h3>
+      <table>
+        <thead><tr><th>方向</th><th>行业 / 标的</th><th>说明</th></tr></thead>
+        <tbody>
+          <tr><td>重仓前五</td><td>国有大行、保险、证券、煤炭开采、白酒</td><td>国有大行市值逾 3 万亿，绝对压舱石</td></tr>
+          <tr><td>增持前五（数量）</td><td>煤炭开采、通用设备、玻璃玻纤、特钢、医疗器械</td><td>科技相关制造业占增持前列多数席位</td></tr>
+          <tr><td>代表新进（Q1）</td><td>剑桥科技、生益科技、恒逸石化等</td><td>剑桥科技为社保基金组合新进</td></tr>
+          <tr><td>Q2 新增披露（汇金资管）</td><td>海康威视（新进 6470 万股）、隆基绿能（增持 2578 万股）</td><td>汇金资管 Q2 通过被动披露的股东名册可见</td></tr>
+        </tbody>
+      </table>
+
+      <h3>代表个股（国家队重仓 · 最新可核实口径）</h3>
+      <table>
+        <thead><tr><th>标的</th><th>主体</th><th>要点</th></tr></thead>
+        <tbody>
+          <tr><td>中国银行</td><td>汇金 / 证金 / 汇金资管</td><td>汇金持股 1,887.92 亿股（58.59%），Q1 股数未变</td></tr>
+          <tr><td>农业银行</td><td>汇金 / 社保 / 证金 / 汇金资管</td><td>汇金持股约 1,405 亿股，零调仓</td></tr>
+          <tr><td>工商银行</td><td>汇金 / 证金 / 社保</td><td>汇金持股 34.79%（1,240 亿股），证金持股 0.68%，Q1 均未变</td></tr>
+          <tr><td>建设银行</td><td>汇金 / 证金 / 汇金资管</td><td>汇金持股 54.61%（1,429 亿股）；证金持股 0.84%（21.89 亿股），Q1 未变</td></tr>
+          <tr><td>中国平安</td><td>汇金资管</td><td>约 4.7 亿股，第五大股东，Q2 小幅低吸</td></tr>
+          <tr><td>贵州茅台</td><td>汇金资管 / 证金</td><td>约 1,040 万股 / 404 万股；证金 Q1 小幅减持</td></tr>
+          <tr><td>五粮液</td><td>证金</td><td>证金 Q2 减持 1111.97 万股（8716→7604 万股，-12.76%，5 月 11 日数据）</td></tr>
+          <tr><td>伊利股份</td><td>证金 / 汇金</td><td>证金 Q2 加仓 200 万股 → 合计 1.26 亿股（中报预披露）</td></tr>
+          <tr><td>中国石化</td><td>证金 / 汇金资管</td><td>证金近乎清仓（23.25 → 4.26 亿股）；汇金资管稳定持有 3.15 亿股</td></tr>
+          <tr><td>中金公司</td><td>中央汇金</td><td>约 19.36 亿股第一大股东；三合一重组证监会受理中；H1 净利润预增 78%–90%</td></tr>
+          <tr><td>海康威视</td><td>汇金资管</td><td>Q2 新进第八大流通股东，持股 6,470 万股</td></tr>
+          <tr><td>隆基绿能</td><td>汇金资管</td><td>Q2 增持 2,578 万股，仍列第九大流通股东</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="events">
+      <h2>近期已核实事件</h2>
+      <ul class="timeline">
+        <li>
+          <div class="date">2026-08-04 ~ 07</div>
+          <div class="title"><span class="tag tag-ok">已核实</span> A 股 8 月首周全面反弹 · 风格再平衡</div>
+          <div class="desc">上证指数周涨 2.81%（连续三周上涨）、科创综指 +10.96%、创业板 +6.55%，超 4200 只个股上涨。信息技术板块 +11%、电子行业 +12.62% 领涨，同时医药（七连阳）、有色等板块同步走强，金融消费回调。主力资金周净流入 943 亿，结束此前连续多周净流出。</div>
+        </li>
+        <li>
+          <div class="date">2026-08-03 ~ 07</div>
+          <div class="title"><span class="tag tag-ok">已核实</span> 汇金系 ETF 净赎回基本归零</div>
+          <div class="desc">兴业证券跟踪的汇金重点持仓 ETF 在 8 月首周净赎回从 107 亿/日降至 56 亿/日，接近归零。仅中证 1000 方向存在大额赎回（约 32 亿）。全周股票型 ETF 整体净流出 789 亿（获利了结），但汇金系未大规模离场，区别于普通机构短期获利行为。</div>
+        </li>
+        <li>
+          <div class="date">2026-07-19 ~ 08-05</div>
+          <div class="title"><span class="tag tag-ok">已核实</span> 120+ 家上市公司密集回购增持 · 央国企成主力</div>
+          <div class="desc">新华财经统计：7 月 19 日至 8 月 5 日，全市场超 120 家次披露回购或增持预案，预案合计金额上限近 300 亿元（上市公司回购约 180 亿、股东增持约 110 亿）。国有控股公司 20 家（7 央企 + 13 地方国企），京东方、燕东微、重庆港等地方国企跟进。注销式回购占比明显抬升，实施效率远超历史（世运电路公告两天即完成 2.96 亿回购）。</div>
+        </li>
+        <li>
+          <div class="date">2026-08-03</div>
+          <div class="title"><span class="tag tag-ok">已核实</span> 证监会工作会议 · 明确逆周期调节四层制度框架</div>
+          <div class="desc">证监会 2026 年年中工作会议明确中央汇金「类平准基金」定位为第二层制度安排。央行互换便利（首期 5,000 亿）与股票回购增持再贷款（3,000 亿）额度合并为 8,000 亿元工具池，已累计操作 1,050 亿元。中长期资金持有 A 股市值已达 23 万亿元（较年初 +36%）。</div>
+        </li>
+        <li>
+          <div class="date">2026-07-20</div>
+          <div class="title"><span class="tag tag-ok">已核实</span> 中国国新 + 中国诚通 · 600 亿增持计划</div>
+          <div class="desc">两大国资平台宣布超 600 亿元增持央国企及 ETF（国资委体系官方口径）。国新已使用再贷款超 500 亿，诚通已买入近百亿，两主体均表态继续增持。从盘面反推，主要流向央企创新 ETF、央企结构调整 ETF 等「中特估」锚，与传统宽基形成补充。</div>
+        </li>
+        <li>
+          <div class="date">2026-07 下旬</div>
+          <div class="title"><span class="tag tag-ok">已核实</span> 中央汇金 · 7 月通过 ETF 净买入约 1,762 亿（兴业证券口径）</div>
+          <div class="desc">兴业证券研究院测算，汇金重点持仓 ETF 7 月合计净流入 1,762 亿元，占全月股票型 ETF 净流入 37%。申购方向高度集中在双创板块（科创 50、创业板、中证 1000），优先级远高于沪深 300 和中证 500，呈现「稳大盘 + 调结构」双重意图。上半年汇金系累计赎回约 1.3–1.4 万亿元，7 月单月逆转。</div>
+        </li>
+        <li>
+          <div class="date">2026-07-14</div>
+          <div class="title"><span class="tag tag-ok">已核实</span> 中金「三合一」重组获证监会受理</div>
+          <div class="desc">中金公司换股吸收合并东兴证券、信达证券申请文件获证监会正式受理。交易金额约 1,138.54 亿元，换股后汇金直接持股约 24.41%。自上交所 6/15 受理仅一个月即完成跨级跳。</div>
+        </li>
+        <li>
+          <div class="date">2026-06-15</div>
+          <div class="title"><span class="tag tag-ok">已核实</span> 证金 · 中国石化近乎清仓（巨潮公告）</div>
+          <div class="desc">中国石化回购公告披露 6 月 15 日前十大股东：证金仅持有 4.26 亿股（0.35%），较 Q1 末 19.79 亿股再减持 15.53 亿股，较 2025 年末 23.25 亿股累计减持 18.99 亿股，近乎清仓。</div>
+        </li>
+        <li>
+          <div class="date">2026-Q2（中报 / 被动披露）</div>
+          <div class="title"><span class="tag tag-ok">已核实</span> 汇金资管 Q2 新进海康威视、增持隆基绿能</div>
+          <div class="desc">因上市公司回购/重组被动披露的时点快照：汇金资管 Q2 新进海康威视第八大流通股东（6,470 万股）、增持隆基绿能 2,578 万股。证金 Q2 减持五粮液 1,111.97 万股至 7,604 万股（-12.76%），同时加仓伊利股份 200 万股。</div>
+        </li>
+        <li>
+          <div class="date">2026-02-14</div>
+          <div class="title"><span class="tag tag-ok">已核实</span> 证金 · 66.7% 股权划转汇金</div>
+          <div class="desc">证金公司公告称股东拟将 66.7% 股权划转至中央汇金，统一国有金融资本管理（财新）。</div>
+        </li>
+      </ul>
+    </section>
+
+    <section id="signals">
+      <h2>舆情 · 待核实</h2>
+      <div class="callout callout-warn">媒体报道与机构估算，<strong>非公告精确持仓</strong>，请勿与底账混读。</div>
+      <ul class="timeline">
+        <li>
+          <div class="date">2026-08-06</div>
+          <div class="title"><span class="tag tag-warn">机构估算</span> 兴业证券：汇金 7 月 ETF 净买入 1,762 亿元</div>
+          <div class="desc">兴业证券研究院基于汇金重点持仓 ETF 清单测算，7 月汇金系 ETF 净流入 1,762 亿元（占全月股票型 ETF 净流入 37%），申购方向以科创 50、创业板等双创板块为主。注意：此口径与 21 世纪经济报道的「23 只 ETF 961 亿」（仅 7/13–17 单周）统计窗口不同，不可直接对比。高盛同期口径（7/13–16）为 290 亿。</div>
+        </li>
+        <li>
+          <div class="date">2026-08-05</div>
+          <div class="title"><span class="tag tag-warn">市场观察</span> 国新央企科技引领 ETF 连续净申购</div>
+          <div class="desc">南方中证国新央企科技引领 ETF（560170）近 10 日净申购 1.41 亿元，近 20 日净申购 1.68 亿元。但其份额仍较年初缩水约 70%，整体规模较小（约 4.77 亿元），尚难断言国资大规模进场。央企结构调整 ETF（512960）规模更大且与国新/诚通增持方向匹配，但无公开逐日持仓数据可核实。（注：同花顺 / 新浪财经数据）</div>
+        </li>
+        <li>
+          <div class="date">2026-08-04</div>
+          <div class="title"><span class="tag tag-warn">机构统计</span> 社保/QFII 中报持仓初现</div>
+          <div class="desc">证券时报：已披露中报中，8 家上市公司出现社保基金身影，42 家出现 QFII 身影。长鑫科技 IPO（7/19）获 36 只社保基金及养老基金参与战略配售。完整 Q2 持仓需等 8 月底中报披露完毕。</div>
+        </li>
+        <li>
+          <div class="date">2026-08-02</div>
+          <div class="title"><span class="tag tag-warn">机构统计</span> 7 月 ETF 净流入 4,778 亿 · 多主体合力</div>
+          <div class="desc">同花顺统计 7 月 ETF 净流入 4,778 亿元，买盘主力为汇金（1,762 亿，兴业口径）、险资（Q1 末持有 A 股 3.84 万亿）及国资平台。全市场 ETF 份额创 3.44 万亿份历史新高，总规模达 4.91 万亿元。（来源：同花顺 / 21 世纪经济报道）</div>
+        </li>
+        <li>
+          <div class="date">2026-07 下旬</div>
+          <div class="title"><span class="tag tag-warn">机构估算</span> 两融净流出 4,080 亿 · 杠杆压力已释放</div>
+          <div class="desc">7 月融资余额单月净流出约 4,080 亿元，终结连续三个月净流入。7 月下旬单日净流出超 700 亿创历史纪录。截至 8 月初融资余额回落至约 2.7 万亿，接近 5 月初水平。国投证券判断杠杆资金压力已在本周充分释放，剩余需平仓资金量不大。（来源：各券商研报 / 证券时报 / 网易财经）</div>
+        </li>
+        <li>
+          <div class="date">2026-08-03</div>
+          <div class="title"><span class="tag tag-warn">机构统计</span> 中信证券：酒类板块底部企稳，证金减持影响边际消化</div>
+          <div class="desc">年内 23 只核心宽基 ETF 累计净赎回 1.59 万亿元（Q1 7,426 亿 / Q2 3,465 亿），6 月末已结束卖出高峰。7 月酒类指数反弹 13.8%，跑赢沪深 300 约 21.5 个百分点，Q1 证金白酒减持的负面影响边际消化。</div>
+        </li>
+      </ul>
+    </section>
+
+    <section id="blind">
+      <h2>数据盲区与下次更新</h2>
+      <div class="callout callout-info">
+        <ul>
+          <li><strong>2026 二季度完整持仓：</strong>上市公司 2026 年中报预计 8 月底前陆续披露完毕。截至 8 月 8 日仅约 50+ 家公司披露中报，国家队/社保 Q2 完整调仓名单尚未出炉。当前 Q2 信息仅限于 ETF 资金流向、回购公告前十大股东快照和少量中报预披露。</li>
+          <li><strong>ETF 精确仓位：</strong>跌破 20% 单一持有人披露线的宽基 ETF，需等<strong>基金 2026 年中报（约 8 月底）</strong>才能精确还原剩余仓位。7 月汇金的 ETF 买入目前仅能通过份额变动反推（机构估算），非公告确认。</li>
+          <li><strong>低于 5% 的分散交易</strong>通常无强制公告，本页无法完整覆盖。</li>
+          <li><strong>国新 / 诚通增持明细：</strong>目前公告仅披露总金额（国新超 500 亿、诚通近百亿），未披露个股与 ETF 清单。盘面反推存在不确定性。</li>
+          <li><strong>政策底 vs 市场底时间差：</strong>历史复盘（2008/2015/2018）显示政策底确立后，市场常有 2–3 个月震荡筑底。当前处于政策密集出台后的修复期，这一时间差现象仅供背景参考，不构成任何操作依据。</li>
+          <li><strong>下周报计划：</strong>中报仍在密集披露期，预计下周将有大量 Q2 国家队持仓数据可纳入，届时本页将同步更新底账表格与时间线。</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="refs">
+      <h2>参考链接</h2>
+      <ul>
+        <li><a href="https://www.163.com/dy/article/L3PVEC98053469RG.html" target="_blank" rel="noopener">证券时报：科技赛道股大幅反弹，上证指数连续三周上涨（2026-08-08）</a></li>
+        <li><a href="https://www.163.com/dy/article/L3PV341T0512DU6N.html" target="_blank" rel="noopener">新民晚报：8月开局A股终于迎来反弹（2026-08-08）</a></li>
+        <li><a href="https://www.163.com/dy/article/L3QEAD8U0512B07B.html" target="_blank" rel="noopener">每日经济新闻：股指本周大幅反弹，超700亿资金借ETF落袋为安（2026-08-08）</a></li>
+        <li><a href="https://www.toutiao.com/article/7671215421403431464" target="_blank" rel="noopener">证券时报：资金流向周报——沪指本周涨2.81%，943.24亿资金净流入（2026-08-07）</a></li>
+        <li><a href="https://www.stcn.com/article/detail/4058728.html" target="_blank" rel="noopener">证券时报：长线资金最新重仓股曝光，A股市场积极因素持续积累（2026-08-04）</a></li>
+        <li><a href="https://guba.eastmoney.com/news,hk02600,1755124426.html" target="_blank" rel="noopener">新华财经：120+家上市公司回购增持潮，注销式回购占比抬升（2026-08-06）</a></li>
+        <li><a href="https://www.yicai.com/news/103281747.html" target="_blank" rel="noopener">第一财经：国家队率先出手护盘，稳市机制持续护航A股（2026-08-01）</a></li>
+        <li><a href="https://cj.sina.com.cn/article/norm_detail?url=https://finance.sina.com.cn/jjxw/2026-08-03/doc-inikyxuv6183022.shtml" target="_blank" rel="noopener">新浪财经：国资及时入场托底，系列稳市举措护航A股（2026-08-03）</a></li>
+        <li><a href="https://www.toutiao.com/article/7669296674543567396" target="_blank" rel="noopener">今日头条：汇金一季度赎回1.18万亿，7月为何反手买入1762亿（2026-08-02）</a></li>
+        <li><a href="https://www.163.com/dy/article/L3N739TC053469RG.html" target="_blank" rel="noopener">证券时报/网易：推动中长期资金稳步入市，建设常态化稳市机制（2026-08-07）</a></li>
+        <li><a href="https://www.sina.cn/news/detail/5326367119901026.html" target="_blank" rel="noopener">新浪财经：国家队减持1.4万亿全景回顾（2026-08）</a></li>
+        <li><a href="https://news.10jqka.com.cn/20260803/c678631495.shtml" target="_blank" rel="noopener">同花顺：7月ETF净流入4778亿元——规模、结构与市场信号（2026-08-03）</a></li>
+        <li><a href="https://www.toutiao.com/article/7670529838700118543" target="_blank" rel="noopener">今日头条：3200亿疯狂买入，1700亿杠杆溃逃（2026-08-05）</a></li>
+        <li><a href="https://www.toutiao.com/w/1872818287058947" target="_blank" rel="noopener">今日头条：ETF数据复盘——汇金系宽基净赎回基本归零（2026-08-07）</a></li>
+        <li><a href="https://new.qq.com/rain/a/20260803A02NGS00" target="_blank" rel="noopener">中信证券研报：酒类板块底部企稳，证金减持影响边际消化（2026-08-03）</a></li>
+        <li><a href="https://data.eastmoney.com/yzxdr/stock/601398.html" target="_blank" rel="noopener">东方财富：工商银行一致行动人持股明细（2026-Q1）</a></li>
+        <li><a href="https://q.stock.sohu.com/cn/601939/zygd.shtml" target="_blank" rel="noopener">搜狐证券：建设银行主要股东（2026-Q1）</a></li>
+        <li><a href="https://www.toutiao.com/article/7655614802085086000" target="_blank" rel="noopener">今日头条：社保、汇金与证金二季度调仓路径（2026-07）</a></li>
+        <li><a href="https://so.html5.qq.com/page/real/search_news?docid=70000021_9976a47760122852" target="_blank" rel="noopener">经济观察报：股价创七年新低——谁在抛售五粮液（2026-07）</a></li>
+      </ul>
+    </section>
+
+    <footer>
+      Equation · 国家队持仓监控周报 <strong>v4</strong> · 生成于 2026-08-08<br />
+      入口：指标大盘 → <em>A 股市场温度 → 国家队持仓</em>
+    </footer>
+  </div>
+<script>
+(function() {
+  var currentFile = document.location.pathname.split('/').pop();
+  var nav = document.getElementById('version-nav');
+  fetch('national-team-holdings-latest.json', { cache: 'no-store' })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      if (!nav || !data.versions) return;
+      var bust = encodeURIComponent(data.updated || data.latest || '');
+      var html = '<strong>📚 历史版本：</strong>';
+      data.versions.forEach(function(v) {
+        if (v.file === currentFile) {
+          html += '<span style="color:#166534;font-weight:600">' + v.label + ' ← 当前</span> ';
+        } else {
+          html += '<a href="' + v.file + '?v=' + bust + '">' + v.label + '</a> ';
+        }
+      });
+      nav.innerHTML = html;
+    })
+    .catch(function() { nav.style.display = 'none'; });
+})();
+</script>
+</body>
+</html>

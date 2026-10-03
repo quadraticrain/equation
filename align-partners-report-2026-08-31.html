@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>李昌焕（Align Partners）持仓周报 v2（2026-08-31）</title>
+  <style>
+    :root {
+      --bg: #f5f6f8; --card: #fff; --text: #1a1a2e; --muted: #6b7280;
+      --border: #e5e7eb; --primary: #1677ff; --success: #389e0d; --warning: #d48806;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
+      background: var(--bg); color: var(--text); line-height: 1.65; font-size: 15px;
+    }
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 24px 16px 80px; }
+    header {
+      background: linear-gradient(135deg, #0f172a 0%, #3b1f2b 100%);
+      color: #fff; padding: 32px 24px; border-radius: 12px; margin-bottom: 20px;
+    }
+    header h1 { margin: 0 0 8px; font-size: 1.65rem; font-weight: 600; }
+    header p { margin: 0 0 6px; opacity: 0.92; font-size: 0.95rem; }
+    .badge {
+      display: inline-block; padding: 3px 11px; border-radius: 999px; font-size: 12px;
+      background: rgba(255,255,255,0.14); margin-right: 8px; margin-top: 12px;
+    }
+    nav.toc {
+      background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+      padding: 14px 18px; margin-bottom: 20px; font-size: 14px;
+    }
+    nav.toc a { color: var(--primary); text-decoration: none; margin-right: 14px; }
+    nav.toc a:hover { text-decoration: underline; }
+    section {
+      background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+      padding: 20px 24px; margin-bottom: 18px;
+    }
+    h2 { margin: 0 0 14px; font-size: 1.15rem; border-left: 4px solid var(--primary); padding-left: 12px; }
+    h3 { margin: 16px 0 8px; font-size: 1rem; color: #374151; }
+    ul, ol { margin: 8px 0; padding-left: 22px; }
+    li { margin-bottom: 7px; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; margin: 10px 0; }
+    th, td { border: 1px solid var(--border); padding: 9px 11px; text-align: left; vertical-align: top; }
+    th { background: #f9fafb; font-weight: 600; }
+    tr:nth-child(even) td { background: #fafafa; }
+    .tag { display: inline-block; padding: 1px 8px; border-radius: 4px; font-size: 12px; font-weight: 500; }
+    .tag-ok { background: #d9f7be; color: #135200; }
+    .tag-warn { background: #ffe58f; color: #874d00; }
+    .tag-kr { background: #e6f4ff; color: #0958d9; }
+    .tag-new { background: #ffd6e7; color: #9d2152; }
+    .callout { border-radius: 8px; padding: 13px 15px; margin: 12px 0; font-size: 14px; }
+    .callout-info { background: #e6f4ff; border-left: 4px solid var(--primary); }
+    .callout-warn { background: #fffbe6; border-left: 4px solid var(--warning); }
+    .timeline { list-style: none; padding: 0; margin: 0; }
+    .timeline li { padding: 11px 0 11px 18px; border-left: 2px solid var(--border); margin-left: 8px; }
+    .timeline .date { font-size: 12px; color: var(--muted); }
+    .timeline .title { font-weight: 600; margin: 3px 0; }
+    .timeline .desc { font-size: 14px; color: #4b5563; }
+    a { color: var(--primary); }
+    footer { text-align: center; color: var(--muted); font-size: 13px; padding: 22px 0; }
+    .version-nav {
+      background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px;
+      padding: 12px 16px; margin-bottom: 16px; font-size: 14px;
+    }
+    .version-nav strong { color: #166534; }
+    .version-nav a { color: #166534; margin-right: 16px; }
+    @media (max-width: 768px) {
+      .wrap { max-width: 100%; padding: 0 0 72px; }
+      header { border-radius: 0; padding: 20px 10px; margin-bottom: 12px; }
+      nav.toc {
+        border-radius: 0; border-left: none; border-right: none;
+        padding: 12px 10px; margin-bottom: 12px;
+      }
+      section {
+        border-radius: 0; border-left: none; border-right: none;
+        padding: 14px 10px; margin-bottom: 12px;
+      }
+      h2 { padding-left: 10px; }
+      table { font-size: 12px; }
+      th, td { padding: 6px 8px; }
+      th:first-child, td:first-child { padding-left: 6px; }
+      th:last-child, td:last-child { padding-right: 6px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="version-nav" id="version-nav"></div>
+
+    <header>
+      <h1>李昌焕（Align Partners）持仓周报</h1>
+      <p><strong>第 2 期</strong> · 数据截止 2026-08-31 · 每周一 09:01 由 WorkBuddy AI 定时任务重新生成</p>
+      <p style="opacity:0.8;font-size:13px">公开信息整理，不构成投资建议。覆盖：李昌焕 / 이창환 / Align Partners（얼라인파트너스자산운용）持仓与 campaign 动态、韩国 Value Up 政策</p>
+      <span class="badge">v2.0</span>
+      <span class="badge">静态页</span>
+      <span class="badge">韩国行动主义基金</span>
+    </header>
+
+    <nav class="toc">
+      <strong>目录</strong>
+      <a href="#summary">本期结论</a>
+      <a href="#profile">人物与基金</a>
+      <a href="#focus">本期焦点</a>
+      <a href="#holdings">持仓与 Campaign</a>
+      <a href="#valueup">Value Up 动态</a>
+      <a href="#blind">数据盲区</a>
+      <a href="#refs">参考链接</a>
+    </nav>
+
+    <section id="summary">
+      <h2>本期结论</h2>
+      <ol>
+        <li><strong>本周（8/24–8/31）李昌焕 / Align Partners 无新增 DART 5% 大量保有报告、无新 campaign 公开信息</strong>。JB·BNK 合并提案仍处「被两董事会拒绝后的长线拉锯」阶段，公开层面唯一动作仍是 7 月 28 日宣布的「索取两家董事会会议记录」，截至本周末无后续公开披露；下一关键节点仍指向 <strong>2027 年 3 月定期股东大会</strong>（BNK 少数股东持股 58.72%，若发起委托书争夺，中小股东投票意向是决定性变量）。</li>
+        <li><strong>本期 Value Up 最大新闻是两大存储芯片巨头的「史上最大股东回报」：</strong>SK 海力士 8 月 19/20 日宣布 <strong>40 万亿韩元</strong>回购并<strong>全部注销</strong>（8/20–11/19 执行），并承诺三年累计 FCF 的 50%+ 返还股东；三星电子 8 月 21 日批准 2026 年股东回报 <strong>90–110 万亿韩元</strong>（约 650–800 亿美元），约为 2020 年 20.3 万亿韩元旧纪录的 5 倍，另设 15 万亿韩元员工激励回购。二者被市场视为 Value Up 政策自上而下的最强催化。</li>
+        <li><strong>「规模惊人但确定性不足」导致市场反噬：</strong>三星方案约 30 万亿韩元现金分红落在 Q3，但其余回购/注销细节留待 2027 年 1 月董事会决定；投资者原本预期最高 150 万亿韩元并希望立刻锁定注销安排，8 月 24 日（周一）三星电子收跌 <strong>8.7%</strong>、KOSPI 跌超 3%。对比之下，明确承诺「回购即注销」的 SK 海力士仅跌 3.4%，「注销确定性」成为分水岭。</li>
+        <li><strong>Value Up 披露口径仍停留 7 月底，8 月数据待 9 月初发布：</strong>累计 747 家披露企业价值提升计划（占全市场市值 84.6%），7 月 90 家上市公司现金分红 7.4 万亿韩元。Korea Value-Up 指数 7 月底 3,162.13、8 月 23 日 3,277.50；8 月下旬 KOSPI 在 6,700–6,900 点区间震荡、迟迟未站稳 7,000 点。</li>
+        <li><strong>补充两条 Align 官方口径的历史 campaign 线索：</strong>2026 年 2 月，Align 分别向 KOSDAQ 上市企业 <strong>SoluM（248070.KQ）</strong>与 <strong>Dentium（145720.KQ）</strong>递交正式股东提案（治理整改 + 独立董事占比 + 高管薪酬），相关 2026 年度股东大会表决结果<strong>待核实</strong>。详见「持仓与 Campaign」。</li>
+      </ol>
+      <div class="callout callout-info">
+        <strong>读法提示：</strong>Align 的打法是「小比例持股 + 高强度治理施压」——不追求控制权，而是通过公开信、新闻发布、股东大会提案迫使董事会回应结构性问题。本周 Align 处于静默期，判断动向的关键仍是：①是否正式行权（提案权 / 委任状征求）；②SoluM、Dentium 2026 年股东会结果；③2027 年 3 月 JB/BNK 定期股东大会；④DART 5% 大量保有报告的新增披露。
+      </div>
+    </section>
+
+    <section id="profile">
+      <h2>人物与基金简介</h2>
+      <table>
+        <tr><th style="width:130px">项目</th><th>内容</th></tr>
+        <tr><td>李昌焕（이창환）</td><td>Align Partners 创始人兼 CEO。出身贫寒（韩国媒体称「土勺」/흙수저，靠救济金长大），以小比例持股发起股东维权著称</td></tr>
+        <tr><td>Align Partners</td><td>2021 年创立，初始资金约 1,600 万美元，五年发展至 AUM 约 1.4 万亿韩元（约 10 亿美元）。最大股东为 Align Holdings（持股 100%），后者由李昌焕 100% 持有</td></tr>
+        <tr><td>代表战役</td><td>仅持 SM 娱乐约 1% 股份即质疑财务乱象、推动治理改革；后续在保险类、地方金融类、医疗器械/电子元器件等低 PB 标的上连续获胜，其治理理念影响了韩国 2024 年「Value Up」计划</td></tr>
+        <tr><td>2025 年分红</td><td>净利润约 239 亿韩元中分红 151 亿韩元（分红率 63%），经 Align Holdings 全部归李昌焕个人（亚洲日报，2026-04-30）</td></tr>
+        <tr><td>风格</td><td>专注低 PB 价值标的，不跟风 AI 热点；公开信 + 新闻发布会 + 股东大会「三板斧」</td></tr>
+      </table>
+    </section>
+
+    <section id="focus">
+      <h2>本期焦点：三星 + SK 海力士「史上最大股东回报」与 Value Up 的自我强化</h2>
+      <p style="margin-top:0">本周 Align 无新动作，市场焦点转向韩国两大存储芯片巨头在 Value Up 框架下掀起的股东回报竞赛，这是政策自上而下传导至头部公司资本配置的最强信号。</p>
+      <ul class="timeline">
+        <li>
+          <div class="date">2026-08-19 / 08-20</div>
+          <div class="title">SK 海力士宣布 40 万亿韩元回购并注销全部回购股份</div>
+          <div class="desc">8 月 20 日–11 月 19 日场内购入 2,407 万股普通股并<strong>全部注销</strong>，同步推出长期政策：未来三年累计自由现金流（FCF）的 50% 以上返还股东。明确「回购即注销」的确定性使其在后续市场回调中表现更抗跌。</div>
+        </li>
+        <li>
+          <div class="date">2026-08-21</div>
+          <div class="title">三星电子批准 2026 年 90–110 万亿韩元股东回报计划</div>
+          <div class="desc">约为 2020 年 20.3 万亿韩元旧纪录的 5 倍，为韩国公司史上最大规模：其中约 30 万亿韩元现金分红落在 Q3（10 月底董事会定具体金额），其余回购/注销待 2027 年 1 月董事会根据全年业绩决定；另设 15 万亿韩元员工激励回购（8/24–11/21）。符合「2024–2026 累计 FCF 50% 返还」的既有承诺。</div>
+        </li>
+        <li>
+          <div class="date">2026-08-24（周一）</div>
+          <div class="title">市场「规模认可、确定性存疑」：三星收跌 8.7%，KOSPI 跌超 3%</div>
+          <div class="desc">投资者原预期最高 150 万亿韩元，且希望一次性锁定回购+注销安排；三星将大部分细节推迟到明年 1 月，被解读为「给了承诺、没给细节」。同日 SK 海力士仅跌约 3.4%，反映「回购即注销」的确定性溢价。</div>
+        </li>
+        <li>
+          <div class="date">2026-08-20 → 08-27</div>
+          <div class="title">机构连续 6 日万亿韩元级净买入「护盘」</div>
+          <div class="desc">韩国交易所数据显示，法人主体（含两大龙头回购）在 8/20–8/27 连续 6 个交易日保持万亿韩元规模净买入，累计净买入 8.57 万亿韩元（其中 SK 海力士 6.52 万亿、三星电子 1.96 万亿）；同期外资净卖出 5.91 万亿、个人净卖出 3.22 万亿——回购托底与外资获利了结形成「拉锯」，KOSPI 未能站稳 7,000 点。</div>
+        </li>
+        <li>
+          <div class="date">对 Align 的意义</div>
+          <div class="title">头部公司示范效应强化「价值提升」叙事，或加速中小低 PB 标的披露</div>
+          <div class="desc">三星/海力士的行动将「提高股东回报」从政策倡导变为市场惯例，客观上为 Align 主打的「低 PB 价值修复」逻辑背书；韩国交易所 9 月六地巡回宣讲也将顺势推动更多高股息、低 PB 企业披露计划。</div>
+        </li>
+      </ul>
+      <div class="callout callout-warn">
+        <strong>风险提示：</strong>两大巨头回报方案属公司自身决策，与 Align 持仓无直接关联；本报告仅将其作为 Value Up 政策动态呈现。市场对三星「110 万亿 vs 预期 150 万亿」的失望，提示「数字越大未必越被买账」，回购注销的确定性与节奏才是估值修复的关键。
+      </div>
+    </section>
+
+    <section id="holdings">
+      <h2>持仓与 Campaign 一览</h2>
+      <h3>已知主要持仓与 campaign（截至 2026-08-31，环比上期）</h3>
+      <table>
+        <tr><th>标的</th><th>持股</th><th>状态</th><th>环比变动</th><th>备注</th></tr>
+        <tr><td>JB 金融集团（1750.KS）</td><td><strong>14.83%</strong></td><td><span class="tag tag-ok">重仓持有</span></td><td>持平</td><td>合并提案 campaign 核心持仓；光州/全罗南道地方金融控股，第二大股东</td></tr>
+        <tr><td>BNK 金融集团（138930.KS）</td><td>&gt;1%</td><td><span class="tag tag-kr">持有</span></td><td>持平</td><td>合并提案另一当事方；釜山/庆南地方金融控股；少数股东合计 58.72%</td></tr>
+        <tr><td>DB Insurance（005830.KS）</td><td>—</td><td><span class="tag tag-ok">已获监事席位</span></td><td>持平</td><td>股东大会选出股东提名监事，韩国首例（市值超 10 万亿韩元公司）</td></tr>
+        <tr><td>Gabia（079900.KQ）</td><td>—</td><td><span class="tag tag-ok">已获 2 董事席位</span></td><td>持平</td><td>KOSDAQ 上市，1 名非常勤董事 + 1 名社外董事入选</td></tr>
+        <tr><td>Stic Investments（305090.KQ）</td><td>曾增至 7.6%</td><td><span class="tag tag-warn">campaign 已收官</span></td><td>持平</td><td>创始人向 Miri Capital 转让股份，新大股东接受大部分 value-up 提案</td></tr>
+        <tr><td>SoluM（248070.KQ）</td><td>待核实</td><td><span class="tag tag-new">新增（待核实）</span></td><td>新增</td><td>2026-02 递交正式股东提案：治理整改、ESL 软件升级、精简业务组合、CEO 薪酬改革；2026 年 AGM 表决结果待核实（Align 官方 Business Wire 口径）</td></tr>
+        <tr><td>Dentium（145720.KQ）</td><td>待核实</td><td><span class="tag tag-new">新增（待核实）</span></td><td>新增</td><td>2026-02 递交正式股东提案：提高独立董事占比、独立董事长、稽核委员会全独立、薪酬上限；2026 年 AGM 表决结果待核实（Align 官方 Business Wire 口径）</td></tr>
+        <tr><td>SM 娱乐（041510.KS）</td><td>曾持约 1%</td><td><span class="tag tag-warn">历史案例</span></td><td>持平</td><td>成名作：质疑财务乱象、硬刚财阀、推动治理改革</td></tr>
+      </table>
+      <h3>近一年 7 次公开 campaign 成果</h3>
+      <ul>
+        <li><strong>DB Insurance</strong>：10 万亿韩元市值以上上市公司中，股东提案董事候选人首次当选（监事/审计委员）。</li>
+        <li><strong>Gabia</strong>：董事会扩容，Align 提名的非常勤董事与社外董事双双入选。</li>
+        <li><strong>Stic Investments</strong>：增持至 7.6% 后提出 6 项要求（接班计划、库存股注销、董事会专业化等），最终与新大股东 Miri Capital 和解收官。</li>
+        <li><strong>JB + BNK</strong>：进行中的地方金融合并提案（见上期焦点），两董事会 7/28 已拒绝，进入长线拉锯。</li>
+        <li><strong>SoluM / Dentium（新增线索）</strong>：2026 年 2 月递交的正式股东提案，治理整改方向一致，AGM 结果待核实。</li>
+        <li>李昌焕自评：「过去一年 7 次公开 campaign 均有产出，能力上了一个台阶」；中期目标做大 AUM，成为更大市值低估值公司的 major shareholder。</li>
+      </ul>
+    </section>
+
+    <section id="valueup">
+      <h2>Value Up 政策动态</h2>
+      <h3>头部公司股东回报（本周最大看点）</h3>
+      <ul>
+        <li><strong>SK 海力士</strong>：40 万亿韩元回购并全部注销（8/20–11/19），三年累计 FCF 50%+ 返还。</li>
+        <li><strong>三星电子</strong>：2026 年 90–110 万亿韩元股东回报（约 5 倍旧纪录）+ 15 万亿韩元员工激励回购；Q3 派息约 30 万亿韩元，其余细节 2027 年 1 月定。</li>
+        <li>市场反馈分化：明确「回购即注销」的 SK 海力士抗跌，三星因细节滞后而 8/24 收跌 8.7%，显示「注销确定性」正成为估值修复的定价因子。</li>
+      </ul>
+      <h3>披露进展（韩国交易所，截至 2026 年 7 月底；8 月数据待发布）</h3>
+      <ul>
+        <li>累计 <strong>747 家</strong>上市公司披露企业价值提升计划（KOSPI 348 家 + KOSDAQ 399 家），占全市场总市值 <strong>84.6%</strong>（KOSPI 口径 88.4%、KOSDAQ 口径 32.6%），披露公司总市值约 4,945 万亿韩元。</li>
+        <li>7 月股东回报创单月新高：90 家上市公司现金分红合计约 <strong>7.4 万亿韩元</strong>（三星电子 2.5 万亿、现代汽车 7,000 亿韩元领衔）；四大金融控股合计约 1.8 万亿韩元回购注销。</li>
+        <li>高股息企业（可享股息分离课税）深度参与：截至 7 月底 632 家高股息企业提交 Value-up 计划，其中 542 家为本次新增披露。</li>
+      </ul>
+      <h3>指数与资金面</h3>
+      <ul>
+        <li>Korea Value-Up 指数 7 月底收于 <strong>3,162.13</strong>，年内 <strong>+75.9%</strong>，跑赢 KOSPI（+56.5%）与 KOSPI200（+72.7%）；8 月 23 日收于 <strong>3,277.50</strong>（KRX 官网）。</li>
+        <li>13 只 Value-up ETF 净资产合计 3.4 万亿韩元，约为发行时的 6 倍。</li>
+        <li>8 月下旬 KOSPI 受两大龙头回购托底在 6,700–6,900 区间震荡，8 月 28 日收 6,788.79（-1.79%），未站稳 7,000 点。</li>
+        <li>KRX 计划 2026 年 9 月在全国 6 地巡回召开企业说明会，面向高股息、低 PBR 及特别上市企业辅导 Value-up 披露。</li>
+      </ul>
+      <h3>制度演进</h3>
+      <ul>
+        <li><strong>商法一年内三次修订</strong>：董事信义义务扩展至全体股东；资产 2 万亿韩元以上大型上市公司引入累计投票制等。</li>
+        <li><strong>2026 年 1 月 1 日起生效的税法修订</strong>：高股息企业须在年度股东大会通过分红决议次日前，通过 KRX KIND 系统披露 Value-up 计划，方可继续享受股息分离课税优惠——从「自愿」走向「硬法」约束。</li>
+        <li>摩根大通预计韩国银行业总股东回报率从 2023 年的 36% 升至 2026 年的 50% 以上。</li>
+      </ul>
+    </section>
+
+    <section id="blind">
+      <h2>数据盲区说明</h2>
+      <ul>
+        <li>DART 5% 大量保有报告以韩国金融监督院系统为准，本报告依赖公开媒体转述，未经 DART 原文逐条核对；本周未检索到 Align 新增大量保有报告，但不能排除「有披露但未被英文/中文媒体覆盖」的情况。</li>
+        <li>SoluM（248070.KQ）与 Dentium（145720.KQ）的持股比例、2026 年股东会表决结果均未核实，来源为 Align 官方 Business Wire 新闻稿（2026-02），可能滞后于最新进展，已标「待核实」。</li>
+        <li>Align 各基金（契约型）对单一标的的精确持股以各基金公示为准，媒体口径（14.83%、&gt;1%、7.6%）为合计或时点数据。</li>
+        <li>合并提案被拒后 Align 是否已正式行权（提案权、委任状征求）、是否已取得两家董事会会议记录，均无公开披露。</li>
+        <li>Value Up 8 月月度披露数据预计 9 月初由韩国交易所发布，本期仍以 7 月底口径为准。</li>
+      </ul>
+    </section>
+
+    <section id="refs">
+      <h2>参考链接</h2>
+      <ol>
+        <li><a href="https://www.asiae.co.kr/en/article/2026082010191159282" target="_blank" rel="noreferrer">亚洲经济 | SK 海力士宣布 40 万亿韩元股东回报，KOSPI 大涨 5%（2026-08-20）</a></li>
+        <li><a href="https://www.fool.com/investing/2026/08/24/samsung-just-authorized-its-largest-shareholder-return-ever-every-major-memory-stock-fell-monday/" target="_blank" rel="noreferrer">Motley Fool | 三星批准史上最大股东回报（90–110 万亿韩元），存储股周一下挫（2026-08-24）</a></li>
+        <li><a href="https://en.oninvest.com/article/samsung-will-return-up-to-80-billion-to-shareholders-a-record-for-the-company-and-the-entire-south-korean-market" target="_blank" rel="noreferrer">Oninvest | 三星将向股东返还最高 800 亿美元，创韩国纪录（2026-08）</a></li>
+        <li><a href="https://www.businesskorea.co.kr/news/articleView.html?idxno=274314" target="_blank" rel="noreferrer">BusinessKorea | 85% 上市公司加入 Value-Up：7 月分红与注销达 8 万亿韩元（2026-08-06）</a></li>
+        <li><a href="https://m.ajupress.com/view/20260806141351019" target="_blank" rel="noreferrer">AJU Press | 韩国上市公司 7 月现金分红超 74 亿美元（2026-08-06）</a></li>
+        <li><a href="https://www.kimchang.com/en/insights/detail.kc?idx=34325" target="_blank" rel="noreferrer">Kim &amp; Chang | 高股息企业须披露 Value-up 计划方可享股息分离课税（2026）</a></li>
+        <li><a href="https://en.sedaily.com/news/2026/08/12/align-partners-ran-7-activist-campaigns-in-a-year-now-eyes" target="_blank" rel="noreferrer">首尔经济日报 CEO 专访 | 一年 7 次 activist campaign，瞄准更大基金（2026-08-12）</a></li>
+        <li><a href="https://secure.businesswire.com/news/home/20260212697382/zh-HK" target="_blank" rel="noreferrer">Business Wire（Align 官方）| 向 SoluM 递交正式股东提案（2026-02-12）</a></li>
+        <li><a href="https://secure.businesswire.com/news/home/20260212082113/zh-HK" target="_blank" rel="noreferrer">Business Wire（Align 官方）| 向 Dentium 递交正式股东提案（2026-02-12）</a></li>
+        <li><a href="https://www.koreatimes.co.kr/business/banking-finance/20260724/align-partners-bnk-jb-merger-proposal-draws-fierce-regional-opposition" target="_blank" rel="noreferrer">Korea Times | Align 的 BNK–JB 合并提案遭遇地方强烈反弹（2026-07-24）</a></li>
+        <li><a href="https://engkind.krx.co.kr/valueup/idx.do?method=valueupIdxMain" target="_blank" rel="noreferrer">KRX 官网 | Korea Value-up Index（2026-08-23 收盘 3,277.50）</a></li>
+        <li><a href="https://www.asiae.co.kr/en/article/2026071410382071139" target="_blank" rel="noreferrer">亚洲经济 | Align Partners 提议 JB·BNK 金融集团合并（2026-07-14）</a></li>
+        <li><a href="https://en.nocutnews.co.kr/news/6554667" target="_blank" rel="noreferrer">No Cut News | BNK 董事会拒绝 Align 提案：0.69 股换股算术与地方反弹（2026-07-28）</a></li>
+      </ol>
+    </section>
+
+    <footer>
+      Equation · 李昌焕（Align Partners）持仓周报 <strong>v2</strong> · 生成于 2026-08-31<br />
+      入口：观察中心 → <em>李昌焕持仓周报</em>
+    </footer>
+  </div>
+<script>
+(function() {
+  var currentFile = document.location.pathname.split('/').pop();
+  var nav = document.getElementById('version-nav');
+  fetch('align-partners-report-latest.json', { cache: 'no-store' })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      if (!nav || !data.versions) return;
+      var bust = encodeURIComponent(data.updated || data.latest || '');
+      var html = '<strong>📚 历史版本：</strong>';
+      data.versions.forEach(function(v) {
+        if (v.file === currentFile) {
+          html += '<span style="color:#166534;font-weight:600">' + v.label + ' ← 当前</span> ';
+        } else {
+          html += '<a href="' + v.file + '?v=' + bust + '">' + v.label + '</a> ';
+        }
+      });
+      nav.innerHTML = html;
+    })
+    .catch(function() { nav.style.display = 'none'; });
+})();
+</script>
+</body>
+</html>

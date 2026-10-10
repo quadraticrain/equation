@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>国家队持仓监控周报 v10（2026-10-10）</title>
+  <style>
+    :root {
+      --bg: #f5f6f8; --card: #fff; --text: #1a1a2e; --muted: #6b7280;
+      --border: #e5e7eb; --primary: #1677ff; --success: #389e0d; --warning: #d48806;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
+      background: var(--bg); color: var(--text); line-height: 1.65; font-size: 15px;
+    }
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 24px 16px 80px; }
+    header {
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%);
+      color: #fff; padding: 32px 24px; border-radius: 12px; margin-bottom: 20px;
+    }
+    header h1 { margin: 0 0 8px; font-size: 1.65rem; font-weight: 600; }
+    header p { margin: 0 0 6px; opacity: 0.92; font-size: 0.95rem; }
+    .badge {
+      display: inline-block; padding: 3px 11px; border-radius: 999px; font-size: 12px;
+      background: rgba(255,255,255,0.14); margin-right: 8px; margin-top: 12px;
+    }
+    nav.toc {
+      background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+      padding: 14px 18px; margin-bottom: 20px; font-size: 14px;
+    }
+    nav.toc a { color: var(--primary); text-decoration: none; margin-right: 14px; }
+    nav.toc a:hover { text-decoration: underline; }
+    section {
+      background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+      padding: 20px 24px; margin-bottom: 18px;
+    }
+    h2 { margin: 0 0 14px; font-size: 1.15rem; border-left: 4px solid var(--primary); padding-left: 12px; }
+    h3 { margin: 16px 0 8px; font-size: 1rem; color: #374151; }
+    ul, ol { margin: 8px 0; padding-left: 22px; }
+    li { margin-bottom: 7px; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; margin: 10px 0; }
+    th, td { border: 1px solid var(--border); padding: 9px 11px; text-align: left; vertical-align: top; }
+    th { background: #f9fafb; font-weight: 600; }
+    tr:nth-child(even) td { background: #fafafa; }
+    .tag { display: inline-block; padding: 1px 8px; border-radius: 4px; font-size: 12px; font-weight: 500; }
+    .tag-ok { background: #d9f7be; color: #135200; }
+    .tag-warn { background: #ffe58f; color: #874d00; }
+    .callout { border-radius: 8px; padding: 13px 15px; margin: 12px 0; font-size: 14px; }
+    .callout-info { background: #e6f4ff; border-left: 4px solid var(--primary); }
+    .callout-warn { background: #fffbe6; border-left: 4px solid var(--warning); }
+    .timeline { list-style: none; padding: 0; margin: 0; }
+    .timeline li { padding: 11px 0 11px 18px; border-left: 2px solid var(--border); margin-left: 8px; }
+    .timeline .date { font-size: 12px; color: var(--muted); }
+    .timeline .title { font-weight: 600; margin: 3px 0; }
+    .timeline .desc { font-size: 14px; color: #4b5563; }
+    a { color: var(--primary); }
+    footer { text-align: center; color: var(--muted); font-size: 13px; padding: 22px 0; }
+    .version-nav {
+      background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px;
+      padding: 12px 16px; margin-bottom: 16px; font-size: 14px;
+    }
+    .version-nav strong { color: #166534; }
+    .version-nav a { color: #166534; margin-right: 16px; }
+    .num-up { color: #cf1322; font-weight: 600; }
+    .num-down { color: #389e0d; font-weight: 600; }
+    @media (max-width: 768px) {
+      .wrap { max-width: 100%; padding: 0 0 72px; }
+      header { border-radius: 0; padding: 20px 10px; margin-bottom: 12px; }
+      nav.toc {
+        border-radius: 0; border-left: none; border-right: none;
+        padding: 12px 10px; margin-bottom: 12px;
+      }
+      section {
+        border-radius: 0; border-left: none; border-right: none;
+        padding: 14px 10px; margin-bottom: 12px;
+      }
+      h2 { padding-left: 10px; }
+      table { font-size: 12px; }
+      th, td { padding: 6px 8px; }
+      th:first-child, td:first-child { padding-left: 6px; }
+      th:last-child, td:last-child { padding-right: 6px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="version-nav" id="version-nav"></div>
+
+    <header>
+      <h1>国家队持仓监控周报</h1>
+      <p><strong>第十版</strong> · 数据截止 2026-10-10 · 每周由 Cursor 云端 Agent 重新生成</p>
+      <p style="opacity:0.8;font-size:13px">公开信息整理，不构成投资建议。覆盖：中央汇金、汇金资管、证金、中国国新、中国诚通</p>
+      <span class="badge">v10.0</span>
+      <span class="badge">静态页</span>
+      <span class="badge">节后急跌 · 宽基 ETF 逆势承接</span>
+    </header>
+
+    <nav class="toc">
+      <strong>目录</strong>
+      <a href="#summary">本周结论</a>
+      <a href="#entities">监控主体</a>
+      <a href="#etf">ETF通道快照</a>
+      <a href="#baseline">底账快照</a>
+      <a href="#events">已核实事件</a>
+      <a href="#signals">舆情待核实</a>
+      <a href="#blind">数据盲区</a>
+      <a href="#refs">参考链接</a>
+    </nav>
+
+    <section id="summary">
+      <h2>本周结论（可执行摘要）</h2>
+      <ol>
+        <li><strong>节后首日急跌、次日「深 V」，宽基 ETF 在关键点位再度放量承接，托底特征延续。</strong>10 月 8 日（节后首个交易日）三大指数集体收跌，上证失守 3800 点、科创 50 单日 −4.82%；10 月 9 日早盘续跌，创业板指一度跌破 3000 点（去年 11 月以来首次）、沪指最低下探 3754.14 点，午后核心宽基 ETF 集体放量、指数翻红收涨。这与 7 月「急跌—ETF 承接—企稳」的操作路径一脉相承，属文档 4.1「急跌状态下的宽基 ETF 集中申购」特征。</li>
+        <li><strong>一级市场申赎口径明确「越跌越买」，数据比盘口更硬。</strong>据统计，9 月 28 日至 10 月 8 日的 4 个交易日，股票型 ETF 合计净流入 532.78 亿元；仅 10 月 8 日单日即净流入 178.49 亿元（科创 50ETF 华夏 +36.07 亿元、创业板 ETF 易方达 +21.72 亿元）。第三方追踪站口径：10 月 9 日 16 只国家队重仓 ETF 当日估算净流入 +130.4 亿元、近 5 日 +371.7 亿元，其中科创 50ETF 华夏单日 +36.7 亿元居首。</li>
+        <li><strong>政策端本周落地两项制度动作，属「稳市工具箱」扩容而非直接入市。</strong>央行 10 月 8 日开展 1.2 万亿元 3 个月期买断式逆回购（当月同期限到期 1 万亿元，转为加量续作、净投放 2000 亿元）并伴 6060 亿元隔夜逆回购，呵护节后流动性；证监会 10 月 9 日就修订后的《公开募集证券投资基金运作管理办法（征求意见稿）》征求意见，降低权益类基金成立门槛、优化被动指数基金举牌/减持/短线交易豁免、强化基金逆周期布局管理。二者均属平准 2.0「制度框架」层面，本身不是国家队买入动作。</li>
+        <li><strong>国新 / 诚通本周无新增 A 股增持公告，可核实个股动作仍停留在 9 月。</strong>截至本报告日，两平台最新可核实的个股增持仍为 9 月 24 日诚通金控增持天地科技触及 1% 刻度（持股升至 6%，延续 9/10 披露的 3–6 亿元增持计划）；本周未见新的增持/权益变动公告。国新「超 500 亿元」、诚通「近百亿元」仍为 7 月披露的累计口径。</li>
+        <li><strong>底账维持 2026 中报 + 2025 年报静态口径，三季报要到 10 月下旬才有增量。</strong>个股十大股东最新披露仍为半年报（8 月底收官），ETF 精确仓位为 2025 年年报（2026 年 4 月披露）的最后可验证官方口径；A 股三季报法定披露期为 10 月 1–31 日、预约高峰集中在 10 月 27–31 日，证金/汇金资管三季报调仓信号须等月末才能核对。</li>
+      </ol>
+      <div class="callout callout-info">
+        <strong>读法提示：</strong>本期关键词是「承接」与「制度化」。与上一期（v9，9/30）「档位切换回宽基托底」相比，方向未变，但触发场景由「节前缩量磨底」转为「节后急跌 + 外部利率压制」。需注意两个口径的区别：<strong>一</strong>是 10 月 8 日二级市场盘口（超大单+大单）口径显示 11 只主流宽基 ETF 主力资金合计净流出约 45.9 亿元、流出集中在成长方向，说明当日的承接更多发生在 10 月 9 日午后；<strong>二</strong>是 ETF 一级市场申赎（份额口径）才是观察国家队是否实际申购的更直接指标，本期数据（9/28–10/8 净流入 532.78 亿元）明显偏多。政策底 vs 市场底的历史时间差现象（2008/2015/2018 常见 2–3 个月震荡筑底）仍值得作为背景理解信号滞后，不构成操作依据。
+      </div>
+    </section>
+
+    <section id="entities">
+      <h2>监控主体说明</h2>
+      <div class="callout callout-info">
+        <strong>平准机制背景：</strong>国家队非单一账户，而是分层协同的逆周期调节体系。<strong>平准 1.0</strong>（2015–2025）：汇金直接买个股/ETF 托市，资金来源临时协调；<strong>平准 2.0</strong>（2026 起）：央行股票回购增持专项再贷款 → 商业银行 → 国新/诚通等国资平台，定向输血而非大水漫灌，低估值央企 + 错杀硬科技双主线。<br />
+        <strong>分工差异：</strong>汇金是逆周期调节的「温度计」（高位减持降温、低位申购托底）；国新/诚通是产业资本的「精准注射器」（官宣增持、定向买入央企核心资产与硬科技赛道）。
+      </div>
+      <table>
+        <thead>
+          <tr><th>主体</th><th>全称 / 角色</th><th>本期要点（截至 2026-10-10）</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>中央汇金</strong></td>
+            <td>中央汇金投资有限责任公司<br />国有金融资本持股平台 / 类平准基金</td>
+            <td>节后急跌中宽基 ETF 通道再现承接特征：10/8 一级市场股票 ETF 净流入 178.49 亿元、10/9 监控组合当日估算净流入 +130.4 亿元（科创 50 方向为主）。2025 年报口径持有 21 只 ETF、约 1974 亿份、7973 亿元，平均占比 36.2%</td>
+          </tr>
+          <tr>
+            <td><strong>汇金资管</strong></td>
+            <td>中央汇金资产管理有限责任公司<br />汇金旗下资管主体（2015 救市筹码承接方）</td>
+            <td>个股底仓维持静态（最新为 2026 中报）：中国银行/工商银行/建设银行/中国建筑/中国中铁等股数多未变；2025 年报口径持有 15 只 ETF、约 1785 亿份、7290 亿元，平均占比 38.0%。本周无新增调仓披露</td>
+          </tr>
+          <tr>
+            <td><strong>证金</strong></td>
+            <td>中国证券金融股份有限公司<br />66.7% 股权拟划转汇金</td>
+            <td>静态持有为主，无新增公开独立动作；主要体现在国有大行权重股的十大股东名单中（中行、农行、工行、建行等）。三季报披露高峰在 10 月下旬，届时可核对 22 家前十名单是否有回补</td>
+          </tr>
+          <tr>
+            <td><strong>中国国新</strong></td>
+            <td>中国国新控股有限责任公司<br />国务院国资委国有资本运营平台（平准 2.0）</td>
+            <td>最新可核实口径仍为「国新投资累计使用股票回购增持专项再贷款及配套资金超 500 亿元，并表态继续增持央企股票」；2025 年报口径持有 31 只 ETF、约 213 亿份、平均占比 19.6%。本周无新增独立增持公告</td>
+          </tr>
+          <tr>
+            <td><strong>中国诚通</strong></td>
+            <td>中国诚通控股集团有限公司<br />国务院国资委国有资本运营平台（平准 2.0）</td>
+            <td>拟用 1000 亿再贷款增持股票（新华社口径）；7 月披露主体累计买入境内股票近百亿元；9/24 诚通金控增持天地科技触及 1% 刻度、持股升至 6%（巨潮公告原文）；2025 年报口径持有 21 只 ETF、约 213 亿份。本周无新增 A 股增持公告</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="callout callout-info" style="margin-top:12px">
+        <strong>协同动向：</strong>社保基金为长线协同资金（非平准执行主体，仅作背景）。二季度（中报）社保重仓 254 只 A 股、市值约 964.84 亿元，新进 85 只、加仓 73 只、减持 61 只；农业银行底仓约 1427.7 亿元未动。证监会口径：今年以来社保、年金、保险等中长期资金合计净买入 A 股超 6000 亿元；截至 2025 年末各类中长期资金合计持有 A 股流通市值约 23 万亿元。
+      </div>
+    </section>
+
+    <section id="etf">
+      <h2>ETF 通道快照</h2>
+
+      <h3>节后两个交易日市场行情（10/8–10/9）</h3>
+      <table>
+        <thead><tr><th>指数</th><th>10/8 收盘</th><th>10/8 涨跌</th><th>10/9 收盘</th><th>10/9 涨跌</th><th>本周累计</th></tr></thead>
+        <tbody>
+          <tr><td>上证指数</td><td>3811.90</td><td class="num-down">−0.79%</td><td>3813.79</td><td class="num-up">+0.05%</td><td class="num-down">−0.74%</td></tr>
+          <tr><td>深证成指</td><td>12620.90</td><td class="num-down">−2.07%</td><td>12641.86</td><td class="num-up">+0.17%</td><td class="num-down">−1.91%</td></tr>
+          <tr><td>创业板指</td><td>3036.66</td><td class="num-down">−3.15%</td><td>3043.33</td><td class="num-up">+0.22%</td><td class="num-down">−2.93%</td></tr>
+          <tr><td>科创 50</td><td>1456.32</td><td class="num-down">−4.82%</td><td>1457.27</td><td class="num-up">+0.07%</td><td>—（科创综指 −4.88%）</td></tr>
+          <tr><td>沪深 300</td><td>4310.28</td><td class="num-down">−1.09%</td><td>—</td><td>—</td><td>—</td></tr>
+          <tr><td>上证 50</td><td>2805.12</td><td class="num-down">−0.64%</td><td>—</td><td>—</td><td>—</td></tr>
+          <tr><td>中证 500 / 中证 1000</td><td>7248.43 / 7138.58</td><td>−2.51% / −2.20%</td><td>—</td><td>—</td><td>—</td></tr>
+        </tbody>
+      </table>
+      <div class="callout callout-info">
+        <strong>盘面特征：</strong>10/8 两市成交约 1.68 万亿元，银行、煤炭、核电、航运港口、油气、电力涨幅居前，半导体、CPO/光通信、稀土、机器人跌幅居前，工商银行/中国银行/杭州银行盘中创历史新高；10/9 早盘续跌（沪指最低 3754.14，创业板指最低 2932.80、跌破 3000），午后宽基 ETF 放量、指数翻红，全市场成交 1.92 万亿元（较前一日 +2224 亿元）、超 3200 只个股上涨，传媒/计算机领涨。本周申万一级行业中，煤炭（+2.74%）、传媒（+2.70%）、石油石化（+2.25%）领涨。假期外围：纳指 +2.75%、标普 +2.19%，日经 225 +4.92% 突破 7 万点，港股恒生 −1.96%。
+      </div>
+
+      <h3>ETF 资金流向（一级市场申赎口径）</h3>
+      <table>
+        <thead><tr><th>时间窗口</th><th>动向</th><th>关键数据（净流入/流出）</th></tr></thead>
+        <tbody>
+          <tr><td>2026-10-08（节后首日）</td><td><strong>股票型 ETF 逆势净流入</strong></td><td>单日净流入 178.49 亿元；科创 50ETF 华夏 +36.07 亿元、创业板 ETF 易方达 +21.72 亿元</td></tr>
+          <tr><td>2026-09-28 至 10-08（4 个交易日）</td><td><strong>持续借道 ETF 入市</strong></td><td>股票型 ETF 合计净流入 532.78 亿元；其中科创 50ETF 华夏 +88.42 亿元、创业板 ETF 易方达 +42.43 亿元，科创 50ETF 易方达 / 中证 1000ETF 南方均超 22 亿元</td></tr>
+          <tr><td>2026-09 单月</td><td>由净流出转为净流入</td><td>股票型 ETF 净流入 451.8 亿元，份额单月增加 319.1 亿份（8 月为净流出 1199.1 亿元）</td></tr>
+          <tr><td>2026-10-08 二级市场盘口（对照）</td><td>主力资金口径净流出</td><td>11 只主流宽基 ETF 主力资金（超大单+大单）合计净流出约 45.9 亿元：科创 50ETF −24.82 亿、创业板 ETF −8.06 亿；上证 50ETF、华夏沪深300ETF 流出温和</td></tr>
+        </tbody>
+      </table>
+
+      <h3>国家队重仓宽基 ETF 估算净流入（第三方追踪站 · 更新至 10/9）</h3>
+      <table>
+        <thead><tr><th>口径</th><th>当日（10/9）</th><th>近 5 日</th><th>近 20 日</th><th>监控组合规模</th></tr></thead>
+        <tbody>
+          <tr><td>16 只国家队重仓 ETF 估算净流入</td><td>+130.4 亿元</td><td>+371.7 亿元</td><td>+601.3 亿元</td><td>约 5712 亿元 / 2026 亿份</td></tr>
+        </tbody>
+      </table>
+
+      <h3>监控池单只 ETF 明细（第三方估算 · 10/9）</h3>
+      <table>
+        <thead><tr><th>代码</th><th>名称</th><th>跟踪指数</th><th>最新份额(亿份)</th><th>当日净流入(亿元)</th><th>近 5 日</th><th>近 20 日</th></tr></thead>
+        <tbody>
+          <tr><td>588000</td><td>华夏科创 50ETF</td><td>科创 50</td><td>629.8</td><td class="num-up">+36.7</td><td>+125.1</td><td>+170.7</td></tr>
+          <tr><td>159915</td><td>易方达创业板 ETF</td><td>创业板指</td><td>220.2</td><td class="num-up">+21.5</td><td>+63.9</td><td>+67.6</td></tr>
+          <tr><td>512100</td><td>南方中证 1000ETF</td><td>中证 1000</td><td>78.8</td><td class="num-up">+19.2</td><td>+41.8</td><td>+52.5</td></tr>
+          <tr><td>510300</td><td>华泰柏瑞沪深 300ETF</td><td>沪深 300</td><td>243.9</td><td class="num-up">+14.3</td><td>+21.4</td><td>+57.3</td></tr>
+          <tr><td>510500</td><td>南方中证 500ETF</td><td>中证 500</td><td>57.2</td><td class="num-up">+9.0</td><td>+17.1</td><td>+50.3</td></tr>
+          <tr><td>588080</td><td>易方达科创 50ETF</td><td>科创 50</td><td>282.0</td><td class="num-up">+7.9</td><td>+36.3</td><td>+46.1</td></tr>
+          <tr><td>510050</td><td>华夏上证 50ETF</td><td>上证 50</td><td>71.2</td><td class="num-up">+5.4</td><td>−1.4</td><td>+16.6</td></tr>
+          <tr><td>510310</td><td>易方达沪深 300ETF</td><td>沪深 300</td><td>121.0</td><td class="num-up">+4.2</td><td>+13.1</td><td>+35.2</td></tr>
+          <tr><td>512500</td><td>华夏中证 500ETF</td><td>中证 500</td><td>19.2</td><td class="num-up">+3.8</td><td>+3.9</td><td>+7.9</td></tr>
+          <tr><td>560010</td><td>广发中证 1000ETF</td><td>中证 1000</td><td>25.7</td><td class="num-up">+3.6</td><td>+14.9</td><td>+22.3</td></tr>
+          <tr><td>159845</td><td>华夏中证 1000ETF</td><td>中证 1000</td><td>27.8</td><td class="num-up">+3.1</td><td>+12.2</td><td>+25.4</td></tr>
+          <tr><td>510330</td><td>华夏沪深 300ETF</td><td>沪深 300</td><td>85.5</td><td class="num-up">+1.5</td><td>+1.4</td><td>+9.3</td></tr>
+          <tr><td>159977</td><td>天弘创业板 ETF</td><td>创业板指</td><td>41.7</td><td class="num-up">+1.0</td><td>+4.3</td><td>+7.7</td></tr>
+          <tr><td>159629</td><td>富国中证 1000ETF</td><td>中证 1000</td><td>9.2</td><td class="num-up">+0.2</td><td>+4.1</td><td>+2.6</td></tr>
+          <tr><td>510180</td><td>华安上证 180ETF</td><td>上证 180</td><td>44.3</td><td>+0.0</td><td>+0.1</td><td>+0.4</td></tr>
+          <tr><td>159919</td><td>嘉实沪深 300ETF</td><td>沪深 300</td><td>68.6</td><td class="num-down">−1.0</td><td>+13.4</td><td>+29.3</td></tr>
+          <tr><td colspan="3"><strong>合计</strong></td><td><strong>2026</strong></td><td><strong>+130.4</strong></td><td><strong>+371.7</strong></td><td><strong>+601.3</strong></td></tr>
+        </tbody>
+      </table>
+      <div class="callout callout-info">
+        <strong>统计口径说明：</strong>「9/28–10/8 股票型 ETF 净流入 532.78 亿元」「10/8 单日净流入 178.49 亿元」来自 Choice / 上海证券报测算，为一级市场申赎口径；「10/8 二级市场盘口净流出 45.9 亿元」来自东方财富 Choice，为二级市场主力资金（超大单+大单）口径，<strong>与一级申赎口径不可混用</strong>。16 只国家队重仓 ETF 份额/估算净申赎来自第三方追踪站（etf.maomaoci-a.com，非官方，数据更新至 2026-10-09 23:31）；「汇金系净申购」类数字均为第三方测算，非官方公告，精确仓位因信披新规（见数据盲区）已无法通过定期报告验证。不同数据源对同一窗口的产品数、份额调整方式可能存在差异，交叉引用时已标注来源。
+      </div>
+    </section>
+
+    <section id="baseline">
+      <h2>底账快照（2026 年二季度 · 十大股东口径；ETF 为 2025 年报口径）</h2>
+      <div class="callout callout-info">
+        <strong>说明：</strong>个股十大股东口径截至 2026 年半年报（8 月底收官）；ETF 持仓为 2025 年年报披露（2026 年 4 月）的最后可验证官方口径。因 2026 年中报起 ETF 不再披露前十大持有人，此后 ETF 精确仓位已无法通过定期报告还原（详见「数据盲区」）。A 股三季报法定披露期为 10 月 1–31 日、预约高峰在 10/27–10/31，本期底账暂无增量。
+      </div>
+      <table>
+        <thead><tr><th>指标</th><th>数值</th><th>来源口径</th></tr></thead>
+        <tbody>
+          <tr><td>中央汇金投资 ETF 持仓（2025 年报）</td><td>21 只 / 约 1974 亿份 / 7973 亿元 / 平均占比 36.2%</td><td>基金年报（官方披露）</td></tr>
+          <tr><td>中央汇金资管 ETF 持仓（2025 年报）</td><td>15 只 / 约 1785 亿份 / 7290 亿元 / 平均占比 38.0%</td><td>基金年报（官方披露）</td></tr>
+          <tr><td>易方达-汇金资管单一资管计划（2025 年报）</td><td>9 只 / 约 437 亿份 / 平均占比 15.3%</td><td>基金年报（官方披露）</td></tr>
+          <tr><td>华夏-汇金资管单一资管计划（2025 年报）</td><td>17 只 / 约 376 亿份 / 平均占比 4.7%</td><td>基金年报（官方披露）</td></tr>
+          <tr><td>中国诚通（含北京诚通金控）ETF 持仓（2025 年报）</td><td>21 只 / 约 213 亿份</td><td>Wind 统计 / 21 世纪经济报道</td></tr>
+          <tr><td>国新投资（中国国新旗下）ETF 持仓（2025 年报）</td><td>31 只 / 约 213 亿份 / 平均占比 19.6%</td><td>Wind 统计 / 21 世纪经济报道</td></tr>
+          <tr><td>国家队 ETF 总市值（2025 年报，上述主体合计）</td><td>约 1.54 万亿元（较 2025 二季度末增加约 2487 亿元）</td><td>Wind 统计 / 21 世纪经济报道</td></tr>
+          <tr><td>汇金、证金现身 A 股前十大股东公司数（2026 中报）</td><td>35 家 / 合计约 3.3 万亿元</td><td>新浪财经（中报统计）</td></tr>
+          <tr><td>中央汇金投资 A 股持股（按 9/30 收盘价估算）</td><td>8 家（中金/农行/新华保险/工行/建行/中行/中信建投/申万宏源）</td><td>第三方数据整理（估算，非公告）</td></tr>
+        </tbody>
+      </table>
+
+      <h3>代表个股（国家队重仓 · 最新可核实口径）</h3>
+      <table>
+        <thead><tr><th>标的</th><th>主体</th><th>要点</th></tr></thead>
+        <tbody>
+          <tr><td>中国银行</td><td>汇金 / 证金 / 汇金资管</td><td>汇金持股 1887.92 亿股（58.59%）未变；汇金资管 18.10 亿股未变</td></tr>
+          <tr><td>农业银行</td><td>汇金 / 社保 / 证金 / 汇金资管</td><td>汇金持股 1404.89 亿股（40.14%）未变；汇金资管 12.55 亿股未变</td></tr>
+          <tr><td>工商银行</td><td>汇金 / 证金 / 汇金资管</td><td>汇金投资 1240.04 亿股、汇金资管 10.14 亿股（中报口径未变）</td></tr>
+          <tr><td>中金公司</td><td>中央汇金</td><td>汇金持股约 19.36 亿股（40.11%）第一大股东，未变</td></tr>
+          <tr><td>新华保险</td><td>中央汇金</td><td>汇金投资 9.78 亿股（31.34%）未变</td></tr>
+          <tr><td>中国建筑</td><td>汇金资管</td><td>汇金资管 5.83 亿股（1.41%）未变</td></tr>
+          <tr><td>中国石化</td><td>国新宏盛投资 / 证金</td><td>国新宏盛投资 Q2 增至 6.82 亿股（0.56%）；证金 4.26 亿股（0.35%）未变</td></tr>
+          <tr><td>天地科技</td><td>诚通金控（诚通旗下）</td><td>诚通金控持股 2.48 亿股（6%），9/23 增持后触及 1% 刻度，3–6 亿增持计划实施中</td></tr>
+          <tr><td>美的集团</td><td>汇金资管</td><td>中报口径仍在前十（8826.05 万股 / 1.29%）附近，「退出前十 ≠ 清仓」路径延续</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="events">
+      <h2>近期已核实事件</h2>
+      <ul class="timeline">
+        <li>
+          <div class="date">2026-10-08</div>
+          <div class="title"><span class="tag tag-ok">已核实</span> 央行开展 1.2 万亿元买断式逆回购（3 个月期，加量续作）</div>
+          <div class="desc">央行 9/30 公告、10 月 8 日操作：以固定数量、利率招标、多重价位中标方式开展 12000 亿元买断式逆回购，期限 3 个月（89 天），到期日 2027 年 1 月 5 日。因当月同期限品种有 1 万亿元到期，本次转为加量续作、净投放 2000 亿元；当日另开展 6060 亿元隔夜逆回购，公开市场合计净回笼 4085 亿元。属保持银行体系流动性充裕的中期流动性投放，非直接入市。本月资金面还伴随 9 月末外汇储备回落至 34002.51 亿美元等数据。<a href="https://www.stcn.com/article/detail/4204307.html" target="_blank" rel="noopener">来源1</a> · <a href="https://dy.163.com/article/L83ECF1I053469RG.html" target="_blank" rel="noopener">来源2</a></div>
+        </li>
+        <li>
+          <div class="date">2026-10-09</div>
+          <div class="title"><span class="tag tag-ok">已核实</span> 证监会就修订后《公开募集证券投资基金运作管理办法（征求意见稿）》征求意见</div>
+          <div class="desc">时隔 12 年的系统性修订。要点：将股票基金、混合基金、FOF 等权益类基金成立门槛从规模 2 亿元/份额 2 亿份降至 5000 万元/5000 万份；优化完全被动复制型指数基金关于举牌、减持、短线交易的相关监管要求，适度放松其他指数类基金交易限制；要求基金管理人强化基金产品逆周期布局管理、健全促进基金稳定运作的风险管理机制；设置 1 年过渡期。属资本市场稳市「制度框架」层面（平准 2.0 语境），非国家队买入动作。<a href="https://finance.eastmoney.com/a/202610103891620770.html" target="_blank" rel="noopener">来源</a></div>
+        </li>
+        <li>
+          <div class="date">2026-10-09</div>
+          <div class="title"><span class="tag tag-ok">已核实</span> A 股「深 V」反转，多只宽基 ETF 成交额创近 2 个月新高</div>
+          <div class="desc">当日早盘三大指数集体低开低走（沪指最低 3754.14、创业板指最低 2932.80 一度跌破 3000 点），午后核心宽基 ETF 放量、指数翻红。收盘沪指 +0.05% 报 3813.79、创业板指 +0.22% 报 3043.33、科创 50 +0.07%、北证 50 +2.49%，成交 1.92 万亿元。宽基 ETF 中科创 50ETF 华夏成交 107.66 亿元、创业板 ETF 易方达 82.11 亿元、中证 1000ETF 南方 60.44 亿元、沪深 300ETF 华泰柏瑞超 55 亿元，均创近 2 个月单日新高。<a href="https://www.cnstock.com/commonDetail/800229" target="_blank" rel="noopener">来源1</a> · <a href="https://www.sohu.com/a/1085584676_120988533" target="_blank" rel="noopener">来源2</a></div>
+        </li>
+        <li>
+          <div class="date">2026-09-24</div>
+          <div class="title"><span class="tag tag-ok">已核实</span> 诚通金控增持天地科技触及 1% 权益变动刻度（巨潮资讯公告 · 本期仍为最新个股动作）</div>
+          <div class="desc">天地科技（600582）公告：持股 5% 以上股东北京诚通金控（中国诚通旗下）于 9/10–9/23 通过上交所集中竞价累计增持 41,399,999 股（占总股本 1%），增持后持股 248,329,468 股（6%），为 9/10 披露的「拟 12 个月增持 3–6 亿元」计划的执行进展，资金来源自有资金。截至本报告日，国新/诚通暂无更新的个股增持公告。<a href="https://static.cninfo.com.cn/finalpage/2026-09-24/1225579295.PDF" target="_blank" rel="noopener">来源</a></div>
+        </li>
+      </ul>
+    </section>
+
+    <section id="signals">
+      <h2>舆情 · 待核实</h2>
+      <div class="callout callout-warn">媒体报道与机构估算，<strong>非公告精确持仓</strong>，请勿与底账混读。</div>
+      <ul class="timeline">
+        <li>
+          <div class="date">2026-10-09/10</div>
+          <div class="title"><span class="tag tag-warn">媒体解读</span> 「国家队进场信号再现」——宽基 ETF 午后集体放量</div>
+          <div class="desc">多家媒体（财经杂志、钱江晚报、南方+、中国证券网等）将 10/9 午后宽基 ETF 的集中放量解读为「托底资金入场」信号，并指本轮大资金入场时点较早（非以往尾盘突击放量），买入方向集中于早盘杀跌最重的创业板、科创板 ETF。此为市场观察与解读，非公告信息；是否国家队实际申购、规模多少，须以一级市场净申赎数据为准。</div>
+        </li>
+        <li>
+          <div class="date">2026-10-09</div>
+          <div class="title"><span class="tag tag-warn">机构估算</span> 16 只国家队重仓 ETF 当日估算净流入 +130.4 亿元</div>
+          <div class="desc">第三方追踪站（etf.maomaoci-a.com，非官方）估算：10/9 监控 16 只国家队重仓 ETF 当日净流入 +130.4 亿元、近 5 日 +371.7 亿元、近 20 日 +601.3 亿元，组合规模约 5712 亿元/2026 亿份；单只以华夏科创 50ETF（当日 +36.7 亿元）、易方达创业板 ETF（+21.5 亿元）居前。为份额变动反推的估算口径，非官方公告。</div>
+        </li>
+        <li>
+          <div class="date">2026-09（复盘）</div>
+          <div class="title"><span class="tag tag-warn">机构估算</span> 汇金 ETF 投资全复盘：三年买入约 1.1 万亿、减持超 50%</div>
+          <div class="desc">自媒体/机构复盘口径：汇金 2023 年 10 月起买入宽基 ETF，累计买入约 10336 亿元；2026 年 1 月起系统性卖出，持仓占比从 2025 年底约 80% 降至 40% 以下，减持幅度超 50%，估算获利约 4806 亿元（年化约 13%）。属「跌补涨减」的典型逆周期操作复盘，具体数字为估算。</div>
+        </li>
+        <li>
+          <div class="date">2026-10-09/10</div>
+          <div class="title"><span class="tag tag-warn">机构观点</span> 四季度「震荡与结构分化」，修复性反弹待确认</div>
+          <div class="desc">机构观点转述（非本页立场）：中金公司认为 A 股下跌空间有限、具备盈利支撑行业有望成为资金配置方向；中欧基金判断四季度是「盈利验证下的震荡与结构分化」格局，向上空间需盈利与政策双重确认；华西证券提出「哑铃型组合」（科技逢低分批 + 红利防御）；申万宏源偏谨慎，认为中期仍偏弱势震荡、反弹级别可能有限。</div>
+        </li>
+        <li>
+          <div class="date">2026-08（复盘）</div>
+          <div class="title"><span class="tag tag-warn">媒体观察</span> ETF 前十大持有人集体「隐身」，追踪「某队」的窗口关闭</div>
+          <div class="desc">多家媒体指出，2026 年中报起 ETF 定期报告普遍不再披露前十大持有人名单，据此跟踪汇金等「某队」调仓的传统方式失效；天相投顾据 2025 年年报统计中央汇金投资现身 21 只 ETF 前十、汇金资管 15 只，合计持有 ETF 市值约 1.53 万亿元。</div>
+        </li>
+      </ul>
+    </section>
+
+    <section id="blind">
+      <h2>数据盲区与下次更新</h2>
+      <div class="callout callout-info">
+        <ul>
+          <li><strong>信披新规（持续盲区）：</strong>证监会 2026 年 3 月 13 日发布、5 月 1 日实施的《公开募集证券投资基金信息披露内容与格式准则第 2 号—定期报告的内容与格式》，删除了「上市基金列示前十大持有人」要求。自 2026 年中报起，ETF 定期报告不再披露前十大持有人名单，仅披露机构/个人合计占比。这意味着<strong>汇金 ETF 的精确仓位从此无法通过定期报告直接验证</strong>，本页所有「汇金 ETF 持仓/净申购」数字均为估算或 2025 年报的滞后台账，只能借每日净申赎数据间接推断。</li>
+          <li><strong>个股底账待三季报更新：</strong>A 股三季报法定披露期为 10 月 1–31 日、预约高峰在 10/27–10/31。证金/汇金资管三季报十大股东调仓信号须待月末才能核对，本期底账仍为 2026 中报口径。</li>
+          <li><strong>「退出前十大股东」≠「清仓」：</strong>证金中报由 77 家降至 22 家、汇金资管退出多家前十，但第十大股东持股比例通常仅约 0.2%，减持小部分即跌出前十，属持仓兑现的正常行为，本页一律以「退出前十」表述，不作清仓定性。</li>
+          <li><strong>国新 / 诚通增持明细：</strong>公告仅披露总额（国新超 500 亿、诚通累计近百亿 + 拟再贷款 1000 亿），除天地科技等具体公告外，未披露完整个股与 ETF 清单；两平台本周无新增个股增持公告。</li>
+          <li><strong>一级申赎 vs 二级盘口：</strong>ETF 一级市场净申赎（份额口径）是观察国家队实际申购的直接指标，二级市场盘口主力资金流向（超大单+大单）仅反映当日交易博弈，二者方向可能相反（如 10/8 盘口净流出、但一级申赎净流入），阅读时须区分。</li>
+          <li><strong>政策底 vs 市场底时间差：</strong>历史复盘（2008/2015/2018）显示政策底确立后市场常有 2–3 个月震荡筑底；监测报告口径为「市场底往往滞后 40 天至 6 个月」。当前处于政策密集出台后的磨底期，这一时间差现象仅供背景参考，不构成任何操作依据。</li>
+          <li><strong>下期报计划：</strong>跟踪 10 月中旬宽基 ETF 申赎方向是否延续净流入、3800 点附近是否再现介入特征；关注 10 月下旬三季报密集披露期核对证金/汇金资管个股调仓；关注 10/12–10/14 新发 ETF 集中上市建仓带来的增量资金。</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="refs">
+      <h2>参考链接</h2>
+      <ul>
+        <li><a href="https://www.stcn.com/article/detail/4204307.html" target="_blank" rel="noopener">证券时报：央行 10 月 8 日将开展 1.2 万亿元买断式逆回购操作（2026-09-30）</a></li>
+        <li><a href="https://dy.163.com/article/L83ECF1I053469RG.html" target="_blank" rel="noopener">网易/证券时报：央行 10 月 8 日 1.2 万亿元买断式逆回购操作</a></li>
+        <li><a href="https://finance.eastmoney.com/a/202610103891620770.html" target="_blank" rel="noopener">东方财富/上海证券报：证监会就新修订的公募基金运作办法征求意见（2026-10-10）</a></li>
+        <li><a href="https://finance.eastmoney.com/a/202610093891555060.html" target="_blank" rel="noopener">东方财富/界面新闻：公募基金运作办法征求意见要点（2026-10-09）</a></li>
+        <li><a href="https://www.cnstock.com/commonDetail/800229" target="_blank" rel="noopener">中国证券网/上海证券报：股基 ETF 4 个交易日资金净流入逾 530 亿元（2026-10-10）</a></li>
+        <li><a href="https://www.163.com/dy/article/L8QTKAGG05199NPP.html" target="_blank" rel="noopener">21 世纪经济报道：超 630 亿元涌入股票 ETF，科创方向成为主力（2026-10-09）</a></li>
+        <li><a href="https://www.cnstock.com/commonDetail/800229" target="_blank" rel="noopener">中国证券网：多只宽基 ETF 成交额创近 2 个月新高（2026-10-10）</a></li>
+        <li><a href="https://www.sohu.com/a/1085584676_120988533" target="_blank" rel="noopener">搜狐/Wind：多只宽基 ETF 成交额创近 2 个月新高、申赎明细（2026-10-09）</a></li>
+        <li><a href="https://www.nfnews.com/content/0oXLZlDao9.html" target="_blank" rel="noopener">南方+：A 股「深 V」反转，谁在午后疯狂抄底（2026-10-09）</a></li>
+        <li><a href="https://www.toutiao.com/article/7694597309379691050/" target="_blank" rel="noopener">钱江晚报/潮新闻：抄底资金进场？A 股午后惊险逆转（2026-10-09）</a></li>
+        <li><a href="https://www.toutiao.com/article/7694653932261474879/" target="_blank" rel="noopener">财经杂志/新浪财经：3800 点，A 股刹住了（2026-10-09）</a></li>
+        <li><a href="https://m.cnfin.com/gs-lb//zixun/20261010/4478939_1.html" target="_blank" rel="noopener">中国金融信息网：A 股市场下探回升，机构称具备修复性反弹基础（2026-10-10）</a></li>
+        <li><a href="https://static.cninfo.com.cn/finalpage/2026-09-24/1225579295.PDF" target="_blank" rel="noopener">巨潮资讯：天地科技关于持股 5% 以上股东（诚通金控）权益变动触及 1% 刻度暨增持计划进展的公告（2026-09-24）</a></li>
+        <li><a href="https://etf.maomaoci-a.com/" target="_blank" rel="noopener">国家队 ETF 动向追踪（16 只重仓 ETF 监控，第三方，非官方）</a></li>
+        <li><a href="https://www.stcn.com/article/detail/4031055.html" target="_blank" rel="noopener">证券时报：国家队密集增持，A 股稳市机制走向常态化（背景）</a></li>
+        <li><a href="https://finance.sina.com.cn/roll/2026-08-05/doc-inimffsp3657653.shtml" target="_blank" rel="noopener">新浪财经：证监会下半年七大监管重点与四层稳市机制（背景）</a></li>
+        <li><a href="https://www.ilovemoyu.com/comment/holder_764eLBi.html" target="_blank" rel="noopener">第三方数据整理：中央汇金投资有限责任公司 A 股持股明细（2026-09-30，估算口径）</a></li>
+        <li><a href="https://data.eastmoney.com/gdfx/shareholder/10506881.html" target="_blank" rel="noopener">东方财富数据：中央汇金资产管理有限责任公司持股列表（中报口径）</a></li>
+      </ul>
+    </section>
+
+    <footer>
+      Equation · 国家队持仓监控周报 <strong>v10</strong> · 生成于 2026-10-10
+    </footer>
+  </div>
+<script>
+(function() {
+  var currentFile = document.location.pathname.split('/').pop();
+  var nav = document.getElementById('version-nav');
+  fetch('national-team-holdings-latest.json', { cache: 'no-store' })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      if (!nav || !data.versions) return;
+      var bust = encodeURIComponent(data.updated || data.latest || '');
+      var html = '<strong>📚 历史版本：</strong>';
+      data.versions.forEach(function(v) {
+        if (v.file === currentFile) {
+          html += '<span style="color:#166534;font-weight:600">' + v.label + ' ← 当前</span> ';
+        } else {
+          html += '<a href="' + v.file + '?v=' + bust + '">' + v.label + '</a> ';
+        }
+      });
+      nav.innerHTML = html;
+    })
+    .catch(function() { nav.style.display = 'none'; });
+})();
+</script>
+</body>
+</html>

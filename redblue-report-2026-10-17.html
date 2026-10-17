@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>低买/分层卖出 红蓝对抗周报 · 2026-10-17</title>
+<style>
+  :root{
+    --bg:#0d1117; --panel:#161b22; --panel2:#1c2129; --line:#2d333b;
+    --text:#e6edf3; --muted:#8b949e; --up:#f85149; --down:#3fb950;
+    --blue:#58a6ff; --gold:#d29922; --purple:#bc8cff; --redteam:#ff7b72; --blueteam:#79c0ff;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--text);font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;line-height:1.7;font-size:15px;padding:0 0 60px}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+  header{padding:44px 0 20px;border-bottom:1px solid var(--line);margin-bottom:28px}
+  header h1{font-size:26px;font-weight:700;letter-spacing:.5px}
+  header .sub{color:var(--muted);margin-top:8px;font-size:13px}
+  .badges{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap}
+  .badge{font-size:12px;padding:3px 12px;border-radius:20px;border:1px solid var(--line);color:var(--muted)}
+  .badge.warn{border-color:var(--gold);color:var(--gold)}
+  .badge.err{border-color:var(--up);color:var(--up)}
+  h2{font-size:20px;margin:44px 0 6px;padding-left:12px;border-left:4px solid var(--blue)}
+  h2.red{border-color:var(--redteam)} h2.blue{border-color:var(--blueteam)} h2.conv{border-color:var(--gold)}
+  h3{font-size:16px;margin:22px 0 8px;color:var(--text)}
+  p{margin:8px 0;color:#c9d1d9}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:18px 20px;margin:14px 0}
+  .grid{display:grid;gap:14px}
+  .g4{grid-template-columns:repeat(4,1fr)} .g3{grid-template-columns:repeat(3,1fr)} .g2{grid-template-columns:repeat(2,1fr)}
+  @media(max-width:760px){.g4,.g3,.g2{grid-template-columns:1fr}}
+  .kpi{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:14px 16px}
+  .kpi .v{font-size:22px;font-weight:700}
+  .kpi .l{font-size:12px;color:var(--muted);margin-top:2px}
+  .up{color:var(--up)} .down{color:var(--down)} .muted{color:var(--muted)} .gold{color:var(--gold)} .bluec{color:var(--blue)}
+  table{width:100%;border-collapse:collapse;font-size:13px;margin:10px 0}
+  th{background:var(--panel2);color:var(--muted);font-weight:600;text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
+  td{padding:7px 10px;border-bottom:1px solid #21262d;white-space:nowrap}
+  tr:hover td{background:#1a2029}
+  .tag{display:inline-block;font-size:11px;padding:1px 8px;border-radius:4px;border:1px solid var(--line);color:var(--muted)}
+  .tag.opt{border-color:var(--purple);color:var(--purple)}
+  .tag.spot{border-color:var(--blue);color:var(--blue)}
+  .tag.exp{border-color:var(--gold);color:var(--gold)}
+  .quote{border-left:3px solid var(--line);padding:6px 14px;margin:10px 0;color:var(--muted);font-size:13px;background:var(--panel2);border-radius:0 6px 6px 0}
+  .red-q{border-color:var(--redteam)} .blue-q{border-color:var(--blueteam)}
+  .verdict{background:linear-gradient(135deg,#1a1520,#161b22);border:1px solid var(--gold);border-radius:10px;padding:18px 20px;margin:16px 0}
+  .verdict h3{color:var(--gold);margin-top:0}
+  svg{display:block;max-width:100%;height:auto;margin:10px auto}
+  .caption{font-size:12px;color:var(--muted);text-align:center;margin-top:-4px}
+  code{background:#21262d;padding:1px 6px;border-radius:4px;font-size:12.5px;color:#ffa657;font-family:"SF Mono",Menlo,monospace}
+  .foot{margin-top:50px;padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font-size:12px}
+  .score{display:inline-block;min-width:26px;text-align:center;font-weight:700;border-radius:4px;padding:0 5px}
+  .s-pos{background:#1d2f22;color:var(--down)} .s-neg{background:#3a1d1d;color:var(--up)} .s-zero{background:#21262d;color:var(--muted)}
+  .vs{display:flex;gap:14px;flex-wrap:wrap;margin:14px 0}
+  .vs>div{flex:1;min-width:300px}
+  ol.tight{padding-left:22px} ol.tight li{margin:8px 0;color:#c9d1d9}
+  .conf{font-size:12px;color:var(--gold)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>低买 / 分层卖出 · 红蓝对抗周报</h1>
+  <div class="sub">Trading Core（quadraticequation.top/equation）策略复盘分析师 · 数据窗口 2026-09-01 ~ 2026-10-15 · 生成于 2026-10-17 18:56（只读取数）</div>
+  <div class="badges">
+    <span class="badge">低买台账 12 行</span>
+    <span class="badge">分层卖出台账 7 行</span>
+    <span class="badge">账户 100002001 / 100002002</span>
+    <span class="badge warn">样本极小 · 所有比例结论均为低置信</span>
+    <span class="badge err">本期发现：口径污染 × 权利金公式化 × 行权归宿盲区</span>
+  </div>
+</header>
+
+<h2>〇、数据概览</h2>
+<div class="grid g4">
+  <div class="kpi"><div class="v">19</div><div class="l">台账总行数（低买12 + 分层7）</div></div>
+  <div class="kpi"><div class="v down">6/12</div><div class="l">低买可核验率（09615/00625/02041 无日线窗口）</div></div>
+  <div class="kpi"><div class="v up">¥0 实盘</div><div class="l">全部 source=bark_notify，信号台账非成交台账</div></div>
+  <div class="kpi"><div class="v gold">+15.9%</div><div class="l">分层表 cash_flow_est 直加总虚增幅度</div></div>
+</div>
+<div class="panel">
+  <p><b>结构分布：</b>低买侧 L1 卖Put ×5 · L2 买现货 ×4 · L3 加倍 ×2 · L2止盈 ×1（无 L4）；分层卖出侧 SELL_CALL ×6 · 到期虚值作废 ×1。</p>
+  <p><b>标的覆盖：</b>TLT / 00625 / 09615 / 02041 / 03993(MOL.HK) / 07709.HK；BRK.B / ASML / NVDA / OXY / PDD。</p>
+  <p><b>数据质量前置声明：</b>近 7 天仅新增低买 2 行（id12 07709 L1、id13 TLT 止盈），分层卖出 0 行。<code>stock_price</code> 美股日线截至 10-12、港股截至 10-15，<b>快照滞后 2~4 个交易日</b>——这直接限制了对最近一笔止盈（10-15）的独立核验能力，本报告用外部行情源补充（均已标注来源）。</p>
+  <p><b>本期更正（2026-10-17 22:50 追加）：</b>初版在「P3 层距模板 + 杠杆 ETF 准入」中用「07709 已经预演了接刀剧本」描述该标的，<b class="down">措辞错误</b>。事实：07709 的 L1 卖 Put（strike 18.6788）在到期时<b>未被行权</b>，我们没有接到货，本次不是接刀，而是一次未被行权的尾部压力测试。已在蓝军 #6 与 3.3 收敛推荐两处改写，并补齐了仍然成立的三条量化论点（缓冲/波动 19 倍错配、收益风险 ≈1:20、2x 路径依赖）。<b>前端入口状态：正常</b>（<code>#/fund-temperature</code> → 卡片「红蓝对抗周报」→ <code>/fund-temperature/redblue</code>，PR #545 已合入）。</p>
+</div>
+
+<svg viewBox="0 0 680 230" xmlns="http://www.w3.org/2000/svg">
+  <text x="20" y="24" fill="#e6edf3" font-size="14" font-weight="bold">低买台账名义敞口分布（USD/HKD 混合，仅示意结构）</text>
+  <g font-size="11" fill="#8b949e">
+    <text x="20" y="58">L1 卖Put ×5（名义）</text>
+    <text x="20" y="86">L2 买现货 ×4</text>
+    <text x="20" y="114">L3 加倍现货 ×2</text>
+    <text x="20" y="142">L2 止盈回收 ×1</text>
+    <text x="20" y="170">分层卖 Call ×6（covered 名义）</text>
+    <text x="20" y="198">期权腿费用记录</text>
+  </g>
+  <g>
+    <rect x="190" y="46" width="180" height="16" rx="3" fill="#bc8cff"/><text x="376" y="58" fill="#8b949e" font-size="11">24,596（put strike×100）</text>
+    <rect x="190" y="74" width="300" height="16" rx="3" fill="#58a6ff"/><text x="496" y="86" fill="#8b949e" font-size="11">31,305 现货买入</text>
+    <rect x="190" y="102" width="148" height="16" rx="3" fill="#58a6ff" opacity="0.65"/><text x="344" y="114" fill="#8b949e" font-size="11">23,523（含 2x 杠杆腿）</text>
+    <rect x="190" y="130" width="155" height="16" rx="3" fill="#3fb950"/><text x="351" y="142" fill="#8b949e" font-size="11">24,146 回收（+936 估算毛利）</text>
+    <rect x="190" y="158" width="440" height="16" rx="3" fill="#d29922" opacity="0.8"/><text x="636" y="170" fill="#8b949e" font-size="11" transform="translate(-52,0)">400,000（BRK.B×2+ASML+NVDA+OXY+PDD covered）</text>
+    <rect x="190" y="186" width="40" height="16" rx="3" fill="#f85149" opacity="0.85"/><text x="236" y="198" fill="#8b949e" font-size="11">期权腿全部为 null（蓝军证据 #7）</text>
+  </g>
+</svg>
+
+<h2 class="red">一、红军：这笔钱花得合理吗</h2>
+
+<h3>1.1 触发真实性核验：可核验部分 6/6 命中</h3>
+<div class="panel">
+<p>对 6 笔有日线窗口的记录，把 <code>reason</code> 中的触发公式还原后对照当日及 ±5 日收盘：</p>
+<table>
+<tr><th>行</th><th>标的</th><th>腿</th><th>触发价（台账/公式）</th><th>信号日收盘</th><th>偏差</th><th>判定</th></tr>
+<tr><td>id8</td><td>TLT</td><td><span class="tag opt">L1 Put</span></td><td>80.67 ≤ 2×波动均值触发线</td><td>81.39</td><td class="down">−0.9% 盘中</td><td>✅ 盘中触发成立</td></tr>
+<tr><td>id9</td><td>03993</td><td><span class="tag opt">L1 Put</span></td><td>15.20 ≤ 触发线 15.20</td><td>15.80</td><td class="down">−3.8% 盘中</td><td>✅ 事件高波动标记一致</td></tr>
+<tr><td>id12</td><td>07709.HK</td><td><span class="tag opt">L1 Put</span></td><td>19.06 ≤ 触发线 19.52</td><td>19.08</td><td style="color:var(--down)">+0.1%</td><td>✅ 触发成立（两个收盘口径：系统日线 19.08 / 外部源 18.68，智通财经 10-15；<b>均高于 strike 18.6788 → 到期未被行权</b>）</td></tr>
+<tr><td>id10</td><td>TLT</td><td><span class="tag spot">L2 现货</span></td><td>78.14 ≤ L1行权价−1v=78.16</td><td>78.26</td><td class="down">−0.15%</td><td>✅</td></tr>
+<tr><td>id11</td><td>TLT</td><td><span class="tag spot">L3 现货</span></td><td>76.95 ≤ L2价−1v=77.34</td><td>76.98</td><td class="down">−0.03%</td><td>✅</td></tr>
+<tr><td>id13</td><td>TLT</td><td><span class="tag spot">止盈</span></td><td>80.485 ≥ L2买入价 78.14</td><td>（外部源 80.05，Tickeron 10-15）</td><td class="up">+0.55%</td><td>✅ 1 倍 bid-ask 内</td></tr>
+</table>
+<p class="conf">置信度：6/6 命中仅在「可核验子集」内成立；09615/00625/02041 共 6 行（占 50%）因日线缺失无法核验，整体命中率区间实际为 [50%, 100%]。</p>
+</div>
+
+<h3>1.2 ATR 自适应层距确实在工作</h3>
+<p>分层卖出 6 笔 Call 的行权价公式反推出的隐含层距（2×波动均值 / 现价），与各标的波动结构吻合：</p>
+<svg viewBox="0 0 680 200" xmlns="http://www.w3.org/2000/svg">
+  <text x="20" y="22" fill="#e6edf3" font-size="13" font-weight="bold">隐含 ATR% 层距（由行权价公式反解）</text>
+  <g font-size="11" fill="#8b949e">
+    <text x="60" y="52">BRK.B(T1)</text><text x="60" y="76">BRK.B(T7)</text><text x="60" y="100">NVDA</text><text x="60" y="124">PDD</text><text x="60" y="148">ASML</text><text x="60" y="172">OXY</text>
+  </g>
+  <g>
+    <rect x="130" y="40" width="113" height="16" rx="3" fill="#3fb950"/><text x="249" y="52" fill="#8b949e" font-size="11">1.52%</text>
+    <rect x="130" y="64" width="89" height="16" rx="3" fill="#3fb950"/><text x="225" y="76" fill="#8b949e" font-size="11">1.19%</text>
+    <rect x="130" y="88" width="169" height="16" rx="3" fill="#d29922"/><text x="305" y="100" fill="#8b949e" font-size="11">2.26%</text>
+    <rect x="130" y="112" width="166" height="16" rx="3" fill="#d29922"/><text x="302" y="124" fill="#8b949e" font-size="11">2.22%</text>
+    <rect x="130" y="136" width="239" height="16" rx="3" fill="#f85149"/><text x="375" y="148" fill="#8b949e" font-size="11">3.20%</text>
+    <rect x="130" y="160" width="244" height="16" rx="3" fill="#f85149"/><text x="380" y="172" fill="#8b949e" font-size="11">3.27%</text>
+  </g>
+  <text x="20" y="194" fill="#8b949e" font-size="11">低波动标的层距窄、高波动标的层距宽 —— 层距随波动自适应的机制有数据支撑（近似值，由 strike=(现价+2v)×1.02 反解）</text>
+</svg>
+<p>红军结论：<b>「高波动标的层级过密」的指责不成立</b>——ASML/OXY 的层距（~3.2%）是 BRK.B（~1.2-1.5%）的 2 倍以上，参数并非无视波动结构。蓝军真正能攻击的是系数本身锁死（见蓝军 #6）。</p>
+
+<h3>1.3 成交偏离度：全部在 1 倍 bid-ask 量级</h3>
+<div class="grid g3">
+  <div class="kpi"><div class="v down">−0.15%</div><div class="l">TLT L2 通知价 vs 当日收盘</div></div>
+  <div class="kpi"><div class="v down">−0.03%</div><div class="l">TLT L3 通知价 vs 当日收盘</div></div>
+  <div class="kpi"><div class="v up">+0.55%</div><div class="l">TLT 止盈价 vs 外部收盘（80.05，Tickeron 10-15）</div></div>
+</div>
+<p>4 笔可核验现货腿偏离均在 ±0.6% 以内，属于「合理可得」价位。止盈那笔还精准踩在 10-15 的避险脉冲上（当日 AI 股抛售、资金涌美债，TLT +1.47%，来源 Tickeron 2026-10-15）——时点无可挑剔。</p>
+
+<h3>1.4 期权定价（仅 Put 侧有真实 mid）</h3>
+<table>
+<tr><th>行</th><th>标的</th><th>premium/strike</th><th>DTE</th><th>年化权利金率</th><th>红军辩护</th></tr>
+<tr><td>id8</td><td>TLT P79（10-09 到期）</td><td>0.658%</td><td>28 天</td><td>8.6%</td><td>加息周期长端 IV 抬升下卖出，合理</td></tr>
+<tr><td>id9</td><td>03993 P14.5（09-29 到期）</td><td>2.966%</td><td>18 天</td><td>60.1%</td><td>事件高波动期卖权，IV 亢奋溢价，教科书式「卖保险」</td></tr>
+</table>
+<p>MOL.HK 那笔年化 60% 恰恰是策略设计意图的体现：清算折价 + 事件高波动标记触发时，权利金处于 IV 亢奋区，此时卖 Put 的赔率最好。</p>
+
+<h3>1.5 红军资产负债表（估算口径）</h3>
+<table>
+<tr><th>项目</th><th>金额（约）</th><th>备注</th></tr>
+<tr><td>L1 卖 Put 名义敞口</td><td>24,596</td><td>5 张（TLT/03993/02041/09615/00625），裸空头</td></tr>
+<tr><td>L2+L3 现货净投入</td><td>31,305</td><td>TLT 23,205 + 09615 9,385 + 00625 12,414（HKD）</td></tr>
+<tr><td>止盈回收</td><td>24,146</td><td>TLT 300 股 @80.485，估算毛利 +936.5</td></tr>
+<tr><td>分层卖 Call 权利金（估值）</td><td>3,220</td><td>⚠️ 其中大部分是公式估值而非市场价（蓝军 #2）</td></tr>
+<tr><td>费用合计（预估）</td><td>179.7</td><td>期权腿全为 null → 系统性低估</td></tr>
+<tr><td>单笔最大敞口</td><td>196,000</td><td>ASML covered call（有 200 股现货背书，非裸暴露）</td></tr>
+<tr><td>理论最大单次亏损场景</td><td>≈ −1,850 ~ −3,100</td><td>TLT 链：长端收益率再 +50bp（TLT −8%）时 L2/L3 浮亏估算</td></tr>
+</table>
+<div class="quote red-q">红军一句话：触发全部真实、价位全部可得、层距自适应有效、MOL 事件权利金吃到 IV 亢奋溢价、止盈踩准避险脉冲——<b>在「信号质量」这个层面，策略及格且有几处亮点。</b></div>
+
+<h2 class="blue">二、蓝军：历史研究者的七发炮弹</h2>
+
+<h3>#1 样本量：19 行什么也证明不了</h3>
+<p>12+7 行、跨 6 周、单一账户对。唯一一笔完整闭环的止盈（id13）若视为「成功」，其 Wilson 95% 置信区间为 <b>[2.5%, 92%]</b>——这个区间宽到同时容纳「几乎必胜」和「几乎必败」。任何基于本期数据的胜率/收益结论都应视为轶事而非证据。<span class="conf">（置信度：高，这是数学不是观点）</span></p>
+
+<h3>#2 核弹①：分层卖出的「权利金」是公式，不是市场</h3>
+<div class="panel">
+<p>6 笔 SELL_CALL 的 premium/strike 全部落在 <b>0.924% ~ 0.982%</b> 的窄带内——尽管它们的 DTE 从 1 天到 73 天、标的 IV 从 BRK.B（~15%）到 ASML（~40%）横跨两倍以上。真实市场不可能给出这样的定价齐整性。</p>
+<svg viewBox="0 0 680 250" xmlns="http://www.w3.org/2000/svg">
+  <text x="20" y="24" fill="#e6edf3" font-size="13" font-weight="bold">权利金率 premium/strike vs DTE —— 六笔 Call 齐刷刷贴在 0.95% 水平线上</text>
+  <line x1="60" y1="200" x2="640" y2="200" stroke="#2d333b"/>
+  <line x1="60" y1="40" x2="640" y2="40" stroke="#2d333b"/>
+  <line x1="60" y1="120" x2="640" y2="120" stroke="#2d333b"/>
+  <text x="30" y="204" fill="#8b949e" font-size="10">0%</text>
+  <text x="24" y="124" fill="#8b949e" font-size="10">1%</text>
+  <text x="24" y="44" fill="#8b949e" font-size="10">2%</text>
+  <line x1="60" y1="80" x2="640" y2="80" stroke="#f85149" stroke-dasharray="6 4"/>
+  <text x="500" y="74" fill="#f85149" font-size="11">固定估值带 ≈0.95%×strike</text>
+  <g>
+    <circle cx="80" cy="82" r="6" fill="#d29922"/><text x="70" y="66" fill="#d29922" font-size="10">BRK.B DTE=1（年化358%!）</text>
+    <circle cx="210" cy="84" r="6" fill="#bc8cff"/><text x="185" y="68" fill="#bc8cff" font-size="10">ASML DTE=51</text>
+    <circle cx="230" cy="83" r="6" fill="#58a6ff"/><text x="212" y="104" fill="#58a6ff" font-size="10">NVDA DTE=51</text>
+    <circle cx="240" cy="85" r="6" fill="#3fb950"/><text x="222" y="106" fill="#3fb950" font-size="10">OXY DTE=49</text>
+    <circle cx="300" cy="84" r="6" fill="#f0883e"/><text x="282" y="68" fill="#f0883e" font-size="10">PDD DTE=73</text>
+    <circle cx="300" cy="82" r="6" fill="#79c0ff"/><text x="316" y="90" fill="#79c0ff" font-size="10">BRK.B DTE=73</text>
+    <circle cx="110" cy="126" r="6" fill="#f85149"/><text x="94" y="146" fill="#f85149" font-size="10">TLT Put（真实mid）0.66%</text>
+    <circle cx="130" cy="46" r="6" fill="#f85149"/><text x="142" y="44" fill="#f85149" font-size="10">03993 Put（真实mid）2.97%</text>
+  </g>
+  <text x="60" y="232" fill="#8b949e" font-size="11">横轴=DTE（1~73天），纵轴=premium/strike。两颗红色 Put 点（真实市场 mid）完全脱离橙色估值带 —— 证明估值带不是市场。</text>
+</svg>
+<p>后果：台账里 3,219.55 的「权利金收入」<b>大半是虚构的</b>；那张年化 358% 的成绩单（T1，DTE=1）是公式与短 DTE 相除的假象。以此为据做任何收益归因都是在给幻觉记账。<span class="conf">（置信度：高——6/6 落带 + 2 个真实点脱离带，模式过于整齐）</span></p>
+</div>
+
+<h3>#3 核弹②：TLT Put 的行权归宿盲区</h3>
+<div class="panel">
+<p>id8：TLT P79，到期 2026-10-09。台账无行权记录、<code>est_net_profit=0</code>、系统设计上 put_sell 不进现货仓位（<code>liqArbLegAffectsSpot=false</code>）。但外部行情显示：TLT 10-07 收 76.91（Pluang）、10-14 收 77.90（GuruFocus）——到期日收在 79 之上需要单日 +1.5% 反弹，而 TLT 日收益 std 仅 0.87%。<b>该 Put 被行权概率 &gt;90%</b>。</p>
+<p>若已行权：账外多出 100 股 @79 的现货。10-16 TLT 收 79.97（Adalytica）→ 当前纸面约 +97，看似无恙，但请注意：<b>这笔持仓的盈亏完全取决于到期日的随机路径</b>——若接在 77 就是 −200。而系统对此 100 股零记录，导致：</p>
+<ol class="tight">
+  <li>下一轮 L2 触发阈值按「无持仓」计算，真实仓位与台账漂移；</li>
+  <li>id13 止盈只平 300 股，若含账外 100 股则实际应为 400 股；</li>
+  <li>L2/L3 层级额度被高估（与既有已知缺陷相互放大）。</li>
+</ol>
+<p><span class="conf">（置信度：中高——行权概率是推断而非记录，恰好暴露「复盘系统对期权归宿无感知」这一结构性缺陷）</span></p>
+</div>
+
+<h3>#4 核弹③：口径污染实锤（三处）</h3>
+<table>
+<tr><th>位置</th><th>问题</th><th>量化后果</th></tr>
+<tr><td>T2 EXPIRE_CALL_OTM</td><td><code>cash_flow_est=511.57</code> 实为到期日现价，非留存权利金 520.23</td><td>表级直加总 3,731.12，虚增 511.57（+15.9%）</td></tr>
+<tr><td>id13 est_net_profit</td><td>字段值 936.5 vs reason 文案「净利≈5.40 USD」自相矛盾</td><td>同一笔记录两个官方口径相差 173 倍</td></tr>
+<tr><td>id12 strike=18.6788</td><td>四位小数为公式计算值，非期权链上真实存在的行权价档位</td><td>按此「strike」评估行权概率/赔率均失真</td></tr>
+</table>
+<p><code>price</code> 列在两张表、不同腿之间语义漂移（strike/权利金总额/每股成交价/现价），<b>这是系统性设计缺陷，不是录入瑕疵</b>——任何跨表 SQL 聚合都可能产出看似精确的垃圾。</p>
+
+<h3>#5 幸存者偏差与缺失的基线</h3>
+<p>只有触发才写台账：未触发的阴跌、触发后继续崩塌的路径、看了一眼没够到阈值的行情，全部不在表里。02041 从 15.42 跌到 8.70（<b class="down">−43.6%</b>）这样教科书级的清算事件，台账里只留下一行 strike 8.526 的 Put 记录——它后来被行权了吗？接货后跌到哪？无记录。09615/00625/02041 六行甚至没有日线可供回溯。同时全系统没有「同标的同期 buy&amp;hold / 等额定投」基线，无法剥离 beta。</p>
+
+<h3>#6 参数僵化与杠杆产品的死亡组合</h3>
+<p>层距系数锁死 1×/2×/4× ATR14，页面不可调。对普通股尚可，但对 <b>每日重置的 2 倍杠杆产品</b>（07709 南方东英SK海力士2X）是死亡组合：该产品 10-13 单日 −17.22%、10-15 再 −24.31%（智通财经/网易财经），三个交易日累计 <b class="down">−40%</b>（31.82→19.08，系统自身日线）。这类产品的「波动均值」被杠杆放大且路径依赖（波动损耗），ATR 层距会在暴跌中连续触发 L2→L3。</p>
+<div class="verdict">
+<p><b>⚠️ 措辞更正（本期追加）：这次不是接刀，是一次未被行权的尾部压力测试。</b></p>
+<p>初版把「标的暴跌」等同于「我们接刀」，审稿人指出该表述错误，核实后更正。<b>事实链：</b>id12 是 L1 卖 Put，<code>strike = 18.6788</code>，触发现价 19.06；到期时系统日线 10-15 收 <b>19.08</b>（高于 strike <b class="up">+2.04%</b>），外部源（智通财经 10-15）报 <b>18.68</b>（高于 strike 仅 <b>+0.008%</b>）。<b>两个收盘口径不一致，但无论取哪一个，都未跌破行权价 → Put 作废 → 我们收权利金、未接到货。</b>因此本次没有损失，也不构成「接刀」。</p>
+<p><b>仍然成立的三条（说清是潜在风险，不是已发生损失）：</b></p>
+<ol class="tight">
+  <li><b>缓冲垫与真实波动错配 19 倍。</b>由触发文案反解 <code>vol_mean = (20.41−19.52)/2 = 0.445</code> 元：现价距 strike 的缓冲 = 0.381 元 = <b>0.86 个 vol_mean</b>；而最近一个交易日的单日跌幅（26.34→19.08）= <b>16.3 个 vol_mean</b>。这套 ATR 化层距单位在该产品上等于没有缓冲——这次停在 19.08 靠的是它恰好停在那里，而它一天能跌 24%。若按外部源 18.68 计，缓冲几乎为零。</li>
+  <li><b>收益/风险 ≈ 1:20。</b>按 1% 公式估，这笔权利金约 19 HKD（100 份 × 1.9 元/份）；一旦被行权，接 1,868 HKD 的货，再跌 20% 即浮亏约 374 HKD。收 19、扛 374 —— 对这个日波动 17~28% 的产品，「再跌 20%」不是尾部，是一天的事。</li>
+  <li><b>2x 每日再平衡的路径依赖才是「接刀」的真义。</b>被行权后接到的<b>不是标的，是 2x 产品份额</b>：标的涨回原位，产品未必涨回去（波动损耗）。低买策略默认的剧本是「接货 → 等反弹 → 解套」，这个假设在 2x 上失效——<b>一旦接到，解套难度是标的本身的平方级</b>。所以正确的说法是：本次未被行权，代价为零；但下次若发生，代价是非线性的。</li>
+</ol>
+<p><b>附带一个账本空洞：</b>id12 的 <code>premium_per_share</code> / <code>note</code> 皆为 <code>null</code>、<code>cash_flow_est = 0</code>。也就是说「我们赚到了权利金」这句话<b>在数据上无法证实</b>——台账里它是 0 元，低买侧的 put 腿连权利金字段都没落。这与蓝军 #3 的口径污染是同一个洞。</p>
+</div>
+<svg viewBox="0 0 680 210" xmlns="http://www.w3.org/2000/svg">
+  <text x="20" y="22" fill="#e6edf3" font-size="13" font-weight="bold">07709.HK 三个交易日 −40%（系统日线 vs 新闻印证）</text>
+  <g>
+    <line x1="70" y1="170" x2="640" y2="170" stroke="#2d333b"/>
+    <polyline points="100,40 260,88 420,92 580,158" fill="none" stroke="#3fb950" stroke-width="3"/>
+    <line x1="70" y1="162" x2="640" y2="162" stroke="#f85149" stroke-width="1.5" stroke-dasharray="6 4"/>
+    <text x="76" y="177" fill="#f85149" font-size="11">strike 18.6788 —— 到期未被行权（收 19.08 高出 2.04%；外源 18.68 仅高出 0.008%，几乎贴线）</text>
+    <g fill="#3fb950">
+      <circle cx="100" cy="40" r="5"/><circle cx="260" cy="88" r="5"/><circle cx="420" cy="92" r="5"/><circle cx="580" cy="158" r="5"/>
+    </g>
+    <g font-size="11" fill="#8b949e">
+      <text x="82" y="30">10-12 收 31.82</text>
+      <text x="238" y="112">10-13 −17.2%（开盘，智通财经）</text>
+      <text x="400" y="80">10-14（窗口缺失）</text>
+      <text x="530" y="150">10-15 收 19.08（外源 18.68，−24.3%）</text>
+    </g>
+    <text x="240" y="192" fill="#f85149" font-size="11">韩国 KOSPI 两日两度熔断 · SK海力士单日 −10% · 外资年内净卖出韩股 1,415 亿美元（韩国交易所 10-14 数据）</text>
+  </g>
+</svg>
+
+<h3>#7 成本模型失真</h3>
+<p>12 行低买里 5 行期权腿 <code>fees=null</code>；现货腿港股按比例估、美股定额 2.0；分层卖出止盈腿 80.485×300 竟无费用字段。所有「净利」数字系统性偏高。对信号台账这尚可容忍，但一旦这套账本被用作实盘化的依据，成本假设会直接转化为虚假的净收益预期。</p>
+
+<h3>#8 alpha 还是 beta？</h3>
+<p>拆开本期仅有的两段「盈利叙事」：TLT 止盈（10-15）发生在 AI 股抛售引发的避险脉冲日（TLT +1.47%，Tickeron）；07709/MOL 的触发全部由韩国熔断级事件驱动。策略的每一分入账都长在宏观事件的土壤上——<b>目前没有任何一条证据能把「策略 alpha」从「事件 beta」里剥出来</b>。要剥离，需要：同标的同时段 buy&amp;hold 基线、触发日与非触发日的对照组、以及至少覆盖一个完整利率周期的样本。唯一对红军有利的原始对比：TLT 分批建仓加权成本 77.35，比 9-11 直接买入（81.39）便宜 <b class="up">+5.0%</b>——但这也要等基线面板才能定论。</p>
+
+<div class="verdict">
+<h3>对抗收敛：三个目标不可兼得</h3>
+<p><b>普适性（跨标的少改配置即可用）、更小回撤（尾部可控）、更大收益（吃满深跌反弹与高 IV 权利金）</b>——三者构成 CAP 式约束：</p>
+<ul style="padding-left:22px">
+  <li>要普适 → 参数必须抽象统一 → 放弃对个别标的调优 → 收益弹性受损；</li>
+  <li>要回撤小 → 加门槛、砍杠杆 → 必然错过部分深跌后的最佳接货点 → 收益受损；</li>
+  <li>要收益大 → 保留 L3 无条件加倍 + 高 IV 卖权 → 尾部敞口放大 → 回撤受损。</li>
+</ul>
+<p>以下每个方案都写明它牺牲了什么。没有全绿选项。</p>
+</div>
+
+<h2 class="conv">三、改进方案与帕累托前沿</h2>
+
+<h3>3.1 五个候选方案</h3>
+<table>
+<tr><th>#</th><th>方案（一句话）</th><th>改动路径</th><th>普适</th><th>回撤</th><th>收益</th><th>牺牲 ⟨X⟩ 换 ⟨Y⟩</th><th>成本/副作用</th><th>验证方式</th></tr>
+<tr>
+  <td>P1</td><td><b>台账口径修复</b>：price 语义列化、现金流分 cash_in/cash_out、EXPIRE 行记留存权利金、行权归宿落账</td>
+  <td><code>service/liq_arb_trade.go</code>、<code>service/tiered_sell_trade.go</code>、两表加 <code>price_semantics</code>/<code>cash_in</code>/<code>cash_out</code>/<code>settle_action</code> 列（AutoMigrate 平滑加列，无需补录）</td>
+  <td><span class="score s-pos">+2</span></td><td><span class="score s-pos">+1</span></td><td><span class="score s-zero">0</span></td>
+  <td>牺牲一个迭代周期，换取账本可信（一切后续优化的地基）</td>
+  <td>纯工程，无双轨；存量行语义由腿/action 推导回填</td>
+  <td>SQL 抽查：直加总与分列加总差异归零</td>
+</tr>
+<tr>
+  <td>P2</td><td><b>权利金改实时 mid</b>：废弃 strike×≈0.95% 估值器，SELL_CALL 下单时取期权链真实 bid/ask 中值</td>
+  <td><code>service/tiered_sell_trade.go</code> 权利金估算函数接 Tiger 期权链快照；估值兜底改 IV 驱动（BS 近似），系数不再与 strike 挂钩</td>
+  <td><span class="score s-zero">0</span></td><td><span class="score s-zero">0</span></td><td><span class="score s-pos">+2</span></td>
+  <td>牺牲接口依赖与限流成本（Tiger 快照配额），换取定价真实性（收益数字从幻觉变可执行）</td>
+  <td>低；需处理链查询失败回退；历史 6 行权利金为估值，标注后保留不补录</td>
+  <td>估值 vs 真实 mid 的偏差分布收窄到 1 倍价差内；样本 ≥20 笔</td>
+</tr>
+<tr>
+  <td>P3</td><td><b>层距模板化 + 杠杆产品准入</b>：ATR 系数 1/2/4 从锁死改为按标的类型模板；每日杠杆 ETF 默认禁入或层距×2 且仅允许 L1/L2</td>
+  <td><code>pkg/arbitrage/vol_mean.go</code> 系数改为 <code>map[assetClass][]float64</code>；universe 构建（service/search.go AllSupportStock 链路）增加 assetClass 标注</td>
+  <td><span class="score s-pos">+1</span></td><td><span class="score s-pos">+1</span></td><td><span class="score s-neg">−1</span></td>
+  <td>牺牲深跌场景的收益弹性（少接一段刀），换取跨资产普适与更平的回撤曲线</td>
+  <td>中；杠杆产品存量信号（07709 id12）需人工确认处置；无双轨</td>
+  <td>同触发样本下最大连续层级触发深度下降；观察期 ≥1 个季度、≥30 个触发样本</td>
+</tr>
+<tr>
+  <td>P4</td><td><b>L3 三重门槛</b>：加倍层需同时满足 IV 分位 ≥70%、标的自高点回撤 ≥20%、本轮资金占用 ≤ 上限</td>
+  <td><code>service/liq_arb_trade.go</code> L3 触发判定增加前置条件；需新增标的 IV 分位缓存（Redis，复用 volbreak 模式）</td>
+  <td><span class="score s-neg">−1</span></td><td><span class="score s-pos">+2</span></td><td><span class="score s-neg">−1</span></td>
+  <td>牺牲收益上限（牛市急跌一步到位时接不满），换取尾部回撤收敛</td>
+  <td>中；引入新数据依赖（IV 分位）；错过 10-01 TLT 那类深跌承接机会的概率上升</td>
+  <td>对照期最大回撤 / Calmar 显著改善；至少跨一次加息落地事件</td>
+</tr>
+<tr>
+  <td>P5</td><td><b>影子基线双轨</b>：每标的同期 buy&amp;hold + 等额定投基线自动入账，信号台账 vs 实盘小仓位对照</td>
+  <td>新表 <code>baseline_track</code>（symbol/date/bh_close/dca_nav），触发时同步写入；<code>liq_arb_trade</code> 加 <code>baseline_ref</code> 外键列</td>
+  <td><span class="score s-pos">+1</span></td><td><span class="score s-zero">0</span></td><td><span class="score s-pos">+1</span></td>
+  <td>牺牲两周工程与数据存储，换取「alpha vs beta」的可判定性（决策信息本身即收益）</td>
+  <td>低；影子账本无资金风险；实盘小仓位需富途通道（可后置）</td>
+  <td>信息比率 / 相对 buy&amp;hold 超额的显著性检验；观察期 ≥1 个季度</td>
+</tr>
+</table>
+
+<h3>3.2 帕累托前沿</h3>
+<svg viewBox="0 0 680 340" xmlns="http://www.w3.org/2000/svg">
+  <rect x="70" y="20" width="580" height="270" fill="#161b22" stroke="#2d333b" rx="8"/>
+  <line x1="70" y1="290" x2="650" y2="290" stroke="#2d333b"/>
+  <line x1="70" y1="20" x2="70" y2="290" stroke="#2d333b"/>
+  <text x="360" y="320" fill="#8b949e" font-size="12">普适性 →（−2 低 ~ +2 高）</text>
+  <text x="20" y="160" fill="#8b949e" font-size="12" transform="rotate(-90 20 160)">收益潜力 →</text>
+  <g font-size="10" fill="#4b5563">
+    <text x="100" y="288">-2</text><text x="220" y="288">-1</text><text x="352" y="288">0</text><text x="484" y="288">+1</text><text x="612" y="288">+2</text>
+  </g>
+  <!-- status quo -->
+  <circle cx="352" cy="185" r="14" fill="#8b949e" opacity="0.35"/>
+  <text x="300" y="212" fill="#8b949e" font-size="11">现状（口径失真，收益不可知）</text>
+  <!-- points: cx = 352 + score*132, cy = 155 - scoreY*45 -->
+  <circle cx="616" cy="155" r="16" fill="#3fb950" opacity="0.85"/><text x="596" y="122" fill="#3fb950" font-size="11" font-weight="bold">P1 口径修复</text>
+  <circle cx="352" cy="65" r="12" fill="#d29922" opacity="0.9"/><text x="368" y="60" fill="#d29922" font-size="11" font-weight="bold">P2 实时权利金</text>
+  <circle cx="484" cy="110" r="18" fill="#58a6ff" opacity="0.8"/><text x="452" y="80" fill="#58a6ff" font-size="11" font-weight="bold">P3 层距模板+杠杆准入</text>
+  <circle cx="220" cy="110" r="22" fill="#f85149" opacity="0.75"/><text x="120" y="72" fill="#f85149" font-size="11" font-weight="bold">P4 L3三重门槛</text>
+  <circle cx="484" cy="65" r="14" fill="#bc8cff" opacity="0.85"/><text x="504" y="52" fill="#bc8cff" font-size="11" font-weight="bold">P5 影子基线</text>
+  <path d="M 616 155 Q 560 90 484 65 Q 430 50 352 65" fill="none" stroke="#d29922" stroke-dasharray="5 4" stroke-width="1.5"/>
+  <text x="430" y="255" fill="#8b949e" font-size="11">点越大/越红 = 回撤改善越强（P4 回撤 +2 最大）；虚线 = 本周期推荐组合 P1→P3→P2 的推进前沿</text>
+</svg>
+<p class="caption">横轴普适性、纵轴收益潜力、点大小/颜色编码回撤改善幅度。P1 是一切的地基（不改善收益但让收益变得可度量）；P2 与 P5 在收益轴占优；P4 用收益换回撤，处于前沿的「防守端」。</p>
+
+<h3>3.3 本周期推荐组合（明确写出放弃了什么）</h3>
+<div class="panel">
+<p><b>推荐：P1 + P2 立即落地，P3 随下一个策略迭代，P4/P5 挂起观察一个季度（积累 ≥30 个触发样本再议）。</b></p>
+<ol class="tight">
+  <li><b>P1（台账口径修复）</b>先行：没有可信的账本，任何收益讨论都是对着哈哈镜举铁。</li>
+  <li><b>P2（实时权利金）</b>消灭本期最大幻觉——「年化 358%」这类数字必须从系统里绝迹。</li>
+  <li><b>P3（层距模板 + 杠杆 ETF 准入）</b>：07709 三日 −40% 是一次<b>未被行权</b>的尾部压力测试——缓冲仅 0.86 个 vol_mean，而单日跌幅是 16.3 个（错配 19 倍），收益/风险 ≈ 1:20；这次运气站在我们这边，下次未必。准入门槛要解决的不是「这次亏了多少」（是 0），而是「2x 产品上『接货等反弹』的默认剧本失效」这个结构性错配。</li>
+</ol>
+<p><b>这个组合放弃了：</b>① 放弃 L3 无条件加倍的收益弹性（P4 被挂起，尾部敞口暂不收紧——我们选择先看清账本再刹车，而不是先刹车再看清路）；② 放弃 07709 这类 2x 产品的完整 L1-L4 收益上限（只留 L1/L2 或禁入）；③ 放弃「本期数据足以证明策略有效」的叙事权——在基线面板（P5）建好之前，官方口径是「证据不足，且知」。</p>
+<p class="conf">验证里程碑：P1/P2 上线后 2 周内做数据抽查；P3 上线后跟踪一个季度，指标 = 触发胜率（Wilson 区间）、最大回撤、Calmar、相对 buy&amp;hold 超额、权利金估值偏差分布。</p>
+</div>
+
+<h2>附录 A · 低买台账明细（12 行，修正口径）</h2>
+<table>
+<tr><th>id</th><th>日期</th><th>标的</th><th>腿</th><th>qty</th><th>price</th><th>语义</th><th>名义</th><th>现金流</th><th>费用</th><th>核验</th></tr>
+<tr><td>1</td><td>09-01</td><td>09615</td><td><span class="tag opt">L1 Put</span></td><td>1张</td><td>99.176</td><td>strike</td><td>9,918</td><td>0*</td><td>null</td><td class="muted">无窗口</td></tr>
+<tr><td>2</td><td>09-01</td><td>00625</td><td><span class="tag opt">L1 Put</span></td><td>1张</td><td>45.08</td><td>strike</td><td>4,508</td><td>0*</td><td>null</td><td class="muted">无窗口</td></tr>
+<tr><td>3</td><td>09-03</td><td>09615</td><td><span class="tag spot">L2 现货</span></td><td>100股</td><td>93.85</td><td>成交价</td><td>9,385</td><td>−9,385</td><td>59.39</td><td class="muted">无窗口</td></tr>
+<tr><td>4</td><td>09-03</td><td>00625</td><td><span class="tag spot">L2 现货</span></td><td>100股</td><td>42.82</td><td>成交价</td><td>4,282</td><td>−4,282</td><td>54.28</td><td class="muted">无窗口</td></tr>
+<tr><td>6</td><td>09-04</td><td>00625</td><td><span class="tag spot">L3 现货2x</span></td><td>200股</td><td>40.66</td><td>成交价</td><td>8,132</td><td>−8,132</td><td>58.13</td><td class="muted">无窗口</td></tr>
+<tr><td>7</td><td>09-07</td><td>02041</td><td><span class="tag opt">L1 Put</span></td><td>1张</td><td>8.526</td><td>strike(计算值)</td><td>853</td><td>0*</td><td>null</td><td class="muted">无窗口</td></tr>
+<tr><td>8</td><td>09-11</td><td>TLT</td><td><span class="tag opt">L1 Put</span></td><td>1张</td><td>79.00</td><td>strike</td><td>7,900</td><td>+52（mid 0.52）</td><td>null</td><td>✅ 触发成立 / <span class="down">行权概率&gt;90% 待落账</span></td></tr>
+<tr><td>9</td><td>09-11</td><td>03993</td><td><span class="tag opt">L1 Put</span></td><td>1张</td><td>14.50</td><td>strike</td><td>1,450</td><td>+43（mid 0.43）</td><td>null</td><td>✅ 触发成立</td></tr>
+<tr><td>10</td><td>09-29</td><td>TLT</td><td><span class="tag spot">L2 现货</span></td><td>100股</td><td>78.14</td><td>成交价</td><td>7,814</td><td>−7,814</td><td>2.00</td><td>✅ 偏离 −0.15%</td></tr>
+<tr><td>11</td><td>10-01</td><td>TLT</td><td><span class="tag spot">L3 现货2x</span></td><td>200股</td><td>76.955</td><td>成交价</td><td>15,391</td><td>−15,391</td><td>2.00</td><td>✅ 偏离 −0.03%</td></tr>
+<tr><td>12</td><td>10-15</td><td>07709.HK</td><td><span class="tag opt">L1 Put</span></td><td>1张</td><td>18.6788</td><td>strike(计算值)</td><td>1,868</td><td>0*</td><td>null</td><td>✅ 触发成立；到期未被行权（收 19.08/18.68 &gt; strike）</td></tr>
+<tr><td>13</td><td>10-15</td><td>TLT</td><td><span class="tag spot">L2止盈</span></td><td>300股</td><td>80.485</td><td>成交价</td><td>24,146</td><td>+24,146</td><td>未记录</td><td>✅ 偏离 +0.55%（vs 外部收盘 80.05）</td></tr>
+</table>
+<p class="muted" style="font-size:12px">* 期权腿无 mid 记录时现金流记 0，属低估而非真实为零。02041 前期高点 15.42 → 触发日 8.70（−43.6%），为全样本最深跌幅事件。</p>
+
+<h2>附录 B · 分层卖出台账明细（7 行）</h2>
+<table>
+<tr><th>id</th><th>日期</th><th>标的</th><th>action</th><th>strike</th><th>到期</th><th>DTE</th><th>权利金(估值)</th><th>p/s</th><th>年化</th><th>核验</th></tr>
+<tr><td>T1</td><td>09-17</td><td>BRK.B</td><td><span class="tag opt">SELL_CALL</span></td><td>530</td><td>09-18</td><td>1</td><td>520.23</td><td>0.982%</td><td class="down">358.3%*</td><td>✅ 到期虚值作废（T2，现价 511.57）</td></tr>
+<tr><td>T2</td><td>09-18</td><td>BRK.B</td><td><span class="tag exp">EXPIRE_OTM</span></td><td>530</td><td>09-18</td><td>—</td><td>—</td><td>—</td><td>—</td><td class="down">⚠ cash_flow_est=511.57 为现价语义（口径污染）</td></tr>
+<tr><td>T3</td><td>09-30</td><td>ASML</td><td><span class="tag opt">SELL_CALL</span></td><td>1,960</td><td>11-20</td><td>51</td><td>1,824.78</td><td>0.931%</td><td>6.7%*</td><td>✅ 触发价公式反解 ATR% 3.20%</td></tr>
+<tr><td>T4</td><td>09-30</td><td>NVDA</td><td><span class="tag opt">SELL_CALL</span></td><td>245</td><td>11-20</td><td>51</td><td>231.87</td><td>0.946%</td><td>6.8%*</td><td>✅ 同上 2.26%</td></tr>
+<tr><td>T5</td><td>10-02</td><td>OXY</td><td><span class="tag opt">SELL_CALL</span></td><td>62.5</td><td>11-20</td><td>49</td><td>57.75</td><td>0.924%</td><td>6.9%*</td><td>✅ 同上 3.27%</td></tr>
+<tr><td>T6</td><td>10-06</td><td>PDD</td><td><span class="tag opt">SELL_CALL</span></td><td>82.5</td><td>12-18</td><td>73</td><td>77.80</td><td>0.943%</td><td>4.7%*</td><td>✅ 同上 2.22%</td></tr>
+<tr><td>T7</td><td>10-06</td><td>BRK.B</td><td><span class="tag opt">SELL_CALL</span></td><td>530</td><td>12-18</td><td>73</td><td>507.12</td><td>0.957%</td><td>4.8%*</td><td>✅ 同上 1.19%</td></tr>
+</table>
+<p class="muted" style="font-size:12px">* 全部 6 笔 Call 权利金均为「预估」公式值（premium/strike 齐落 0.92%~0.98% 带），年化数字是估值链的产物，不代表市场可实现收益。T1 年化 358% 为 1 天 DTE 与固定估值带相除的假象。至 10-12：ASML 1,769.91 / NVDA 227.72 / OXY 61.37 / PDD 80.64 / BRK.B 513.61，5 笔存续 Call 全部处于虚值（贴不远），被行权风险暂低。</p>
+
+<h2>附录 C · 数据与方法声明</h2>
+<div class="panel">
+<p>· 取数：<code>redblue_weekly_fetch.py --days 7</code>，只读账号 trading_read，全程 SELECT，生成于 2026-10-17 18:56；共 79 条 ±5 交易日日线窗口。</p>
+<p>· 金额口径：期权腿 price=strike、现货腿 price=成交/通知价、SELL_CALL price=权利金总额；报告内已按 <code>price_semantics</code> 派生字段修正。</p>
+<p>· ATR 为近似值：stock_price 仅存收盘价，无 OHLC，故用 strike 公式反解与收盘价日变动近似，非真实 ATR14；结论仅用于量级判断。</p>
+<p>· 外部行情引用：智通财经/新浪财经（07709，10-13/10-15）、Tickeron（TLT 10-15 收 80.05）、GuruFocus（TLT 10-14 收 77.90）、Pluang（TLT 10-07 收 76.91）、Adalytica（TLT 10-16 收 79.97）、韩国交易所外资净卖出数据（经智通财经转引）。均为 2026-10-13 ~ 10-16 时点。</p>
+<p>· 免责：本报告为系统内信号台账的复盘研究，全部交易为 bark_notify 信号、未真实下单；不构成投资建议。</p>
+</div>
+
+<div class="foot">
+低买/分层卖出 红蓝对抗周报 · 2026-10-17 期 · automation-1792168039095 · 报告文件自包含，可离线阅读
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+  <meta name="theme-color" content="#F2F2F7"/>
+  <title>Stock Detect — X 舆情报告</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <div id="navbar"></div>
+  <div class="wrap">
+    <div id="content"><div class="loading"><div class="loading-spinner"></div><span>加载报告中…</span></div></div>
+    <p class="footer">
+      仅供研究参考，不构成投资建议。
+      <a href="https://github.com/quadraticrain/stock-detect">数据来源</a>
+    </p>
+  </div>
+  <script>
+    window.STOCK_DETECT = {
+      mode: "report",
+      homeUrl: "index.html",
+      defaultAccount: "aleabitoreddit",
+      windowDays: 63
+    };
+  </script>
+  <script src="app.js"></script>
+</body>
+</html>

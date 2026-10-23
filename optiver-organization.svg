@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 620" role="img" aria-label="Optiver organization chart">
+  <defs>
+    <style type="text/css"><![CDATA[
+      .box { fill: #f3effa; stroke: #8b7ab8; stroke-width: 1.5; }
+      .title { font: 700 15px "PingFang SC", "Microsoft YaHei", Arial, sans-serif; fill: #1a1a1a; }
+      .sub { font: 400 12px "PingFang SC", "Microsoft YaHei", Arial, sans-serif; fill: #444444; }
+      .line { fill: none; stroke: #666666; stroke-width: 1.5; }
+    ]]></style>
+  </defs>
+
+  <rect width="1100" height="620" fill="#fafafa"/>
+
+  <rect class="box" x="400" y="20" width="300" height="64" rx="6"/>
+  <text class="title" x="550" y="48" text-anchor="middle">Optiver</text>
+  <text class="sub" x="550" y="68" text-anchor="middle">全球做市商 · 科技驱动的交易公司</text>
+
+  <path class="line" d="M550,84 L550,110"/>
+  <path class="line" d="M110,110 L990,110"/>
+  <path class="line" d="M110,110 L110,130"/>
+  <path class="line" d="M330,110 L330,130"/>
+  <path class="line" d="M550,110 L550,130"/>
+  <path class="line" d="M770,110 L770,130"/>
+  <path class="line" d="M990,110 L990,130"/>
+
+  <rect class="box" x="20" y="130" width="180" height="72" rx="6"/>
+  <text class="title" x="110" y="158" text-anchor="middle">域 1 · 做市与交易</text>
+  <text class="sub" x="110" y="180" text-anchor="middle">Market-making / Trading</text>
+
+  <rect class="box" x="240" y="130" width="180" height="72" rx="6"/>
+  <text class="title" x="330" y="158" text-anchor="middle">域 2 · 技术</text>
+  <text class="sub" x="330" y="180" text-anchor="middle">Technology</text>
+
+  <rect class="box" x="460" y="130" width="180" height="72" rx="6"/>
+  <text class="title" x="550" y="158" text-anchor="middle">域 3 · 量化研究 / 数据科学</text>
+  <text class="sub" x="550" y="180" text-anchor="middle">Research / Data Science</text>
+
+  <rect class="box" x="680" y="130" width="180" height="72" rx="6"/>
+  <text class="title" x="770" y="152" text-anchor="middle">域 4 · 合规导向的</text>
+  <text class="title" x="770" y="170" text-anchor="middle">风控与管控</text>
+  <text class="sub" x="770" y="190" text-anchor="middle">Control and Risk Management</text>
+
+  <rect class="box" x="900" y="130" width="180" height="72" rx="6"/>
+  <text class="title" x="990" y="158" text-anchor="middle">域 5 · 人力与业务运营</text>
+  <text class="sub" x="990" y="180" text-anchor="middle">Business Operations</text>
+
+  <path class="line" d="M770,202 L770,230"/>
+  <path class="line" d="M110,230 L990,230"/>
+  <path class="line" d="M110,230 L110,250"/>
+  <path class="line" d="M330,230 L330,250"/>
+  <path class="line" d="M550,230 L550,250"/>
+  <path class="line" d="M770,230 L770,250"/>
+  <path class="line" d="M990,230 L990,250"/>
+
+  <rect class="box" x="20" y="250" width="180" height="64" rx="6"/>
+  <text class="title" x="110" y="278" text-anchor="middle">市场风险</text>
+  <text class="sub" x="110" y="298" text-anchor="middle">Market risk</text>
+
+  <rect class="box" x="240" y="250" width="180" height="64" rx="6"/>
+  <text class="title" x="330" y="278" text-anchor="middle">自动化交易风险</text>
+  <text class="sub" x="330" y="298" text-anchor="middle">Automated trading risk</text>
+
+  <rect class="box" x="460" y="250" width="180" height="64" rx="6"/>
+  <text class="title" x="550" y="278" text-anchor="middle">操作风险管理</text>
+  <text class="sub" x="550" y="298" text-anchor="middle">Operational risk management</text>
+
+  <rect class="box" x="680" y="250" width="180" height="64" rx="6"/>
+  <text class="title" x="770" y="278" text-anchor="middle">合规</text>
+  <text class="sub" x="770" y="298" text-anchor="middle">Compliance</text>
+
+  <rect class="box" x="900" y="250" width="180" height="64" rx="6"/>
+  <text class="title" x="990" y="278" text-anchor="middle">管控</text>
+  <text class="sub" x="990" y="298" text-anchor="middle">Control</text>
+</svg>

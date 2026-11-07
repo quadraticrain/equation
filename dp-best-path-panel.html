@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>期权备兑最优路径</title>
+  <style>
+    :root {
+      --bg: #fafafa; --surface: #fff; --border: #f0f0f0;
+      --text: rgba(0,0,0,0.88); --muted: rgba(0,0,0,0.45);
+      --accent: #1677ff; --success: #52c41a; --warn: #faad14; --danger: #ff4d4f;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", sans-serif;
+      background: var(--bg); color: var(--text); font-size: 13px; line-height: 1.5; overflow: hidden; }
+    .wrap { padding: 4px 0 8px; }
+    .loading, .error, .empty { padding: 12px; text-align: center; color: var(--muted); }
+    .error { color: var(--danger); }
+    .empty { color: var(--warn); }
+    .stats { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 8px; margin-bottom: 12px; }
+    .stat { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 8px 10px; }
+    .stat .label { font-size: 11px; color: var(--muted); }
+    .stat .value { font-size: 14px; font-weight: 600; margin-top: 2px; word-break: break-all; }
+    .stat .value.positive { color: var(--success); }
+    .stat .value.negative { color: var(--danger); }
+    h3 { font-size: 13px; margin: 12px 0 8px; font-weight: 600; }
+    h4 { font-size: 12px; margin: 10px 0 6px; font-weight: 600; color: var(--text); }
+    table { width: 100%; max-width: 100%; table-layout: fixed; border-collapse: collapse; background: var(--surface); border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
+    th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--border); white-space: normal; overflow-wrap: anywhere; word-break: break-word; }
+    th { background: #fafafa; color: var(--muted); font-weight: 500; font-size: 12px; }
+    td { font-size: 12px; }
+    a { color: var(--accent); }
+    .toolbar { display: flex; justify-content: space-between; gap: 8px; margin-bottom: 8px; align-items: center; flex-wrap: wrap; }
+    .toolbar-left { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+    .toolbar label { font-size: 12px; color: var(--muted); }
+    .toolbar select { min-width: 220px; max-width: 100%; padding: 4px 8px; font-size: 12px; border: 1px solid var(--border); border-radius: 6px; background: var(--surface); }
+    .toolbar button, .pager button { padding: 4px 12px; font-size: 12px; border: 1px solid var(--border); border-radius: 6px;
+      background: var(--surface); cursor: pointer; }
+    .toolbar button:hover, .pager button:hover { border-color: var(--accent); color: var(--accent); }
+    .toolbar button:disabled, .pager button:disabled { cursor: not-allowed; color: var(--muted); background: #f5f5f5; }
+    .pager { display: flex; gap: 8px; align-items: center; justify-content: flex-end; margin: 8px 0; color: var(--muted); font-size: 12px; flex-wrap: wrap; }
+    .muted { color: var(--muted); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="toolbar">
+      <div class="toolbar-left">
+        <label for="run-id-select">批次 Run ID</label>
+        <select id="run-id-select" disabled><option value="">加载中…</option></select>
+      </div>
+      <button type="button" id="btn-refresh">刷新</button>
+    </div>
+    <div id="status" class="loading">加载中…</div>
+    <div id="content" hidden></div>
+  </div>
+  <script>
+    function apiBase() {
+      const h = window.location.hostname;
+      if (h === 'localhost' || h === '127.0.0.1' || h === '') return 'http://localhost:64480';
+      return 'https://quadraticequation.top';
+    }
+    function token() {
+      return new URLSearchParams(location.search).get('token') || '';
+    }
+    const PAGE_SIZE = 15;
+    const searchParams = () => new URLSearchParams(location.search);
+    let currentPage = Number(searchParams().get('page') || 1) || 1;
+    let currentRunId = searchParams().get('run_id') || '';
+    const fmtMoney = (v) => v == null ? '—' : '$' + Number(v).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    const fmtPct = (v) => v == null ? '—' : Number(v).toFixed(2) + '%';
+    const esc = (s) => String(s ?? '—').replace(/&/g,'&amp;').replace(/</g,'&lt;');
+    const escLines = (lines) => (lines || []).map(esc).join('<br>');
+    const qty = (s) => Number(s?.contract_quantity ?? s?.option_quantity ?? s?.quantity ?? 0) || (String(s?.action || '').startsWith('sell_') ? 1 : 0);
+
+    function syncUrlParams() {
+      const params = searchParams();
+      if (currentRunId) params.set('run_id', currentRunId);
+      else params.delete('run_id');
+      if (currentPage > 1) params.set('page', String(currentPage));
+      else params.delete('page');
+      const query = params.toString();
+      const nextUrl = query ? `${location.pathname}?${query}` : location.pathname;
+      history.replaceState(null, '', nextUrl);
+    }
+
+    function runOptionLabel(run) {
+      const runId = run?.run_id || '—';
+      const createdAt = run?.created_at ? `｜${run.created_at}` : '';
+      const pnl = run?.total_pnl == null ? '' : `｜${fmtMoney(run.total_pnl)}`;
+      return `${runId}${createdAt}${pnl}`;
+    }
+
+    function renderRunSelector(recentRuns, selectedRunId) {
+      const select = document.getElementById('run-id-select');
+      const runs = recentRuns || [];
+      if (!runs.length) {
+        select.innerHTML = '<option value="">暂无批次</option>';
+        select.disabled = true;
+        return;
+      }
+      const seen = new Set();
+      const options = [];
+      for (const run of runs) {
+        const runId = run?.run_id;
+        if (!runId || seen.has(runId)) continue;
+        seen.add(runId);
+        options.push(`<option value="${esc(runId)}"${runId === selectedRunId ? ' selected' : ''}>${esc(runOptionLabel(run))}</option>`);
+      }
+      if (selectedRunId && !seen.has(selectedRunId)) {
+        options.unshift(`<option value="${esc(selectedRunId)}" selected>${esc(selectedRunId)}（当前）</option>`);
+      }
+      select.innerHTML = options.join('');
+      select.disabled = options.length <= 1;
+    }
+
+    function buildApiUrl() {
+      const params = new URLSearchParams({
+        page: String(currentPage),
+        page_size: String(PAGE_SIZE),
+      });
+      if (currentRunId) params.set('run_id', currentRunId);
+      return `${apiBase()}/api/subscribe/dp-best-path?${params.toString()}`;
+    }
+
+    function dailySellLines(dailySellCount) {
+      const data = dailySellCount || {};
+      const sellDays = Object.keys(data).sort();
+      if (!sellDays.length) return ['无卖出记录'];
+      return sellDays.map(d => `${d}: ${data[d]}张`);
+    }
+
+    function optionLabel(s) {
+      const symbol = s?.option_symbol || s?.optionSymbol;
+      if (symbol) return symbol;
+      if (s?.symbol && s?.contract_id) return `${s.symbol}#${s.contract_id}`;
+      return s?.symbol || s?.contract_id || '未知期权';
+    }
+
+    function dailyActionLines(dailyActions, dailySellCountFallback) {
+      const actions = dailyActions || [];
+      if (!actions.length) return dailySellLines(dailySellCountFallback);
+      return actions.map(day => {
+        if (day.action === 'hold') return `${day.date}: hold`;
+        const options = (day.options || []).filter(s => String(s.action || '').startsWith('sell_'));
+        if (!options.length) return `${day.date}: 卖出 ${day.total_quantity ?? 0}张`;
+        return `${day.date}: ` + options.map(s => `${optionLabel(s)}×${qty(s)}`).join(', ');
+      });
+    }
+
+    function renderOptionSellRows(options) {
+      let html = '';
+      for (const s of options || []) {
+        const quantity = qty(s);
+        html += `<tr><td>${esc(s.step_no)}</td><td>${esc(s.step_date || s.date)}</td><td>${esc(s.action)}</td><td>${esc(s.symbol)}</td>
+          <td>${quantity ? esc(quantity) + '张' : '—'}</td><td>${esc(s.option_symbol)}</td><td>${esc(s.put_call)}</td><td>${esc(s.strike_price)}</td><td>${esc(s.expiry_date)}</td>
+          <td>${esc(s.sim_fill_price_avg)}</td><td>${esc(s.underlying_price_avg)}</td></tr>`;
+      }
+      return html;
+    }
+
+    function renderDailySells(dailySells) {
+      if (!dailySells || !dailySells.length) return '<p class="empty">没有卖出期权步骤。</p>';
+      let html = '';
+      for (const day of dailySells) {
+        html += `<h4>${esc(day.date)}｜卖出 ${esc(day.total_quantity ?? 0)} 张</h4>`;
+        html += '<table><thead><tr><th>#</th><th>日期</th><th>动作</th><th>标的</th><th>卖出数量</th><th>期权代码</th><th>方向</th><th>行权价</th><th>到期</th><th>权利金</th><th>正股价</th></tr></thead><tbody>';
+        html += renderOptionSellRows(day.options || []);
+        html += '</tbody></table>';
+      }
+      return html;
+    }
+
+    function renderDailyActions(dailyActions, dailySellsFallback) {
+      const actions = dailyActions || [];
+      if (!actions.length) return renderDailySells(dailySellsFallback || []);
+      let html = '';
+      for (const day of actions) {
+        const isHold = day.action === 'hold';
+        const title = isHold ? `${esc(day.date)}｜hold 持有 / 不操作` : `${esc(day.date)}｜卖出 ${esc(day.total_quantity ?? 0)} 张`;
+        html += `<h4>${title}</h4>`;
+        html += '<table><thead><tr><th>#</th><th>日期</th><th>动作</th><th>标的</th><th>卖出数量</th><th>期权代码</th><th>方向</th><th>行权价</th><th>到期</th><th>权利金</th><th>正股价</th></tr></thead><tbody>';
+        html += renderOptionSellRows(day.options || []);
+        html += '</tbody></table>';
+      }
+      return html;
+    }
+
+    function renderStepsTable(steps) {
+      if (!steps || !steps.length) return '<p class="empty">path_steps 为空。</p>';
+      let html = '<table><thead><tr><th>#</th><th>日期</th><th>动作</th><th>标的</th><th>卖出数量</th><th>期权代码</th><th>方向</th><th>行权价</th><th>到期</th><th>权利金</th><th>正股价</th></tr></thead><tbody>';
+      html += renderOptionSellRows(steps);
+      html += '</tbody></table>';
+      return html;
+    }
+
+
+    function notifyHeight() {
+      const height = Math.max(
+        document.body.scrollHeight,
+        document.documentElement.scrollHeight,
+        document.body.offsetHeight,
+        document.documentElement.offsetHeight
+      );
+      window.parent?.postMessage({ type: 'dp-best-path-panel-height', height }, window.location.origin);
+    }
+
+    if ('ResizeObserver' in window) {
+      const observer = new ResizeObserver(() => notifyHeight());
+      observer.observe(document.body);
+    }
+    window.addEventListener('load', notifyHeight);
+
+    function renderPager(p) {
+      if (!p) return '';
+      const totalPages = Number(p.total_pages || 0);
+      const page = Number(p.page || currentPage || 1);
+      const total = Number(p.total || 0);
+      const disabledPrev = !p.has_prev ? ' disabled' : '';
+      const disabledNext = !p.has_next ? ' disabled' : '';
+      return `<div class="pager"><span>Run ID: ${esc(p.run_id || '—')}</span><span>第 ${esc(page)} / ${esc(totalPages || 1)} 页</span><span>共 ${esc(total)} 条，每页 ${esc(p.page_size || PAGE_SIZE)} 条</span><button type="button" data-page="${page - 1}"${disabledPrev}>上一页</button><button type="button" data-page="${page + 1}"${disabledNext}>下一页</button></div>`;
+    }
+
+    async function load(page = currentPage, runId = currentRunId) {
+      currentPage = Math.max(1, Number(page) || 1);
+      currentRunId = runId || '';
+      syncUrlParams();
+      const status = document.getElementById('status');
+      const content = document.getElementById('content');
+      status.className = 'loading';
+      status.textContent = '加载中…';
+      status.hidden = false;
+      content.hidden = true;
+      try {
+        const res = await fetch(buildApiUrl(), {
+          headers: { Authorization: 'Bearer ' + token(), 'Cache-Control': 'no-cache' },
+          mode: 'cors', credentials: 'omit', cache: 'no-store',
+        });
+        const body = await res.json();
+        if (!res.ok || body.code !== 200) {
+          throw new Error(body.message || ('HTTP ' + res.status));
+        }
+        render(body.data || {});
+        status.hidden = true;
+        content.hidden = false;
+      } catch (e) {
+        status.className = 'error';
+        status.textContent = e.message || '加载失败';
+        notifyHeight();
+      }
+    }
+
+    function render(data) {
+      const gb = data.global_best;
+      const steps = data.path_steps || [];
+      const top99 = data.top_99 || [];
+      const recent = data.recent_runs || [];
+      const pagination = data.top_paths_pagination || {};
+      const selectedRunId = data.selected_run_id || data.top_paths_run_id || gb?.run_id || currentRunId || '';
+      currentRunId = selectedRunId;
+      renderRunSelector(recent, selectedRunId);
+      syncUrlParams();
+      let html = '';
+
+      if (!gb && !top99.length) {
+        document.getElementById('content').innerHTML = '<p class="empty">暂无路径记录。</p>';
+        notifyHeight();
+        return;
+      }
+
+      if (gb) {
+        const pnlClass = gb.total_pnl > 0 ? 'positive' : gb.total_pnl < 0 ? 'negative' : '';
+        html += `<div class="stats">
+          <div class="stat"><div class="label">Run ID</div><div class="value">${esc(gb.run_id)}</div></div>
+          <div class="stat"><div class="label">Shard Key</div><div class="value" style="font-size:11px">${esc(gb.candidate_shard_key || '-')}</div></div>
+          <div class="stat"><div class="label">交易日</div><div class="value">${esc(gb.trade_days ?? '-')}</div></div>
+          <div class="stat"><div class="label">区间</div><div class="value" style="font-size:12px">${esc(gb.start_date)} → ${esc(gb.end_date)}</div></div>
+          <div class="stat"><div class="label">总盈亏</div><div class="value ${pnlClass}">${fmtMoney(gb.total_pnl)}</div></div>
+          <div class="stat"><div class="label">收益率</div><div class="value">${fmtPct(gb.total_return_pct)}</div></div>
+          <div class="stat"><div class="label">Leaf Paths</div><div class="value">${esc(gb.leaf_paths ?? '-')}</div></div>
+          <div class="stat"><div class="label">Workers</div><div class="value">${esc(gb.workers ?? '-')}</div></div>
+          <div class="stat"><div class="label">耗时(s)</div><div class="value">${esc(gb.elapsed_s ?? '-')}</div></div>
+          <div class="stat"><div class="label">更新时间</div><div class="value" style="font-size:11px">${esc(gb.created_at)}</div></div>
+        </div>`;
+        if (gb.github_run_url) html += `<p><a href="${esc(gb.github_run_url)}" target="_blank" rel="noopener">GitHub Actions Run</a></p>`;
+        html += '<h3>Global Best｜完整 path_steps</h3>';
+        html += renderStepsTable(steps);
+      } else {
+        html += `<div class="stats"><div class="stat"><div class="label">Top 路径 Run ID</div><div class="value">${esc(data.top_paths_run_id)}</div></div></div>`;
+      }
+
+      if (top99.length) {
+        html += `<h3>批次 Top 路径${selectedRunId ? `（${esc(selectedRunId)}）` : ''}</h3>`;
+        html += '<p class="muted">按所选 best_investment_run.run_id 查询 best_investment_path，按 rank_num 正序分页；每日操作摘要含 hold 持有/不操作与期权代码。</p>';
+        html += renderPager(pagination);
+        html += '<table><thead><tr><th>排名</th><th>区间</th><th>盈亏</th><th>收益率</th><th>每日操作 / 期权代码</th></tr></thead><tbody>';
+        for (const t of top99) {
+          html += `<tr><td>${t.rank_num}</td><td style="font-size:11px">${esc(t.start_date)} → ${esc(t.end_date)}</td><td>${fmtMoney(t.total_pnl)}</td><td>${fmtPct(t.total_return_pct)}</td><td style="font-size:11px; line-height:1.7">${escLines(dailyActionLines(t.daily_actions || [], t.daily_sell_count))}</td></tr>`;
+        }
+        html += '</tbody></table>';
+      } else {
+        html += '<p class="empty">暂无 Top-99 数据。</p>';
+      }
+
+      document.getElementById('content').innerHTML = html;
+      document.querySelectorAll('[data-page]').forEach(btn => {
+        btn.addEventListener('click', () => load(Number(btn.dataset.page)));
+      });
+      notifyHeight();
+    }
+
+    document.getElementById('btn-refresh').addEventListener('click', () => load(currentPage, currentRunId));
+    document.getElementById('run-id-select').addEventListener('change', (event) => {
+      load(1, event.target.value || '');
+    });
+    load(currentPage, currentRunId);
+  </script>
+</body>
+</html>

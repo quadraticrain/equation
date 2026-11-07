@@ -1,0 +1,10 @@
+{
+  "latest": "institution-holdings-report-2026-11-07.html",
+  "updated": "20261107a",
+  "versions": [
+    { "file": "institution-holdings-report-2026-11-07.html", "label": "第 4 期 (2026-11-07)", "date": "2026-11-07" },
+    { "file": "institution-holdings-report-2026-10-31.html", "label": "第 3 期 (2026-10-31)", "date": "2026-10-31" },
+    { "file": "institution-holdings-report-2026-10-24.html", "label": "第 2 期 (2026-10-24)", "date": "2026-10-24" },
+    { "file": "institution-holdings-report-2026-10-17.html", "label": "第 1 期 (2026-10-17)", "date": "2026-10-17" }
+  ]
+}

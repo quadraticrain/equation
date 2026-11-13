@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>XTX Markets 做市策略周报 v4（2026-10-30）</title>
+  <style>
+    :root {
+      --bg: #f5f6f8; --card: #fff; --text: #1a1a2e; --muted: #6b7280;
+      --border: #e5e7eb; --primary: #0e7490; --success: #389e0d; --warning: #d48806;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
+      background: var(--bg); color: var(--text); line-height: 1.7; font-size: 17px;
+    }
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 24px 16px 80px; }
+    header {
+      background: linear-gradient(135deg, #0f172a 0%, #134e4a 100%);
+      color: #fff; padding: 32px 24px; border-radius: 12px; margin-bottom: 20px;
+    }
+    header h1 { margin: 0 0 8px; font-size: 1.85rem; font-weight: 600; line-height: 1.3; }
+    header p { margin: 0 0 6px; opacity: 0.92; font-size: 1rem; }
+    .badge {
+      display: inline-block; padding: 3px 12px; border-radius: 999px; font-size: 13px;
+      background: rgba(255,255,255,0.14); margin-right: 8px; margin-top: 12px;
+    }
+    nav.toc {
+      background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+      padding: 14px 18px; margin-bottom: 20px; font-size: 16px;
+    }
+    nav.toc a { color: var(--primary); text-decoration: none; margin-right: 14px; }
+    nav.toc a:hover { text-decoration: underline; }
+    section {
+      background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+      padding: 20px 24px; margin-bottom: 18px;
+    }
+    h2 { margin: 0 0 14px; font-size: 1.3rem; border-left: 4px solid var(--primary); padding-left: 12px; line-height: 1.35; }
+    h3 { margin: 16px 0 8px; font-size: 1.12rem; color: #374151; line-height: 1.4; }
+    p { font-size: 16px; }
+    ul, ol { margin: 8px 0; padding-left: 22px; font-size: 16px; }
+    li { margin-bottom: 7px; font-size: 16px; }
+    table { width: 100%; border-collapse: collapse; font-size: 16px; margin: 10px 0; }
+    th, td { border: 1px solid var(--border); padding: 9px 11px; text-align: left; vertical-align: top; }
+    th { background: #f9fafb; font-weight: 600; }
+    tr:nth-child(even) td { background: #fafafa; }
+    .tag { display: inline-block; padding: 1px 8px; border-radius: 4px; font-size: 13px; font-weight: 500; }
+    .tag-ok { background: #d9f7be; color: #135200; }
+    .tag-warn { background: #ffe58f; color: #874d00; }
+    .tag-tech { background: #cffafe; color: #155e75; }
+    .tag-fin { background: #e6f4ff; color: #0958d9; }
+    .tag-new { background: #ffd6e7; color: #9d2152; }
+    .callout { border-radius: 8px; padding: 13px 15px; margin: 12px 0; font-size: 16px; }
+    .callout-info { background: #ecfeff; border-left: 4px solid var(--primary); }
+    .callout-warn { background: #fffbe6; border-left: 4px solid var(--warning); }
+    .timeline { list-style: none; padding: 0; margin: 0; }
+    .timeline li { padding: 11px 0 11px 18px; border-left: 2px solid var(--border); margin-left: 8px; }
+    .timeline .date { font-size: 13px; color: var(--muted); }
+    .timeline .title { font-weight: 600; margin: 3px 0; font-size: 16px; }
+    .timeline .desc { font-size: 16px; color: #4b5563; }
+    a { color: var(--primary); }
+    footer { text-align: center; color: var(--muted); font-size: 14px; padding: 22px 0; line-height: 1.7; }
+    .version-nav {
+      background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px;
+      padding: 12px 16px; margin-bottom: 16px; font-size: 16px;
+    }
+    .version-nav strong { color: #166534; }
+    .version-nav a { color: #166534; margin-right: 16px; }
+    @media (max-width: 768px) {
+      .wrap { max-width: 100%; padding: 0 0 72px; }
+      header { border-radius: 0; padding: 20px 10px; margin-bottom: 12px; }
+      nav.toc {
+        border-radius: 0; border-left: none; border-right: none;
+        padding: 12px 10px; margin-bottom: 12px;
+      }
+      section {
+        border-radius: 0; border-left: none; border-right: none;
+        padding: 14px 10px; margin-bottom: 12px;
+      }
+      h2 { padding-left: 10px; }
+      table { font-size: 14px; }
+      th, td { padding: 6px 8px; }
+      th:first-child, td:first-child { padding-left: 6px; }
+      th:last-child, td:last-child { padding-right: 6px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="version-nav" id="version-nav"></div>
+
+    <header>
+      <h1>XTX Markets 做市策略周报</h1>
+      <p><strong>第 4 期</strong> · 数据截止 2026-10-30 · 每周五 09:01 由 WorkBuddy AI 定时任务重新生成</p>
+      <p style="opacity:0.8;font-size:14px">公开信息整理，不构成投资建议。覆盖：XTX Markets 做市策略 / 技术体系 / 财务数据 / Alexander Gerko 动态，并对公开叙述做信息交叉验证与数学模型合理性检验</p>
+      <span class="badge">v4.0</span>
+      <span class="badge">静态页</span>
+      <span class="badge">全球算法做市商</span>
+    </header>
+
+    <nav class="toc">
+      <strong>目录</strong>
+      <a href="#summary">本期结论</a>
+      <a href="#profile">公司与人物</a>
+      <a href="#focus">本期焦点</a>
+      <a href="#strategy">做市策略拆解</a>
+      <a href="#math">数学模型合理性检验</a>
+      <a href="#financials">财务与规模数据</a>
+      <a href="#blind">数据盲区</a>
+      <a href="#refs">参考链接</a>
+    </nav>
+
+    <section id="summary">
+      <h2>本期结论</h2>
+      <ol>
+        <li><strong>本期最重要直接新事件：10-27 XTX 公布 AIMO 关闭后的第二批数学资助，方向从「工具」转向「人」。</strong>官网公告（10-27）：<strong>£500 万</strong>在伦敦帝国理工学院设立 <strong>Langlands Lab</strong>（由 Kevin Buzzard 教授领导，4 年内支持 5 名博士生 + 3 名博士后，2027 年启动、首批博士生同年入学，成果用 Lean 验证，并将试验「团队署名发表」）；<strong>£50 万</strong>给国际数学科学中心（ICMS，爱丁堡大学与赫瑞瓦特大学合办），用于摸底英国数学家的 AI 使用与培训需求，其中最多 <strong>£20 万</strong>用于算力；<strong>$17 万</strong>给 Convergent Research，试做面向数学家的在线研究工作台。帝国理工官网同日发布独立公告确认金额与实验室架构 <span class="tag tag-ok">已核验（XTX 官网 + Imperial 官网双源，日期/金额/人名一致）</span>。这是 9-16 AIMO 关闭公告中「first in a series of new grants」之后的<strong>第二批</strong>，资助逻辑从「买开源基础设施（Lean FRO / Mathlib）」延伸到「改造博士训练与评价范式」。</li>
+        <li><strong>本周第二条硬信息：Bloomberg 10-22 专题把「算力」确立为做市商的新竞争轴，XTX 卡亚尼首座数据中心「年内上线」。</strong>Bloomberg《Jane Street and Rivals Are Now Fighting for AI Power as Well as Pace》（Katherine Doherty / Dina Bass / Justina Lee，10-23 发布）：XTX 在芬兰卡亚尼建成 €10 亿（约 $11 亿）数据中心，<strong>预计年底前上线</strong>，紧邻的第二座 2027 年投运；行业受访高管称头部做市商算力支出已达 ChatGPT 前的 <strong>10–20 倍</strong>；Jane Street 向 CoreWeave 投资 $10 亿 + 承诺 $60 亿算力采购，另与 Crusoe 签 $130 亿五年云合同；HRT 每年 AI 支出 $10 亿；Optiver CEO Jan Boomaars 称「不参与这场游戏，就很难留在系统性做市里」 <span class="tag tag-ok">已核验（Bloomberg 原创 + 至少 4 家独立转述：the-decoder / pivotnews / goldenera / emergent）</span>。</li>
+        <li><strong>本周最关键的反向信号：Rosenblatt 欧洲 9 月报告显示 XTX SI 市场份额下滑。</strong>Rosenblatt《Let There Be Light: European Edition》（10-16，9 月数据）原文：「Hudson River Trading SI widened its lead over Citadel Connect Europe, Jane Street JX-EU and <strong>XTX SI, which all lost market share</strong>」；同月欧股 SI 整体份额环比 <strong>-38bp</strong>，连续竞价 lit 份额跌至 MiFID II 以来纪录低位，而欧洲 ADVT 环比 <strong>+8.47%</strong>、同比 +17.97% 至 €830.5 亿 <span class="tag tag-ok">已核验（Rosenblatt 报告页原文）</span>。这是「连续六年五冠」叙事之外，本报告首次采集到 XTX 核心主场份额流失的硬数据；报告未给降幅数字（付费墙），只能确认<strong>方向为负</strong>。</li>
+        <li><strong>业绩坐标系需要修正：Q3 2026 是低波动、低活动季度，v3 的「行业高景气」读数被高估。</strong>Flow Traders 10-29 发布 Q3：净交易收入 €8,450 万（环比 <strong>-43%</strong>）、净利 €640 万（环比 <strong>-84%</strong>）、EBITDA 率 20%（Q2 为 43%）、交易资本回报率 30%（Q2 为 53%），当季平均 VIX 仅 <strong>16.0</strong>（Q2 18.3、Q1 20.3），股价当日跌约 9–10%。CEO Thomas Spitz 直言「本季财务表现令人失望」 <span class="tag tag-ok">已核验（公司公告 + TradeInformer / Investing.com / ideal-investisseur 三方）</span>。这意味着 v3 用「Jane Street Q3 +18% 同比」推出的行业景气判断必须降级：<strong>2025 Q3 同样是低波动季度（Flow Traders 当季传统 NTI 仅 €4,230 万），同比被低基数放大，环比才反映真实收缩</strong>。这是本报告对上一期的自我修正。</li>
+        <li><strong>财务基线补全：v3 遗留的「Gerko 分红 £6.83 亿年份冲突」已解决。</strong>FT 报道（经星岛日报 10-12、上海证券报/东方财富 10-12 等多源转述）：XTX 2025 年向 Gerko 派发分红 <strong>£8.95 亿</strong>，较 2024 年的 <strong>£6.83 亿</strong>增长 31%；另有 <strong>23 名</strong>核心量化分析师与开发者共分 <strong>£8.33 亿</strong>，人均约 <strong>£3,620 万</strong>；公司 2025 年将约 £17 亿利润分配给创始人与核心团队。两笔数字满足 683 × 1.31 ≈ 895 的算术关系，年份归属冲突由此消解：<strong>£6.83 亿属 2024 年，£8.95 亿属 2025 年</strong> <span class="tag tag-ok">已核验（FT 原始 + 3 家以上独立转述 + 算术自洽）</span>。</li>
+        <li><strong>Companies House 与官网口径：双双无变动。</strong>Technologies Ltd 最新 filing 仍为 10-02 的 CS01 确认声明（无变更），2025 年报（4-02）为最新财务披露，2026 年中期依旧零披露。10-30 直接抓取官网首页：$2,500 亿日成交 / 25,000+ GPU / 1 EB+ 存储 / 53,000+ 工具 / 35 国 / 300 员工 / £4 亿公益——<strong>连续第三周零变动</strong>，可确认为改版后的稳定口径而非持续演进。</li>
+      </ol>
+      <div class="callout callout-info">
+        <strong>读法提示：</strong>本期覆盖 10-23 至 10-30，是 v1 以来信息密度最高的一期：①一条直接新事件（10-27 资助）；②一条行业级深度报道（Bloomberg 算力专题）；③一条对我方叙事不利的硬数据（Rosenblatt 显示 XTX SI 份额下滑）；④一条对行业景气判断的修正（Flow Traders Q3）；⑤一条遗留盲区的闭合（分红年份）。<strong>本期最重要的判断变化是：XTX 的竞争壁垒正在从「模型」向「资本开支」迁移，而资本开支是竞对可以照抄的——Optiver、Tower、Jane Street 全都在自建。下一观察窗口：①卡亚尼首座 DC 的官方投运公告（Bloomberg 口径为「年底前」，需 XTX 自己确认）；②10 月欧洲 SI 份额数据（验证 9 月的下滑是一次性还是趋势）；③XTY Labs 纽约 AI Lab 的论文/招聘口径变化；④2026 年报（预计 2027 年中）。</strong>
+      </div>
+    </section>
+
+    <section id="profile">
+      <h2>公司与人物简介（★ = 本期更新）</h2>
+      <table>
+        <tr><th style="width:130px">项目</th><th>内容</th></tr>
+        <tr><td>XTX Markets</td><td>2015 年创立的算法做市商，总部伦敦。用机器学习对股票、固定收益、外汇、大宗商品、加密货币 5.3 万余种工具生成价格预测，在交易所与另类交易场所交易，并向客户直接提供流动性。无外部投资人，属 XTX Holdings（开曼注册、英国税务居民）集团</td></tr>
+        <tr><td>Alexander Gerko</td><td>创始人，1979 年生于莫斯科，莫斯科国立大学数学博士（交换代数 / 同调维数方向），新经济学院经济学硕士。2004 年入德意志银行做股票 / 外汇量化，2009 年至 GSA Capital 主管外汇交易，2015 年分拆创立 XTX。持公司约 <strong>75%</strong> 股份，英国最大纳税人之一；GSA 时期 HFFX 基金递延薪酬税案（£2,250 万）经最高法院五名法官一致裁定 HMRC 胜诉。★分红口径落地：2025 年分红 <strong>£8.95 亿</strong>（2024 年 £6.83 亿，+31%）；★<strong>单源待核实</strong>：个人投资载体名为 <strong>Cromulon Capital</strong>（取自《瑞克和莫蒂》），PitchBook 口径其天使投资已涉 64 家公司</td></tr>
+        <tr><td>组织形态</td><td>官网口径 300 名员工；无传统人工交易员，全部报价 / 撤单由 ML 模型自动完成。纽约 AI Lab 为 XTY Labs（2024 年成立，Hudson Yards，Research Director Atlas Wang，UT Austin 教授休假加入）。★<strong>办公城市增至 8 个</strong>：伦敦 / 纽约 / 新加坡 / 巴黎 / 布里斯托 / 孟买 / 埃里温 / <strong>卡亚尼</strong>（芬兰，招聘页口径）</td></tr>
+        <tr><td>★数据中心组织化</td><td>招聘页出现独立的 <strong>Datacentre</strong> 职能线：芬兰在招「Quality Engineer, Data Center Operations」「Datacentre Operations Specialist」，新加坡在招「Datacentre Operations Engineer」。这是芬兰园区从「土建/机电」转入「运营编制」的第一条公开招聘证据，与 Bloomberg「年底前上线」口径互相咬合 <span class="tag tag-ok">已核验（官网招聘页 + 第三方招聘聚合站交叉）</span></td></tr>
+        <tr><td>关键地位</td><td>2025 年 Rosenblatt 榜 ELP 系统化内部撮合商（SI）第一名（近六年五度登顶，2026-01 官宣）；★<strong>但 9 月单月份额下滑</strong>（Rosenblatt 10-16，见本期焦点）；外汇 2021 Euromoney 6.69%（第四）后官方榜单口径不可比；2020 年首家进入中国银行间外汇市场的境外非银做市商</td></tr>
+        <tr><td>技术设施</td><td>官网口径（10-30 复核）：1 EB+ 可用存储、25,000+ GPU、$250bn 日成交、35 国、300 员工——连续三周零变动。★招聘页仍写「25,000+ GPU、<strong>650 PB</strong> 可用存储」（2026-06-30 更新），与首页 1 EB+ 并存未同步。芬兰 Kajaani 园区：规划 5 座、投资 &gt;€10 亿，首座 15,000㎡ / 22.5MW，Bloomberg 口径「年底前上线」</td></tr>
+        <tr><td>AI 风投版图</td><td>官网 Ventures 专页：Seed 到 Series B+，组合含 <strong>Anthropic</strong>、<strong>Groq（退出→Nvidia）</strong>、Tenstorrent、Wayve、Vast Data、Prior Labs（退出→SAP）、Proxima Fusion、X-Energy 等。★星岛日报口径为「至少 <strong>35 家</strong>」，与官网/上期「40+ 家」不一致，未裁决。★<strong>新增风险侧</strong>：Citadel Securities 10-27 研报警告 AI 资本开支已「没有容错空间」（见数学检验 4）</td></tr>
+        <tr><td>公益</td><td>官网口径累计承诺 &gt;£4 亿维持（2020 年起）。★新增分层口径：其中向英国数学类慈善与教育机构承诺 <strong>&gt;£9,000 万</strong>（edtechinnovationhub 引 XTX 口径）。★AIMO 关闭（9-16）后两年路线落地：第一批（9-16）$1,000 万 Lean FRO + $1,000 万 Mathlib Initiative + SAIR 三项竞赛；<strong>第二批（10-27）Langlands Lab £500 万 + ICMS £50 万 + Convergent Research $17 万</strong></td></tr>
+      </table>
+    </section>
+
+    <section id="focus">
+      <h2>本期焦点：第二批数学资助落地 + 算力军备赛道确认 + XTX SI 份额首次转负 + Q3 低波动证伪「高景气」</h2>
+      <p style="margin-top:0">本期四条主线互不相同却互相咬合：一条公益（资助范式升级）、一条行业（算力成为竞争轴）、一条对我方不利（份额）、一条修正我方判断（景气读数）。</p>
+      <ul class="timeline">
+        <li>
+          <div class="date">2026-10-27（本期核心新事件）</div>
+          <div class="title">XTX 公布第二批 AI-for-maths 资助：£550 万 + $17 万，首次直接资助「博士训练范式」 <span class="tag tag-new">本期新增</span></div>
+          <div class="desc">官网公告题为「Following the update on our AI for maths philanthropy… the <strong>second</strong> in a series of new grants」。三项：①<strong>£500 万</strong>设立帝国理工 <strong>Langlands Lab</strong>（Kevin Buzzard 教授领导，聚焦 Langlands 纲领，成果用 Lean 形式化验证；4 年支持 5 名博士生 + 3 名博士后；2027 年启动、首批博士生同年 10 月入学；配套「大量 AI 算力」、外部学者访问与工作坊）。Buzzard 的表述是本期最值得记录的一手观点：「AI 正在改变数学研究的含义，我们需要重新思考如何培养下一代数学家……博士生将被要求在不借助 AI 的情况下解释并辩护自己的结果，然后才承担研究产出责任。」②<strong>£50 万</strong>给 ICMS（爱丁堡 / 赫瑞瓦特合办），摸底英国数学家的 AI 使用与培训需求，含最多 £20 万算力预算。③<strong>$17 万</strong>给 Convergent Research，试做集成多模态推理、形式化工具、研究 agent、写作排版于一体的在线研究工作台。<strong>读法：</strong>第一批（9-16）买的是「基础设施」（Lean FRO / Mathlib / SAIR 竞赛），第二批买的是「人」（博士训练、评价方式、团队署名）——这是从「工具层」上移到「制度层」，也意味着资助不再有排行榜式可验证产出，外部可核验度下降。</div>
+        </li>
+        <li>
+          <div class="date">2026-10-22 / 10-23</div>
+          <div class="title">Bloomberg 专题：做市商从「拼纳秒」转向「拼算力」，XTX 卡亚尼首座年底上线 <span class="tag tag-new">本期新增</span></div>
+          <div class="desc">《Jane Street and Rivals Are Now Fighting for AI Power as Well as Pace》（10-23 10:00 UTC 发布，10-22 上线）。XTX 侧：卡亚尼 €10 亿（$11 亿）数据中心，<strong>预计年底前上线</strong>，紧邻第二座 2027 年投运。行业侧：某高管称头部做市商算力支出为 ChatGPT 前的 <strong>10–20 倍</strong>；Jane Street 在德州自建机房（56 个液冷机柜 / 4,000+ 张 Nvidia GPU，数千公里内部光纤），向 CoreWeave 投 $10 亿 + 承诺 $60 亿采购，与 Crusoe 签 $130 亿五年合同，领投 Etched（估值 $210 亿）；HRT 每年 AI 支出 $10 亿，用挪威 Lefdal 矿井（峡湾水冷却），已签 CoreWeave 多年期与 Lambda 协议；Tower Research 自建未披露机房，CIO John Cogman 称「供给有限」；Susquehanna 在投波浪能浮动数据中心。<strong>最关键的一句是 Optiver CEO Jan Boomaars 的</strong>：「如果不参与这场游戏，就很难继续留在当今做市所必需的那些更系统化的策略里」；以及「只依赖云会贵得多，而且你无法掌控自己的命运——我们必须掌控自己的算力基础设施」。<strong>这句话同时为 XTX 的自建选择提供了第三方背书，也说明自建已非差异化而是入场券。</strong></div>
+        </li>
+        <li>
+          <div class="date">2026-10-16（9 月数据，本期首次采集）</div>
+          <div class="title">Rosenblatt：XTX SI 9 月份额下滑，HRT SI 扩大领先 <span class="tag tag-warn">对既定叙事不利</span></div>
+          <div class="desc">Rosenblatt《Let There Be Light: European Edition》9 月号：<strong>HRT SI 扩大了相对 Citadel Connect Europe、Jane Street JX-EU 与 XTX SI 的领先，后三者均丢失市场份额</strong>。同月欧洲股票 ADVT 环比 +8.47%、同比 +17.97% 至 €830.5 亿（暑期后回升），VSTOXX 均值 17.78（环比 +11.59%）；结构上收盘集合竞价 +204bp、开盘竞价 +18bp、OTC +9bp 抢份额，<strong>连续竞价 lit -211bp 创 MiFID II 以来新低</strong>，SI 整体 -38bp，周期拍卖 -21bp；大额交易（LIS）占暗池成交比重降至 MiFID II 生效以来最低。月内最小两家 SI（Tower Europe、Virtu）ADVT 反而双位数增长。<strong>读法：</strong>量在涨、SI 总份额在缩、XTX 在缩得更多。这与「连续六年五冠」的年报叙事并不矛盾（年度排名可以仍第一而单月份额下滑），但它是本报告迄今采集到的<strong>第一份指向 XTX 主场份额转向的第三方数据</strong>，须列入持续跟踪项，且不得据此推断趋势（单月、无数字、付费墙）。</div>
+        </li>
+        <li>
+          <div class="date">2026-10-29</div>
+          <div class="title">Flow Traders Q3：净利环比 -84%，VIX 回落至 16.0 —— Q3 是低波动季度 <span class="tag tag-new">修正上期判断</span></div>
+          <div class="desc">净交易收入 €8,450 万（环比 -43%，同比则由 €4,230 万升至 €7,080 万，传统业务 +67%）；数字资产 NTI €1,380 万（环比 -15%，同比 -62%）；总支出 €6,890 万（环比 -18%，主因可变薪酬从 €2,450 万降至 €410 万）；EBITDA €1,750 万、利润率 20%；净利 €640 万（环比 -84%）；ROTC 30%（Q2 53%、去年同期 37%）；交易资本 €11.37 亿。全年固定成本指引维持 €2.35–2.45 亿。CEO 称「本季财务表现令人失望」，但强调 Horizon 2030（NTI &gt;€10 亿、EBITDA 率 &gt;45%）不变，并称 2026 与 2027 上半年为过渡期、投入回报从 2027 下半年体现在 NTI。市场 ETF 成交额环比 -6% 至 €20.55 万亿，ETF 周转率同比 -10%——<strong>资产在涨（全球 ETF AUM €21.1 万亿，同比 +33%）但成交在缩</strong>，这是做市商营收承压的结构性原因。</div>
+        </li>
+        <li>
+          <div class="date">2026-10-12（FT 报道，本期补全）</div>
+          <div class="title">分红口径落地：Gerko £8.95 亿（2025）、23 人共分 £8.33 亿，v3 的年份冲突消解 <span class="tag tag-new">补全 v3 盲区</span></div>
+          <div class="desc">FT 报道经星岛日报、上海证券报 / 东方财富、香港经济日报等多源转述：2025 年 XTX 向 Gerko 派发 <strong>£8.95 亿</strong>，较 2024 年 <strong>£6.83 亿</strong>增 31%；23 名核心量化分析师与开发者共分 <strong>£8.33 亿</strong>（人均近 £3,620 万）；公司 2025 年把约 £17 亿利润分配给创始人及核心团队；英国实体 2025 年税后利润 £17 亿（同比 +33%）、营业收入增 44% 至 £39 亿。v3 记录的「gate.com 称 2025、jawlah 称 2024」之争由此判定：<strong>两说各对一半，£6.83 亿是 2024、£8.95 亿是 2025</strong>。注意 44% vs 本报告基线 43%（£39.336 亿）为四舍五入差，非新数据。</div>
+        </li>
+        <li>
+          <div class="date">2026-10-02（本期复核，无变更）</div>
+          <div class="title">Companies House：仍无新财务披露 <span class="tag tag-ok">已核验</span></div>
+          <div class="desc">XTX Markets Technologies Ltd（12300034）最新 filing 为 10-02 的 CS01 确认声明（2026-10-01 制作，无更新）；财务披露仍为 4-02 提交的 2025 全年报表（36 页）。下一个可能的信息点是 2026 年中期分红 filing 或 2027 年 4 月的 2026 年报。</div>
+        </li>
+      </ul>
+      <div class="callout callout-warn">
+        <strong>风险与噪声提示：</strong>①Bloomberg 为付费墙媒体，本期经 4 家独立二手源交叉（the-decoder / pivotnews / goldenera / emergent），核心数字一致，但「算力支出 10–20 倍」是<strong>单一匿名高管估计</strong>，不是统计口径，不得当作测量值引用；②「Jane Street 去年净交易收入近 $400 亿」为二手转述，与本报告 v3 记录的「2026 前三季 &gt;$240 亿」在数学上不相容，二者至少一错，本期均不作锚点（见数据盲区）；③Rosenblatt 只披露方向不披露降幅，不得量化演绎「XTX 失去第一名」；④Langlands Lab 的 £500 万中，「significant compute」无金额，勿折算为 GPU 数；⑤AI for Math Fund 存在 $37m 与 $35.1m 两个官方口径，未裁决；⑥中文媒体仍在用「250 人 / 400PB」旧口径，与官网 300 人 / 1EB+ 不符，交叉验证时须以官网直抓为准。本报告仅客观呈现公开信息，不构成投资建议。
+      </div>
+    </section>
+
+    <section id="strategy">
+      <h2>做市策略拆解（基于公开信息）</h2>
+      <h3>1. 反延迟军备竞赛：「拼大脑，不拼神经末梢」——但赛道已被改写</h3>
+      <ul>
+        <li>Gerko 长期公开游说不参与微秒军备、支持 speed bumps，竞争焦点放在短周期价格预测精度。本期无其本人新表态，基线维持。</li>
+        <li>★<strong>但本期 Bloomberg 专题给这条叙事加了一个重要限定</strong>：全行业已经接受「算力 &gt; 纯延迟」的新竞争轴（10–20 倍支出增长、Optiver 把美国自建模式复制到欧亚、Tower/Susquehanna 各自找路径）。XTX「不拼延迟」的差异化优势因此<strong>不再独特</strong>——它先把资源押在算力与模型上，如今对手用资本把同一件事做了出来。<strong>结论：XTX 的领先从「策略选择领先」退化为「执行与规模领先」，可持续性依赖持续资本开支而非一次性的路径选择。</strong></li>
+      </ul>
+      <h3>2. 跨资产交叉信号：官方首次给出模型族谱系 <span class="tag tag-tech">本期新增证据</span></h3>
+      <ul>
+        <li>官网 XTY Labs 招聘文案（2026-06-30 更新）罕见地写明了模型演进路径：<em>「The models that drive our trading strategies have evolved considerably over the last 10 years, from econometric methods that gave our company its name, to trees, to neural networks, to modern deep learning architectures.」</em>——计量经济学（XTX 之名即来自「X Transact」式的计量起点）→ 树模型 → 神经网络 → 现代深度学习。<strong>这是目前唯一可引的、XTX 官方对自身模型族的谱系描述</strong>，仍是「类别」而非「结构」，无参数、无损失函数、无特征清单。</li>
+        <li>工程口径（同页，可核验）：模型从 <strong>MATLAB 原型</strong>进入生产，覆盖「近 <strong>100 家交易所</strong>、数万工具」；行情单源可达每秒数十 Gb；OTC 做市系统「讲约 <strong>100 种行情与交易协议</strong>」、每秒产生数百万事件；post-trade 核心平台以 <strong>Go</strong> 为主，交易侧 C++ / Python。<strong>读法：</strong>这些是「管道能力」而非「预测能力」的证据——它解释了 5.3 万工具 / 35 国如何被同一套系统承载，但不构成对预测精度的任何证明。</li>
+        <li>XTY Labs 的公开研究议程（Atlas Wang 多次演讲）：金融时序数值型「基础模型」、把市场数据当作「新型模态」、<strong>neural scaling laws on market data</strong>、持续学习与 regime drift。★本期无新增技术口径（10-01/02 IFML 演讲仍未放出文本）。</li>
+      </ul>
+      <h3>3. 风险吸收型做市：报价即库存管理——9 月出现第一个负面读数</h3>
+      <ul>
+        <li>欧洲 SI 2025 全年 €1,770 亿（+50%）、日均 €6.93 亿、2025-04 单月 €10.2 亿纪录（2026-01 官宣）基线维持，10 月无新 SI 数据。</li>
+        <li>★<strong>9 月单月：XTX SI 份额下滑，HRT SI 扩大领先</strong>（Rosenblatt 10-16）。同时欧股 SI 整体份额 -38bp、lit 创纪录低位、月度 ADVT 环比 +8.47%。这组三条放一起才有意义：<strong>成交量在涨、透明 lit 在让位、但份额流向了 HRT 而不是 XTX。</strong>可能解释（均为推测，非事实）：HRT 在 9 月的报价更激进（更窄价差换份额），或 XTX 在低波动月份主动收缩风险吸收规模以保护库存。两种解释在数据上无法区分，须等 10 月数据。</li>
+        <li>★<strong>与「风险吸收」逻辑的张力</strong>：若 XTX 确因风控主动让份额，则说明其风险吸收是「有价格弹性的」，而非无限承接——这与 v1 以来「风险吸收型做市」的强叙事形成有价值的限定。</li>
+      </ul>
+      <h3>4. 双轨执行：交易所做市 + SI 双边直连</h3>
+      <ul>
+        <li>Ritesh Saigal（全球业务发展主管）2026-01 的表态仍有效：欧洲 order-by-order 竞争结构利好非银 SI，并预期「美国场外流动性（尤其零售）的逐笔竞争将在 2026 加速」。本期无更新。</li>
+        <li>★<strong>对手在固收扩张</strong>：Citadel Securities 总裁 Jim Esposito 10-20 在自家 Future of Global Markets 会议上称「我们在固定收益才真正刚刚开始」，并称公司「maniacally focused on market making」。XTX 明确覆盖固收（5.3 万工具含 fixed income），但固收的份额、产品线、客户结构<strong>完全零披露</strong>，是本期识别出的最大结构性盲区之一。</li>
+      </ul>
+      <h3>5. 算力与人才基础设施：本期最大增量 <span class="tag tag-new">本期重点</span></h3>
+      <ul>
+        <li><strong>卡亚尼进度（多源拼图）</strong>：园区 478 英亩、规划 5 座、总投资 &gt;€10 亿；首座 15,000㎡ / 3 个数据厅 / IT 供电 22.5MW、低温空气冷却且核心运行不耗水、余热探索免费供社区；<strong>Bloomberg「年底前上线」</strong>；YIT 2026-09-25 签下<strong>第三座</strong>的内部装修、机电与调试投运合同（新阶段 2026 年末开始，金额未披露）——注意「含调试投运」不等于已投运。</li>
+        <li><strong>组织证据</strong>：招聘页出现芬兰 Datacentre 两个岗位 + 新加坡 Datacentre 一个岗位，XTX 首次为数据中心单独设岗，说明运维从外包走向自建团队。</li>
+        <li><strong>技术负责人原话（经二手转述）</strong>：Joshua Leahy 称其算力需求「已经超过可获得的租赁选项」，故须提前自建。这句话与 Boomaars 的「必须掌控自己的算力基础设施」是同一逻辑的两种表述。</li>
+        <li><strong>路线分叉（本期新洞察）</strong>：<strong>自建派</strong>（XTX / Jane Street / HRT / Tower / Optiver）vs <strong>外租派</strong>（Citadel Securities，18 个月内大幅扩大 Google TPU 使用，Google Cloud 口径为「最高快 4 倍、成本低 30%」）。这不是对错之争而是<strong>成本结构之争</strong>：自建把算力变成固定成本 + 折旧 + 长期电力合约（低边际成本、高退出成本），外租把算力变成可变成本（高单价、可弹性收缩、无技术过时风险）。在「芯片老化快」被 Bloomberg 点名为核心风险的前提下，两条路的胜负取决于<strong>算力利用率的稳定性</strong>——而这恰好是做市业务最不确定的变量。</li>
+      </ul>
+      <h3>6. 做市 + AI 风投双轮模式：本期补上风险侧 <span class="tag tag-warn">上期只讲了好的一面</span></h3>
+      <ul>
+        <li>正面（v3 已述）：官网 Ventures 组合含 Anthropic、Groq（→Nvidia）、Tenstorrent、Wayve、Vast Data、Prior Labs（→SAP）、Proxima Fusion、X-Energy 等；fnlondon 称其「striking gold with Anthropic」；Jane Street Q3 约 12% 收入来自 Anthropic 等私人公司投资，提供独立样本。</li>
+        <li>★<strong>负面（本期新增）</strong>：Citadel Securities EMEA 固收销售主管 Nohshad Shah 10-27 研报指出，市场对 AI 交易的投入规模已到「一旦巨额投入产生不了回报就几乎没有犯错空间」的地步；支撑数据：美光 + 英伟达两家合计贡献标普 500 预期盈利增长的 <strong>36%</strong>，前十大合计约 2/3，剔除前十后指数预期盈利增速从约 27% 降至约 11%。10 月已预演：费城半导体指数累计跌超 15%，某头部云服务商 10-14 单日跌逾 15%、两日内再跌约 12%。</li>
+        <li><strong>对 XTX 的传导路径（推断，非事实）</strong>：若 AI 一级/二级估值同步回撤，Ventures 组合（含 Anthropic）的<strong>账面重估收益方向会反转</strong>，而该部分在 2025 年 £39.3 亿净营收中的占比零披露。这意味着「双轮」在牛市放大利润、在回撤时放大波动，其风险特征与做市价差收益完全不同——不能用一个 Sharpe 去描述。</li>
+      </ul>
+    </section>
+
+    <section id="math">
+      <h2>数学模型合理性检验</h2>
+      <p style="margin-top:0">XTX 内部模型细节无公开来源，本节为<strong>基于公开叙述与经典做市理论的框架性核对</strong>。本期新增四项检验：算力资本开支与价差方向的一致性、SI 份额再分配的理论解释、分红池的内部矛盾、以及行业景气读数的统计口径修正。</p>
+
+      <h3>检验 1：盈利量级 sanity check（维持，0.8bp） <span class="tag tag-ok">自洽</span></h3>
+      <ul>
+        <li>$250bn × 约 250 交易日 ≈ <strong>$62.5 万亿</strong>年名义成交额；净营收 £39.336 亿 ≈ <strong>$52 亿</strong> → <strong>0.8bp</strong>，落在做市行业 0.2–1bp 区间且低于中值。本期官网口径无变动，结论不变。</li>
+        <li>反向验算（新增）：若把 Gerko 2025 年分红 £8.95 亿视为「他个人从公司取得的经济利益」，除以 75% 持股 → 隐含可分配总额 <strong>£11.93 亿</strong>；但 FT 同期口径为「£8.95 亿 + £8.33 亿 = £17.28 亿」共分配给 24 人。<strong>两个数相差 £5.35 亿，说明「分红」不是按 75% 等比例分配</strong>（合理猜测：合伙人股权与分红权分离、或 £8.33 亿包含往年留存/不同主体分配）。<strong>此项不可加总，属口径不可通约</strong>，不得据此推导「Gerko 实际持股低于 75%」——那需要 Companies House 的股东与分红决议原件，本期未获取。</li>
+        <li>年度对齐校验：2025 年净利 £17.094 亿、派息 £17.8 亿 → <strong>派息率 104%</strong>，即派息超过当年净利，动用往年留存。这与「无外部投资人、利润全部流向合伙人」的结构一致，但也意味着<strong>不能用「派息/净利」当作当年盈利能力的度量</strong>。</li>
+      </ul>
+
+      <h3>检验 2：「拼预测不拼延迟」的理论等价性（维持自洽，但优势来源已变） <span class="tag tag-tech">本期修订</span></h3>
+      <ul>
+        <li>经典框架下（Glosten–Milgrom 逆向选择 → 报价必须覆盖知情交易者的信息租金；Avellaneda–Stoikov → 最优价差随 σ²、库存与剩余时间外扩），XTX 路线压缩的是<strong>逆向选择成本</strong>而非等待成本，与风险吸收形态互为前提。v1–v3 结论维持。</li>
+        <li>★<strong>本期修订</strong>：该框架描述的是「为什么可以不做低延迟」，而不是「为什么能持续赢」。当全行业把算力支出推高 10–20 倍（Bloomberg），模型质量趋同的速度会加快，A–S 框架中唯一不可复制项<strong>从 σ 估计精度转向「单位预测精度成本」</strong>——即每 bp 价差所需的训练/推理算力成本。XTX 自建 DC 的经济意义正在这里：它买的不是更快的模型，而是<strong>更低的每单位算力成本</strong>。这也解释了 Optiver 的「必须掌控自己的算力基础设施」：这不是技术偏好，是成本曲线选择。</li>
+      </ul>
+
+      <h3>检验 3：★「算力支出爆炸」与「价差收窄」为什么能并存 <span class="tag tag-tech">新增</span></h3>
+      <ul>
+        <li><strong>表面矛盾</strong>：若做市商固定成本因算力上升，均衡价差应被推高（成本转嫁）；但 9 月观测到的是<strong>价差/份额竞争加剧</strong>（lit 份额创新低、SI 整体 -38bp、HRT 抢份额），即价差在收窄。</li>
+        <li><strong>自洽解释</strong>：算力支出是<strong>沉没的前置投入</strong>，不进入边际报价成本。做市的边际成本近似为「成交瞬间的信息损失 + 库存风险」，与训练算力无关。算力改变的是<strong>进入门槛</strong>（固定成本）而非<strong>边际成本</strong>，因此在位者的报价行为不受当期算力支出影响，反而是「已经花了钱的人必须提高成交量来摊薄固定成本」——<strong>这会推动份额竞争加剧、价差收窄</strong>，与 9 月观测一致。</li>
+        <li><strong>可证伪的推论</strong>：若上述解释成立，则算力军备的净效应是<strong>行业集中度上升 + 价差中枢下移 + 尾部风险上升</strong>（因为摊薄固定成本的压力会鼓励放大库存与风险吸收规模）。这恰好解释了 Jane Street 7 月单月 -$150 亿与 Q3 仍赚 $68.3 亿的共存形态：<strong>高固定成本结构要求更大的风险预算</strong>。此推论为理论演绎，非事实断言。</li>
+      </ul>
+
+      <h3>检验 4：★行业景气读数的统计口径修正（本期自我修正） <span class="tag tag-warn">修正 v3</span></h3>
+      <ul>
+        <li>v3 用「Jane Street Q3 净交易收入 $68.3 亿、同比 +18%」推导「行业延续高景气」。本期 Flow Traders Q3 数据（环比 -43% / 净利 -84% / VIX 16.0）表明该推断<strong>口径上有偏</strong>。</li>
+        <li><strong>正确读法</strong>：Q3 2025 本身也是低波动季度（Flow Traders 当季传统 NTI €4,230 万，为其序列低点），因此 Q3 2026 的 +67% 同比是<strong>低基数放大</strong>；环比（-43%）才反映真实的活动收缩。Jane Street 的 +18% 同比同理需要打折，且其 Q3 环比已从 Q2 纪录 $101 亿回落 33%——<strong>方向与 Flow Traders 一致，只是幅度不同</strong>。</li>
+        <li><strong>方法论结论</strong>：做市商营收对波动率的弹性极高，任何跨期比较必须先对齐 σ（VIX / VSTOXX 均值）。仅用同比会系统性高估景气。v3 的「行业高景气」应降级为「<strong>同比因低基数而虚高，环比为收缩，结构性增长（ETF 资产 +33%）与周期性收缩（周转率 -10%）并存</strong>」。这是本报告连续四周以来最重要的一次自我校准。</li>
+      </ul>
+
+      <h3>检验 5：SI 份额再分配的理论解释（本期新增，方向可证伪）</h3>
+      <ul>
+        <li><strong>观测</strong>：9 月欧股 ADVT +8.47%、SI 总份额 -38bp、lit 创新低、XTX SI 份额下滑、HRT SI 扩大领先。</li>
+        <li><strong>A–S 框架预测</strong>：σ 下降 → 最优价差收窄 → 报价竞争加剧 → 份额向「边际成本更低 / 风险预算更大」者集中。9 月 VSTOXX 17.78（环比 +11.59%，但仍属中低位），与「价差收窄、份额重分配」方向一致 <span class="tag tag-ok">理论自洽</span>。</li>
+        <li><strong>与 XTX 特性的张力</strong>：XTX 的差异化是「风险吸收 + 跨资产预测」，理论上应在低波动月份<strong>更能</strong>扩大份额（因为逆向选择成本下降）。观测相反，故有两种互斥解释：(a) HRT 报价更激进，XTX 未跟进；(b) XTX 主动收缩库存规模（风控优先于份额）。<strong>二者不可由公开数据区分，列入下期跟踪判据：若 10 月 XTX SI 份额回升 → 支持 (b) 一次性收缩；若继续下滑 → 支持 (a) 结构性失守。</strong></li>
+      </ul>
+
+      <h3>检验 6：会计口径甄别（维持并由本期数据强化）</h3>
+      <ul>
+        <li>合并净利率 43%（£17.094 亿 / £39.336 亿）、Gerko 分红占净利 52.4%（£8.95 亿 / £17.09 亿）——<strong>这些都不是「策略年化收益率」</strong>。英国三实体架构下 Technologies 主体向 Holdings 支付 IP/服务费压低了 UK 层利润率，集团真实经济利润率接近同行（Jane Street &gt;70%、HRT 59%、Citadel Securities 47%，媒体口径）。</li>
+        <li>富豪榜财富增量 £72.61 亿是<strong>股权估值重估</strong>，不是 PnL、不是现金（中文媒体也已点明「账面」）。把「一年增值 642 亿人民币」当作「年赚 642 亿」是本季度最普遍的中文报道错误。</li>
+        <li>Jane Street 约 12% Q3 收入来自 Anthropic 等私人公司投资——性质是<strong>估值变动计入收入</strong>。若 XTX 2025 年 £39.3 亿净营收含同类重估，则检验 1 的 0.8bp 是<strong>上界</strong>（剔除投资收益只会更低），结论方向不受影响，但跨年增速对比不可直接比较。</li>
+        <li>人均分红 ≠ 人均策略收益：£8.33 亿 / 23 人 ≈ £3,620 万，来自<strong>累积留存利润的分配</strong>而非当年产出，且分配口径（是否含往年留存）未披露。</li>
+      </ul>
+
+      <h3>检验 7：无法验证的部分（诚实清单）</h3>
+      <ul>
+        <li><strong>XTX 内部模型零公开。</strong>模型族、特征体系、损失函数、库存与风控约束的具体形式：无任何公开来源。本报告唯一可引的官方谱系描述是招聘页那句「econometric → trees → neural networks → modern deep learning」，属<strong>类别层面</strong>，不足以支撑任何结构断言。</li>
+        <li>凡「XTX 用 XX 模型」的具体说法（含中文媒体「同步分析 5 万种工具实时数据流、识别微观价格模式」的描写）均为<strong>第三方基于官网话术的推演</strong>，不是 XTX 的技术披露。本报告一律标注为推断。</li>
+        <li>Ventures 投入规模、Anthropic 持股量级与账面回报：零披露。fnlondon 两篇报道仍在付费墙后，本期未取得全文。</li>
+        <li>卡亚尼首座是否已通电上线：<strong>无 XTX 官方投运公告</strong>。Bloomberg 用「预计年底前」，二手源出现「built / constructed」等完成时态，YIT 只确认第三座机电合同 2026 年末开始——三者时态不一致，不得写成「已投运」。</li>
+        <li>可检验的只有外显行为与财务结果（上文 1–6 项）；凡涉及内部机制的判断，本栏继续以「外显行为核验」替代「内部模型猜测」。</li>
+      </ul>
+      <div class="callout callout-info">
+        <strong>结论：</strong>本期四项新检验中，检验 1（量级 0.8bp）维持、检验 2（理论等价性）修订为「优势来源从模型转向单位算力成本」、检验 3（算力与价差并存）通过并给出可证伪推论、检验 4（景气读数）属<strong>对 v3 的自我修正</strong>。核心数字未变，但「行业高景气」这一叙事被本期数据实质性削弱。<strong>XTX 内部模型依旧零公开；本报告不对其模型做任何断言。</strong>
+      </div>
+    </section>
+
+    <section id="financials">
+      <h2>财务与规模数据（★ = 相对上期变动）</h2>
+      <h3>英国三实体 2025 年报（Companies House，单位：百万英镑）——本期无新披露，维持基线</h3>
+      <table>
+        <tr><th>KPI</th><th>Technologies</th><th>Trading Ltd</th><th>Markets Ltd</th><th>合并</th></tr>
+        <tr><td>净营收</td><td>3,022.4</td><td>849.2</td><td>62.0</td><td><strong>3,933.6</strong>（同比 +43%，FT 口径 +44%）</td></tr>
+        <tr><td>行政费用</td><td>765.6</td><td>822.5</td><td>59.9</td><td>1,648.1</td></tr>
+        <tr><td>税后净利</td><td><strong>1,687.5</strong></td><td>21.1</td><td>0.8</td><td><strong>1,709.4</strong>（2024：1,280；同比 +33%）</td></tr>
+        <tr><td>分红节奏</td><td colspan="4">2025 全年派 £17.8 亿至 XTX Holdings（≈当年净利的 104%）；期后 2026-01 £3.31 亿、2026-03 £2.61 亿；★10-02 仅提交 CS01（无变更），2026 年至今无新分红 filing</td></tr>
+      </table>
+
+      <h3>★ 分红分配结构（2025，FT 口径，本期首次纳入）</h3>
+      <table>
+        <tr><th>对象</th><th>2025</th><th>2024</th><th>同比</th><th>口径备注</th></tr>
+        <tr><td>Alexander Gerko</td><td><strong>£8.95 亿</strong></td><td>£6.83 亿</td><td>+31%</td><td>683 × 1.31 ≈ 895，算术自洽；占净利 52.4%</td></tr>
+        <tr><td>23 名核心量化 / 开发</td><td><strong>£8.33 亿</strong></td><td>未披露</td><td>—</td><td>人均约 £3,620 万；含往年留存或不同主体的可能性未排除</td></tr>
+        <tr><td>合计（24 人）</td><td>约 <strong>£17.28 亿</strong></td><td>—</td><td>—</td><td>略高于当年净利 £17.09 亿，且 Gerko 占 51.8% ≠ 75% 持股 → <span class="tag tag-warn">口径不可加总</span></td></tr>
+      </table>
+
+      <h3>规模与份额速览（多口径并列，不强行统一）</h3>
+      <table>
+        <tr><th>维度</th><th>官网（2026-10-30 复核）</th><th>官网（2026-10-23，v3）</th><th>环比</th><th>其他口径</th></tr>
+        <tr><td>日均交易额</td><td>$250bn</td><td>$250bn</td><td>持平</td><td>Atlas Wang 演讲 $300B+</td></tr>
+        <tr><td>研究集群 GPU</td><td>25,000+</td><td>25,000+</td><td>持平</td><td>媒体细分：约 1 万张 A100 + 1 万张 V100（未核实）</td></tr>
+        <tr><td>存储</td><td>1 EB+ 可用</td><td>1 EB+ 可用</td><td>持平</td><td>★招聘页仍写 650PB（6-30 更新）；中文媒体 400PB</td></tr>
+        <tr><td>覆盖工具数</td><td>53,000+</td><td>53,000+</td><td>持平</td><td>招聘页/历史公告 50,000+</td></tr>
+        <tr><td>员工数</td><td>300</td><td>300</td><td>持平</td><td>★中文媒体普遍仍用「250 多名」；第三方站点甚至写「约 100 人」</td></tr>
+        <tr><td>交易国家</td><td>35</td><td>35</td><td>持平</td><td>—</td></tr>
+        <tr><td>办公城市</td><td colspan="2">★8 个（伦敦 / 纽约 / 新加坡 / 巴黎 / 布里斯托 / 孟买 / 埃里温 / <strong>卡亚尼</strong>）</td><td>★+1（卡亚尼）</td><td>上期记为 7 城</td></tr>
+        <tr><td>公益承诺</td><td>&gt;£400m</td><td>&gt;£400m</td><td>持平</td><td>★其中英国数学类 &gt;£9,000 万；★AIMO 系列实发约 $162 万 / 宣称 $558 万</td></tr>
+        <tr><td>★AI for maths 资助</td><td colspan="4">第一批（9-16）：$1,000 万 Lean FRO + $1,000 万 Mathlib Initiative + SAIR 三项竞赛；<strong>第二批（10-27）：Langlands Lab £500 万 + ICMS £50 万 + Convergent Research $17 万</strong>；累计 AI-for-maths 开源承诺 &gt;$5,000 万</td></tr>
+        <tr><td>欧股 SI 成交</td><td colspan="4">2025 年 €1,770 亿（+50%），日均 €6.93 亿；2025-04 单月 €10.2 亿（ELP 纪录）；Rosenblatt 榜连续六年五冠（2026-01）基线不变 <span class="tag tag-warn">9 月单月份额下滑</span></td></tr>
+        <tr><td>数据中心</td><td colspan="4">卡亚尼园区：478 英亩、规划 5 座、&gt;€10 亿；首座 15,000㎡ / 3 厅 / 22.5MW，<strong>Bloomberg「年底前上线」</strong>；第二座 2027；YIT 第三座机电合同 2026-09-25（2026 年末开始，含调试投运）<span class="tag tag-warn">无官方投运公告</span></td></tr>
+        <tr><td>★Ventures</td><td colspan="4">组合 35–40+ 家（口径不一）：Anthropic、Groq（→Nvidia）、Tenstorrent、Wayve、Vast Data、Prior Labs（→SAP）；投入与回报金额零披露 <span class="tag tag-warn">待核实</span></td></tr>
+      </table>
+
+      <h3>★竞争对手对照（Q3 2026 更新，本期修正景气读数）</h3>
+      <table>
+        <tr><th>公司</th><th>最新业绩 / 动作</th><th>对照要点</th></tr>
+        <tr><td>Jane Street</td><td>Q3 净交易收入 <strong>$68.3 亿</strong>（+18% YoY，环比 -33%）；净利 $37.3 亿；约 12% 收入来自 Anthropic 等投资；算力：德州自建 56 机柜 / 4,000+ GPU，$10 亿投 CoreWeave + $60 亿采购，$130 亿 Crusoe 五年合同，领投 Etched（$210 亿估值）</td><td>体量约为 XTX 的 8 倍；<strong>环比 -33% 与 Flow Traders 环比 -43% 方向一致</strong>，同比 +18% 属低基数；「做市 + 算力 + 芯片股权」三线并行</td></tr>
+        <tr><td>Citadel Securities</td><td>Q3 交易收入 $26.4 亿（+9%）、净利约 $10.5 亿；★总裁 Esposito 10-20：「在固定收益才真正刚刚开始」「maniacally focused on market making」；<strong>算力走外租路线</strong>：18 个月扩大 Google TPU 使用（快 4 倍 / 成本 -30%，Google 口径）</td><td>唯一明确的「不建机房」路线；固收扩张直接侵蚀 XTX 的固收盲区</td></tr>
+        <tr><td>Hudson River Trading</td><td>Q3 收入 $37 亿（+81%）；★<strong>9 月欧洲 SI 扩大对 XTX 的领先</strong>；年 AI 支出 $10 亿；挪威矿井机房；CoreWeave + Lambda 双云</td><td>本期唯一「份额上升」的直接信号；与 XTX 在同一欧洲 SI 赛道正面竞争</td></tr>
+        <tr><td>Optiver</td><td>2025 全年净交易收入 €45.56 亿；★CEO Boomaars：「不参与算力游戏就做不了系统性做市」「必须掌控自己的算力基础设施」；把美国自建模式复制到欧亚</td><td>荷兰系最强表态者；其言论为 XTX 自建路线提供第三方背书</td></tr>
+        <tr><td>Flow Traders</td><td>★Q3 NTI €8,450 万（环比 <strong>-43%</strong>）、净利 €640 万（环比 <strong>-84%</strong>）、EBITDA 率 20%、ROTC 30%、VIX 16.0；YTD NTI €3.882 亿（+7%）；股价当日 -9~10%；Horizon 2030 目标 NTI &gt;€10 亿不变</td><td><strong>本期最重要的反证</strong>：上市口径显示 Q3 行业收缩；也是「同比虚高、环比真实」修正的实证来源</td></tr>
+        <tr><td>Tower / Susquehanna</td><td>★Tower 自建未披露机房，CIO 称「供给有限」；Susquehanna 投资波浪能浮动数据中心</td><td>算力军备已扩散到二线玩家，佐证「自建 = 入场券」判断</td></tr>
+        <tr><td>XTX Markets</td><td>2025 净营收 £39.3 亿（≈$52 亿）、净利 £17.1 亿；2026 中期零披露；★自建 €10 亿卡亚尼 DC 年内上线；★9 月欧洲 SI 份额下滑</td><td>唯一「无人工交易员 + 300 人」极致人均模型；<strong>本期同时出现「资本开支领先」与「份额转负」两个信号</strong></td></tr>
+      </table>
+    </section>
+
+    <section id="blind">
+      <h2>数据盲区说明</h2>
+      <ul>
+        <li><strong>★官网三套存储口径并存（本期确认）</strong>：首页「1 EB+ 可用存储」、招聘页「650 PB 可用存储」（2026-06-30 更新）、中文媒体「400 PB」。三者跨度 2.5 倍，均来自 XTX 自有页面但未同步。本报告以首页为准，其余视为未清理的历史口径。</li>
+        <li><strong>★AI for Math Fund 官方自相矛盾</strong>：aimoprize.com 9-16 更新页写「$37mn to the AI for Math Fund」，而 Renaissance Philanthropy 10-06 公告写「a total of $35.1 million」。后者日期更晚但金额更小，时间顺序上不成立；疑为「累计承诺 vs 已发放」或 9-16 页预支了未定稿的轮次规模。<strong>本期不采信任一数字作为锚点，两者并列。</strong></li>
+        <li><strong>★Mathlib 金额两个官方版本</strong>：同一批 9-16 公告中，aimoprize 页写「$6.5mn to Mathlib」，xtxmarkets 页写「$10mn to the Mathlib Initiative」。差额 $350 万，无法判定是新旧两笔还是笔误。</li>
+        <li><strong>★分红池不可加总</strong>：£8.95 亿 + £8.33 亿 = £17.28 亿 &gt; 当年净利 £17.09 亿；且 Gerko 占比 51.8%，与其 75% 持股不符。可能因合伙人分红权与股权分离、或 £8.33 亿跨年度/跨主体。未获取分红决议原件前，不得据此推断持股结构。</li>
+        <li><strong>★Jane Street 营收口径互斥</strong>：Bloomberg 经二手源转述「去年（2025）净交易收入近 $400 亿」，而 v3 记录「2026 前三季 &gt;$240 亿、Q2 纪录 $101 亿、Q3 $68.3 亿」。若 2025 全年 $400 亿，则 2026 前三季 $240 亿意味着同比大幅下滑，与「Q3 +18% YoY」矛盾。<strong>至少一方有误，本期均不作锚点。</strong></li>
+        <li><strong>★Rosenblatt 只有方向没有数字</strong>：9 月报告确认 XTX SI「lost market share」，但幅度、ADVT 绝对值、排名位置均在付费墙后。不得由「份额下滑」推断「失去第一名」。</li>
+        <li><strong>★卡亚尼是否已投运，时态混乱</strong>：Bloomberg「预计年底前上线」；emergent 转述用「constructed」（已建成）却又说「expects…online by year-end 2026」（自相矛盾）；YIT 2026-09-25 只确认第三座机电合同「2026 年末开始」。<strong>结论：首座处于「即将投运但无官方公告」状态。</strong></li>
+        <li><strong>★Gerko 纳税额两说</strong>：香港经济日报称 2024 年纳税 £6.645 亿；今日头条称 2025 年纳税 £3.314 亿、为英国第二大纳税人。年份不同但未见同期对照，未裁决。</li>
+        <li><strong>★转载链污染（本期显著恶化）</strong>：10-11 起中文媒体围绕富豪榜产生大量同源转载，普遍使用「250 多名员工 / 400PB / 超过 5 万种工具」旧口径，与官网「300 人 / 1EB+ / 53,000+」不符；腾讯新闻、东方财富等还混入 A 股行情段落；第三方榜单站（QuantVero）在同一页面写 XTX「约 100 人」又写「约 275 人」。<strong>本报告一律以官网直抓 + 一手公告为准，中文转载仅用于「媒体口径」记录。</strong></li>
+        <li><strong>★单源待核实项汇总</strong>：Cromulon Capital（Gerko 投资载体）、PitchBook「64 家天使投资」、1729 Maths School（多源但同属泰晤士报/FT 上游，仍未见学校官网或 DfE 备案）、「1 万张 A100 + 1 万张 V100」GPU 细分、Ventures「至少 35 家」。</li>
+        <li><strong>固收业务零披露</strong>：XTX 覆盖 fixed income，但份额、产品线、客户结构、与 Citadel Esposito「才刚开始」的正面竞争态势，全部无公开数据。</li>
+        <li>2026 年 1–10 月 XTX 自身财务无中期披露；2026 年报预计 2027 年中。所有「策略拆解」内容均基于公开叙述与理论框架的推断，XTX 从不披露模型与 PnL 归因；<strong>本报告禁止将推断表述为事实，不构成投资建议。</strong></li>
+      </ul>
+    </section>
+
+    <section id="refs">
+      <h2>参考链接</h2>
+      <ol>
+        <li><a href="https://www.xtxmarkets.com/news/2026-latest-ai-for-maths-grants" target="_blank" rel="noreferrer">XTX Markets 官网（2026-10-27）| 第二批 AI for maths 资助：Langlands Lab £5m（Imperial，Kevin Buzzard）、ICMS £500k（含最多 £200k 算力）、Convergent Research $170k</a></li>
+        <li><a href="https://www.imperial.ac.uk/news/articles/admin-services/giving/2026/5-million-grant-to-establish-new-laboratory-for-ai-assisted-mathematics-at-imperial" target="_blank" rel="noreferrer">Imperial College London（2026-10）| Langlands Lab：£500 万、4 年支持 5 名博士生 + 3 名博士后、2027 年启动、Lean 验证、团队署名出版实验；Buzzard 与系主任 Axel Gandy 引言</a></li>
+        <li><a href="https://www.xtxmarkets.com/news/2026-update-on-xtx-markets-ai-philanthropy" target="_blank" rel="noreferrer">XTX Markets 官网（2026-09-16）| AIMO 关闭公告 + 第一批资助：$10m Lean FRO、$10m Mathlib Initiative、SAIR 三项竞赛；附录含 AIMO 全系列统计（6,829 队 / 8,145 人 / 274,576 提交 / 宣称 $5,582,880、实发约 $162 万）</a></li>
+        <li><a href="https://aimoprize.com/updates/2026-09-16-update-on-xtx-markets-ai-philanthropy" target="_blank" rel="noreferrer">AIMO Prize（2026-09-16）| 关闭理由：AIMO 3 多数团队基于同一 base model gpt-oss-120b 与同一 notebook 导致分数聚集；三年 &gt;$50mn 承诺（$37mn AI for Math Fund / $10mn Lean FRO / $6.5mn Mathlib / €3mn Numina）</a></li>
+        <li><a href="https://blog.sair.foundation/an-open-commitment-to-mathematics-and-science" target="_blank" rel="noreferrer">SAIR Foundation 博客 | XTX Markets 与 Susquehanna 为首批支持方；秋季三项竞赛：Lean Kernel Challenge（与 Lean FRO 合办）、Andrews–Curtis（与 Caltech）、Inverse Galois Stage 2（与 LMFDB）</a></li>
+        <li><a href="https://www.bloomberg.com/news/features/2026-10-22/jane-street-hrt-are-spending-billions-to-win-in-ai-era" target="_blank" rel="noreferrer">Bloomberg（2026-10-22/23）|《Jane Street and Rivals Are Now Fighting for AI Power as Well as Pace》——XTX 卡亚尼 €10 亿 DC 年底前上线、第二座 2027（付费墙）</a></li>
+        <li><a href="https://the-decoder.com/wall-streets-fastest-traders-are-building-data-centers-and-backing-chip-startups-to-stay-ahead-in-ai/" target="_blank" rel="noreferrer">The Decoder（2026-10-26）| Bloomberg 专题转述：算力支出为 ChatGPT 前 10–20 倍、Jane Street 德州 4,000+ GPU、$10 亿投 CoreWeave + $60 亿采购</a></li>
+        <li><a href="https://emergent.sh/news/jane-street-hrt-spend-billions-ai-compute" target="_blank" rel="noreferrer">Emergent（2026-10-23）| 最完整转述：Boomaars「不参与就做不了系统性做市」「必须掌控自己的算力基础设施」；Citadel 走 Google TPU 路线（快 4 倍 / 成本 -30%）；Tower、Susquehanna、Etched（$210 亿）、Crusoe $130 亿</a></li>
+        <li><a href="https://www.rblt.com/market-structure-reports/let-there-be-light-european-edition-88" target="_blank" rel="noreferrer">Rosenblatt Securities《Let There Be Light: European Edition》（2026-10-16，9 月数据）| 原文：HRT SI 扩大领先，Citadel Connect Europe、Jane Street JX-EU 与 <strong>XTX SI 均丢失份额</strong></a></li>
+        <li><a href="https://www.rblt.com/market-structure-reports/european-securities-volumes-september-2026" target="_blank" rel="noreferrer">Rosenblatt（9 月欧洲成交量）| ADVT €830.5 亿（+8.47% m/m、+17.97% y/y）、VSTOXX 17.78、lit 连续竞价 -211bp 创纪录低位、SI -38bp</a></li>
+        <li><a href="https://www.manilatimes.net/2026/10/29/tmt-newswire/globenewswire/flow-traders-3q-2026-trading-update/2456900" target="_blank" rel="noreferrer">Flow Traders 3Q 2026 Trading Update（2026-10-29，公司公告全文）| NTI €84.5m（环比 -43%）、净利 €6.4m（-84%）、EBITDA 率 20%、ROTC 30%、固定成本指引 €235–245m</a></li>
+        <li><a href="https://tradeinformer.com/institutional-trading/flow-traders-q3-profit-falls" target="_blank" rel="noreferrer">TradeInformer（2026-10-29）| Flow Traders Q3 净利 -84%、VIX 回落至 16.0、Horizon 2030 目标（NTI &gt;€1bn / EBITDA 率 &gt;45%）、2026–H1 2027 为过渡期</a></li>
+        <li><a href="https://singtao.co.uk/2026-10-12/xtx%e5%89%b5%e8%be%a6%e4%ba%ba%e5%8e%bb%e5%b9%b4%e5%88%86%e7%b4%858-95%e5%84%84/4763295" target="_blank" rel="noreferrer">星岛日报（2026-10-12）| 分红落地：2025 年 Gerko £8.95 亿（2024 年 £6.83 亿）、23 人共分 £8.33 亿、公司 2025 年税后利润 £17 亿（+33%）、营收 +44% 至 £39 亿</a></li>
+        <li><a href="https://finance.eastmoney.com/a/202610123892152973.html" target="_blank" rel="noreferrer">东方财富 / 上海证券报（2026-10-12）| 转 FT 口径：23 位核心量化与开发共分 £8.33 亿、人均 £3,600 万、Gerko £8.95 亿；PitchBook 口径 64 家天使投资（单源待核实）</a></li>
+        <li><a href="https://inews.hket.com/article/4207379/" target="_blank" rel="noreferrer">香港经济日报（2026-10）| 人均税后利润约 £684 万；2024 年纳税 £6.645 亿；1729 Maths School 预计 9 月开学（与星岛同源）</a></li>
+        <li><a href="https://www.xtxmarkets.com/" target="_blank" rel="noreferrer">XTX Markets 官网首页（2026-10-30 直接核验）| 53,000+ 工具、1EB+ 存储、25,000+ GPU、$250bn 日成交、35 国、300 员工、&gt;£400m 公益——与 v3（10-23）完全一致</a></li>
+        <li><a href="https://www.xtxmarkets.com/careers" target="_blank" rel="noreferrer">XTX Markets 招聘页（2026-10-30 核验）| 新设 Datacentre 职能线：芬兰 2 岗、新加坡 1 岗；岗位访谈披露 ~100 家交易所、~100 种协议、MATLAB 原型→C++/Python、post-trade 用 Go</a></li>
+        <li><a href="https://interninsider.me/internships/xtx-markets/ai-research-internship-53616624-46fc-4cd3-b37e-889eb3264dca" target="_blank" rel="noreferrer">XTY Labs AI Research Internship 岗位原文（2026-06-30 更新）| 模型谱系官方表述「econometric methods → trees → neural networks → modern deep learning」；8 城含卡亚尼；「25,000+ GPU / 650PB」</a></li>
+        <li><a href="https://cds.nyu.edu/mad" target="_blank" rel="noreferrer">NYU CDS MaD Seminar | Atlas Wang 演讲《Training Foundation Models for Algorithmic Trading》：金融时序基础模型、市场数据作为新型模态、neural scaling laws、$300B+ 日成交口径</a></li>
+        <li><a href="https://www.citadelsecurities.com/news-and-insights/global-market-intelligence/october-update/" target="_blank" rel="noreferrer">Citadel Securities Global Market Intelligence（2026-10-12）| 个股 1M ATM IV 34.1%→36.4%，标普 500 IV 13.2%→11.7%（指数波动接近一年低位）；零售净买入 $91 亿为 15 周最高</a></li>
+        <li><a href="https://www.aifuc.com/news/citadel-securities-ai-trade-no-room-for-error-km30-6adfb86a77e736c46d4cbfde" target="_blank" rel="noreferrer">Citadel Securities 研报转述（Nohshad Shah，2026-10-27，经财联社）| AI 资本开支「几乎没有犯错空间」；美光 + 英伟达贡献标普 500 预期盈利增长 36%、前十约 2/3、剔除后 27%→11%</a></li>
+        <li><a href="http://snslive.uk/article/2794696" target="_blank" rel="noreferrer">Bloomberg 转述（2026-10-20）| Citadel Securities 总裁 Jim Esposito：「在固定收益才真正刚刚开始」、「maniacally focused on market making」</a></li>
+        <li><a href="https://www.yit.fi/en/projects/xtx-markets-data-center-2-kajaani" target="_blank" rel="noreferrer">YIT 官网 | Kajaani DC2：主体结构与外壳 2026 年完工、整体 2027 年初竣工；2026-09-25 追加第三座机电与调试投运合同</a></li>
+        <li><a href="https://www.datacentermap.com/finland/kajaani/xtx-markets-kajaani-building-1/" target="_blank" rel="noreferrer">DataCenterMap | Kajaani 一号馆：15,000㎡ / 22.5MW / 余热供社区（第三方口径，无官方投运公告）</a></li>
+        <li><a href="https://find-and-update.company-information.service.gov.uk/company/12300034/filing-history" target="_blank" rel="noreferrer">Companies House：XTX Markets Technologies Ltd（12300034）| 最新 filing 为 2026-10-02 CS01（无变更）；2026-04-02 的 2025 年报为最新财务披露</a></li>
+        <li><a href="https://www.renaissancephilanthropy.org/insights/renaissance-philanthropy-and-xtx-markets-announce-further-171-million-to-accelerate-mathematical-progress" target="_blank" rel="noreferrer">Renaissance Philanthropy（2026-10-06）| AI for Math Fund 追加 $1,710 万、累计 $3,510 万；470+ 申报、22 项目 / 30 机构；XTX + Gerko 对 Mathlib / Formal Frontier / Lean FRO 累计承诺 &gt;$3,500 万</a></li>
+        <li><a href="https://www.edtechinnovationhub.com/news/ai-for-math-fund-expands-to-351m-as-new-grants-back-open-tools-theorem-proving-and-ai-generated-proofs" target="_blank" rel="noreferrer">EdTech Innovation Hub（2026-10）| 引 XTX 口径：向英国数学类慈善与教育机构承诺 &gt;£9,000 万，属 2020 年以来 &gt;£4 亿公益承诺的一部分</a></li>
+        <li><a href="https://www.xtxmarkets.com/ventures/" target="_blank" rel="noreferrer">XTX Ventures 官网专页 | 组合含 Anthropic、Groq（→Nvidia）、Tenstorrent、Wayve、Vast Data、Prior Labs（→SAP）、Proxima Fusion、X-Energy 等</a></li>
+        <li><a href="https://www.fnlondon.com/articles/xtx-markets-looks-for-ai-gems-after-striking-gold-with-anthropic-3acf4e87" target="_blank" rel="noreferrer">Financial News / fnlondon |《XTX Markets looks for AI gems after striking gold with Anthropic》（付费墙，仍为单源待核实）</a></li>
+        <li><a href="https://www.quantvero.com/algo-trading/best-quant-trading-firms/" target="_blank" rel="noreferrer">QuantVero（第三方榜单，可靠性低）| 展示第三方数据质量问题：同一页面写 XTX「约 100 人」与「约 275 人」并存，FX ~7% / 欧股 &gt;11% 份额口径沿用旧数</a></li>
+      </ol>
+    </section>
+
+    <footer>
+      Equation · XTX Markets 做市策略周报 <strong>v4</strong> · 生成于 2026-10-30<br />
+      入口：观察中心 → <em>XTX 做市策略周报</em>
+    </footer>
+  </div>
+<script>
+(function() {
+  var currentFile = document.location.pathname.split('/').pop();
+  var nav = document.getElementById('version-nav');
+  fetch('xtx-strategy-report-latest.json', { cache: 'no-store' })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      if (!nav || !data.versions) return;
+      var bust = encodeURIComponent(data.updated || data.latest || '');
+      var html = '<strong>📚 历史版本：</strong>';
+      data.versions.forEach(function(v) {
+        if (v.file === currentFile) {
+          html += '<span style="color:#166534;font-weight:600">' + v.label + ' ← 当前</span> ';
+        } else {
+          html += '<a href="' + v.file + '?v=' + bust + '">' + v.label + '</a> ';
+        }
+      });
+      nav.innerHTML = html;
+    })
+    .catch(function() { nav.style.display = 'none'; });
+})();
+</script>
+</body>
+</html>

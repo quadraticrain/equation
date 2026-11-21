@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>机构持仓变更周报 · 第 2 期（2026-10-24）</title>
+  <style>
+    :root {
+      --bg: #f5f6f8; --card: #fff; --text: #1a1a2e; --muted: #6b7280;
+      --border: #e5e7eb; --primary: #1677ff; --success: #389e0d; --warning: #d48806;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
+      background: var(--bg); color: var(--text); line-height: 1.7; font-size: 17px;
+    }
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 24px 16px 80px; }
+    header {
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+      color: #fff; padding: 32px 24px; border-radius: 12px; margin-bottom: 20px;
+    }
+    header h1 { margin: 0 0 8px; font-size: 1.85rem; font-weight: 600; line-height: 1.3; }
+    header p { margin: 0 0 6px; opacity: 0.92; font-size: 1rem; }
+    .badge {
+      display: inline-block; padding: 3px 12px; border-radius: 999px; font-size: 13px;
+      background: rgba(255,255,255,0.14); margin-right: 8px; margin-top: 12px;
+    }
+    nav.toc {
+      background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+      padding: 14px 18px; margin-bottom: 20px; font-size: 16px;
+    }
+    nav.toc a { color: var(--primary); text-decoration: none; margin-right: 14px; }
+    nav.toc a:hover { text-decoration: underline; }
+    section {
+      background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+      padding: 20px 24px; margin-bottom: 18px;
+    }
+    h2 { margin: 0 0 14px; font-size: 1.3rem; border-left: 4px solid var(--primary); padding-left: 12px; line-height: 1.35; }
+    h3 { margin: 16px 0 8px; font-size: 1.12rem; color: #374151; line-height: 1.4; }
+    p { font-size: 16px; }
+    ul, ol { margin: 8px 0; padding-left: 22px; font-size: 16px; }
+    li { margin-bottom: 7px; font-size: 16px; }
+    table { width: 100%; border-collapse: collapse; font-size: 16px; margin: 10px 0; }
+    th, td { border: 1px solid var(--border); padding: 9px 11px; text-align: left; vertical-align: top; }
+    th { background: #f9fafb; font-weight: 600; }
+    tr:nth-child(even) td { background: #fafafa; }
+    .tag { display: inline-block; padding: 1px 8px; border-radius: 4px; font-size: 13px; font-weight: 500; }
+    .tag-ok { background: #d9f7be; color: #135200; }
+    .tag-warn { background: #ffe58f; color: #874d00; }
+    .tag-new { background: #ffd6e7; color: #9d2152; }
+    .tag-kr { background: #e6f4ff; color: #0958d9; }
+    .tag-shift { background: #f0e6ff; color: #531dab; }
+    .callout { border-radius: 8px; padding: 13px 15px; margin: 12px 0; font-size: 16px; }
+    .callout-info { background: #e6f4ff; border-left: 4px solid var(--primary); }
+    .callout-warn { background: #fffbe6; border-left: 4px solid var(--warning); }
+    a { color: var(--primary); }
+    footer { text-align: center; color: var(--muted); font-size: 14px; padding: 22px 0; line-height: 1.7; }
+    .version-nav {
+      background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px;
+      padding: 12px 16px; margin-bottom: 16px; font-size: 16px;
+    }
+    .version-nav strong { color: #166534; }
+    .version-nav a { color: #166534; margin-right: 16px; }
+    @media (max-width: 768px) {
+      .wrap { max-width: 100%; padding: 0 0 72px; }
+      header { border-radius: 0; padding: 20px 10px; margin-bottom: 12px; }
+      nav.toc { border-radius: 0; border-left: none; border-right: none; padding: 12px 10px; margin-bottom: 12px; }
+      section { border-radius: 0; border-left: none; border-right: none; padding: 14px 10px; margin-bottom: 12px; }
+      h2 { padding-left: 10px; }
+      table { font-size: 14px; }
+      th, td { padding: 6px 8px; }
+      th:first-child, td:first-child { padding-left: 6px; }
+      th:last-child, td:last-child { padding-right: 6px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="version-nav" id="version-nav"></div>
+
+    <header>
+      <h1>机构持仓变更周报</h1>
+      <p><strong>第 2 期</strong> · 数据截止 2026-10-24 · 每周六 09:01 由 WorkBuddy AI 定时任务重新生成</p>
+      <p style="opacity:0.8;font-size:14px">公开信息整理，不构成投资建议。覆盖中财期货 / 贝莱德 / 摩根大通 / 东方港湾近三个月主要持仓变更</p>
+      <span class="badge">静态页</span>
+      <span class="badge">每周六 09:01 更新</span>
+      <span class="badge">四大机构</span>
+    </header>
+
+    <nav class="toc">
+      <strong>目录</strong>
+      <a href="#summary">本期结论</a>
+      <a href="#zhongcai">中财期货</a>
+      <a href="#blackrock">贝莱德（BlackRock）</a>
+      <a href="#jpmorgan">摩根大通（JPMorgan Chase）</a>
+      <a href="#orient">东方港湾（但斌）</a>
+      <a href="#notes">口径与数据盲区</a>
+      <a href="#refs">参考链接</a>
+    </nav>
+
+    <section id="summary">
+      <h2>本期结论</h2>
+      <ol>
+        <li><strong>东方港湾海外基金 Q3 13F 出炉：坚守 AI 主线，首次买入 SpaceX、买回苹果。</strong>截至 2026-09-30 共持有 13 只美股，市值约 14.69 亿美元；谷歌仍为第一大重仓（约 27%，较 Q2 提升约 4 个百分点），英伟达加仓约 13.72% 升至第二；清仓迈威尔科技（MRVL）与 Arm ADR。（来源：SEC 13F，披露日 2026-10-22）</li>
+        <li><strong>贝莱德最新可得 13F 为 2026 年 Q2：增持前五全部来自半导体产业链。</strong>Q2 申报持仓约 6.73 万亿美元（较上季约 5.72 万亿增长约 18%），美光、AMD、应用材料、迈威尔、科磊获增持幅度居前；前十大重仓全部为科技股，英伟达以约 3,885.6 亿美元市值居首。Q3（截至 9-30）13F 尚未到 SEC 披露期（截止约 11 月中），本期数据缺失。</li>
+        <li><strong>摩根大通 13F 最新亦为 Q2：科技巨头为核心底仓，Q2 多数获增持。</strong>前五大重仓为微软、英伟达、谷歌-A、苹果、HDFC 银行，其中谷歌 Q2 加仓约 2,146 万股居首；港股方面 9-10 月在多只标的间高频双向调整（增持重庆农商行、01208、01385 等，同期亦有减持）。</li>
+        <li><strong>中财期货席位：PVC 仍是最大单项敞口，沪金远月与合成橡胶多单居首。</strong>2026-10-22 席位快照显示 PVC 净多 165,863 手（较前一日 +1,585）；10-16 上期所沪金 AU2708 合约多单 3,100 手排名第 1；合成橡胶净多排行第 1（898 手，10-12）。</li>
+        <li><strong>各机构披露节奏差异显著：13F 按季披露（滞后 45 天）、港交所权益披露为触发式、私募 A 股持仓仅随上市公司定期报告可见。</strong>本期贝莱德/摩根大通的 Q3 13F 与东方港湾 A 股三季报数据均未到披露期或尚未披露完毕，相关小节标注「数据缺失」。</li>
+      </ol>
+      <div class="callout callout-info">
+        <strong>读法提示：</strong>本期与第 1 期口径一致。13F 部分：SEC 规定 Q3（截至 2026-09-30）持仓须在季末后 45 天内（约 2026-11-14 前）申报，大机构通常临近截止才提交，故贝莱德与摩根大通本节以 Q2（2026-06-30）为最新披露期；东方港湾海外基金已提前提交 Q3 13F，为四家中唯一可覆盖三季度的美股口径。
+      </div>
+    </section>
+
+    <section id="zhongcai">
+      <h2>中财期货</h2>
+      <p><strong>数据对应报告期：</strong>交易所日度席位快照，本节取 2026-10-08 至 2026-10-22 区间的零散日期；<strong>近三个月连续趋势数据缺失</strong>（需逐日抓取交易所排名才能形成）。</p>
+
+      <h3>本期要点</h3>
+      <ul>
+        <li>PVC 净多持仓 165,863 手（10-22，较前日 +1,585），仍是该席位最大单项敞口；与第 1 期引用的「多头持仓 141,190 手（10-01）」口径不同（多头 vs 净持仓），两者不能直接环比。</li>
+        <li>上期所沪金 AU2708 合约：多单 3,100 手排名第 1，占该合约多单约 26.96%（10-16），同日成交量 134 手排名第 6。</li>
+        <li>合成橡胶（全月份合约加总）：净多 898 手居净多排行第 1，日内减少 145 手（10-12）。</li>
+        <li>农副板块多空分化：生猪、苹果净多，鸡蛋、花生、红枣净空；其中鸡蛋净空单日减少 1,756 手、红枣净空减少 573 手（10-22）。</li>
+      </ul>
+
+      <h3>主要品种席位持仓快照（奇货可查，2026-10-22）</h3>
+      <table>
+        <tr><th>品种</th><th>方向</th><th>净持仓（手）</th><th>较前一日变动</th><th>备注</th></tr>
+        <tr><td>PVC</td><td><span class="tag tag-ok">净多</span></td><td>165,863</td><td>+1,585</td><td>席位最大单项敞口（v2701 + v2705）</td></tr>
+        <tr><td>乙二醇</td><td><span class="tag tag-warn">净空</span></td><td>4,742</td><td>+52</td><td>—</td></tr>
+        <tr><td>红枣</td><td><span class="tag tag-warn">净空</span></td><td>2,434</td><td>-573</td><td>净空收敛</td></tr>
+        <tr><td>尿素</td><td><span class="tag tag-ok">净多</span></td><td>1,144</td><td>-80</td><td>—</td></tr>
+        <tr><td>鸡蛋</td><td><span class="tag tag-warn">净空</span></td><td>1,024</td><td>-1,756</td><td>净空大幅收敛</td></tr>
+        <tr><td>苯乙烯</td><td><span class="tag tag-warn">净空</span></td><td>1,021</td><td>-30</td><td>—</td></tr>
+        <tr><td>生猪</td><td><span class="tag tag-ok">净多</span></td><td>969</td><td>-425</td><td>—</td></tr>
+        <tr><td>花生</td><td><span class="tag tag-warn">净空</span></td><td>761</td><td>+127</td><td>—</td></tr>
+        <tr><td>苹果</td><td><span class="tag tag-ok">净多</span></td><td>658</td><td>-218</td><td>—</td></tr>
+      </table>
+
+      <h3>交易所排名摘录</h3>
+      <table>
+        <tr><th>合约/品种</th><th>维度</th><th>数值</th><th>排名</th><th>数据来源与日期</th></tr>
+        <tr><td>沪金 AU2708（上期所）</td><td><span class="tag tag-ok">多头持仓</span></td><td>3,100 手（占比 26.96%，较上日 -134）</td><td>第 1</td><td>新浪财经持仓分析，2026-10-16</td></tr>
+        <tr><td>沪金 AU2708（上期所）</td><td>成交量</td><td>134 手（占比 6.84%）</td><td>第 6</td><td>新浪财经持仓分析，2026-10-16</td></tr>
+        <tr><td>合成橡胶（全月份加总）</td><td><span class="tag tag-ok">净多头</span></td><td>898 手（日内 -145）</td><td>净多排行第 1</td><td>叩富问财，数据时间 2026-10-12</td></tr>
+        <tr><td>苹果 AP2610（郑商所）</td><td><span class="tag tag-ok">多头持仓</span></td><td>33 手（占比 42.86%）</td><td>第 1</td><td>新浪财经持仓分析，2026-10-08（小合约，样本有限）</td></tr>
+      </table>
+
+      <h3>数据缺口</h3>
+      <ul>
+        <li>上期所/大商所/郑商所/中金所/广期所各主力品种<strong>近三个月连续持仓排名变化数据缺失</strong>——交易所仅提供日度快照，本期只取到零散日期。</li>
+        <li>中金所、广期所品种本期未检索到中财期货的排名记录。</li>
+        <li>10-21 郑商所白糖持仓榜中见「中财期货（代客）3,152 手」，但转述页面多空方向列对位不清晰，未列入表格，以交易所原始披露为准。</li>
+      </ul>
+    </section>
+
+    <section id="blackrock">
+      <h2>贝莱德（BlackRock）</h2>
+      <p><strong>数据对应报告期：</strong>① 美股 13F：2026 年 Q2（截至 2026-06-30，8 月中旬披露）；Q3（截至 2026-09-30）<strong>尚未到 SEC 披露期，数据缺失</strong>。② 港股：港交所权益披露，2026-08-31 至 2026-10-06 触发式披露。③ A 股：上市公司定期报告，最新可得为 2026 年一季报（2026-03-31）。</p>
+
+      <h3>本期要点</h3>
+      <ul>
+        <li>Q2 13F：申报持仓约 <strong>6.73 万亿美元</strong>（上季约 5.72 万亿，增约 18%），期内新增 274 档、增持 3,606 档、减持 1,322 档、清仓 263 档；前十大重仓全部为科技股，集中度升至约 28.01%。</li>
+        <li>增持前五<strong>全部来自半导体产业链</strong>：美光（持仓市值约 1,210 亿美元）、AMD（约 873 亿）、应用材料（约 580 亿）、迈威尔（约 255 亿）、科磊（约 381 亿）；10 只半导体股合计持仓超 1 万亿美元。</li>
+        <li>核心底仓微调：小幅减持英伟达、苹果、微软、亚马逊，小幅增持谷歌；另减持好市多、伯克希尔 B 类股、强生等传统防御品种。</li>
+        <li>港股权益披露呈<strong>高频双向调整</strong>：9 月下旬至今对 01787、00902 等标的多日交替增减持；9-29 单日对中伟新材、金力永磁、先导智能三只标的同日增持。</li>
+      </ul>
+
+      <h3>关键持仓变更明细</h3>
+      <table>
+        <tr><th>标的/品种</th><th>方向/增减</th><th>数量或比例变化</th><th>来源与披露日期</th></tr>
+        <tr><td>美光科技（美股 13F）</td><td><span class="tag tag-ok">增持</span></td><td>增持幅度居首，持仓市值约 1,210 亿美元</td><td>SEC 13F Q2（截至 2026-06-30），媒体披露 2026-08 中旬</td></tr>
+        <tr><td>AMD / 应用材料 / 迈威尔 / 科磊（美股 13F）</td><td><span class="tag tag-ok">增持</span></td><td>市值分别约 873 / 580 / 255 / 381 亿美元，增持幅度第 2-5 位</td><td>同上</td></tr>
+        <tr><td>英伟达（美股 13F）</td><td><span class="tag tag-warn">小幅减持</span></td><td>仍为第一大重仓，约 19.42 亿股、市值约 3,885.6 亿美元（占组合 5.77%）</td><td>同上</td></tr>
+        <tr><td>苹果 / 微软 / 亚马逊（美股 13F）</td><td><span class="tag tag-warn">小幅减持</span></td><td>苹果约 11.63 亿股（3,365.2 亿美元）、微软约 6.07 亿股（2,265.6 亿美元）、亚马逊约 1,783.7 亿美元</td><td>同上</td></tr>
+        <tr><td>谷歌 Alphabet（美股 13F）</td><td><span class="tag tag-ok">小幅增持</span></td><td>Alphabet A 类约 1,647.4 亿美元，居第五大重仓</td><td>同上</td></tr>
+        <tr><td>中伟新材 02579.HK</td><td><span class="tag tag-ok">增持</span></td><td>2026-09-29 场内 +16.56 万股 @21.2241 港元；持股 627.84 万股，5.86% → 6.02%</td><td>港交所权益披露（格隆汇转述），2026-10-02</td></tr>
+        <tr><td>金力永磁 06680.HK</td><td><span class="tag tag-ok">增持</span></td><td>2026-09-29 场内 +36.12 万股 @14.9967 港元；1,719.26 万股，6.98% → 7.13%</td><td>港交所权益披露，2026-10-02</td></tr>
+        <tr><td>先导智能 00470.HK</td><td><span class="tag tag-ok">增持</span></td><td>2026-09-29 场内 +34.53 万股 @27.7472 港元；1,745.04 万股，15.83% → 16.15%</td><td>港交所权益披露，2026-10-02</td></tr>
+        <tr><td>01787.HK</td><td><span class="tag tag-shift">双向调整</span></td><td>8-31 至 10-06 多日交替：8/31 +1,051 万股 → 7.63%；10/6 -932.6 万股 → 5.58%（另有 9/30 +1,173 万 → 6.67% 等）</td><td>港交所权益披露（东方财富 F10 汇总），2026-08-31 ~ 10-06</td></tr>
+        <tr><td>00902.HK</td><td><span class="tag tag-shift">双向调整</span></td><td>9/30 +344 万股 → 5.04%；10/1 -695.7 万股 → 4.89%（9 月内亦多次交替）</td><td>港交所权益披露（东方财富 F10 汇总），2026-09-02 ~ 10-01</td></tr>
+        <tr><td>宁沪高速 600377（A 股）</td><td><span class="tag tag-ok">增持</span></td><td>2026Q1 自持 +0.70% 至 1.223 亿股（占流通股 2.43%）</td><td>公司一季报（截至 2026-03-31），披露 2026-04-29/30</td></tr>
+      </table>
+
+      <h3>数据缺口</h3>
+      <ul>
+        <li>Q3 13F（截至 2026-09-30）<strong>数据缺失</strong>——SEC 截止约 2026-11-14，下一期周报预计可覆盖。</li>
+        <li>A 股最新披露为 2026 年一季报，二季报/三季报口径未检索到贝莱德相关十大流通股东变动；A 股三季报须于 10 月底前披露完毕，建议下期跟踪。</li>
+        <li>港股权益披露为触发式（触及 5% 整数位等门槛才披露），实际调仓可能多于公开记录；部分「增减持」为形式上的好仓结构调整，口径以披露原文为准。</li>
+      </ul>
+    </section>
+
+    <section id="jpmorgan">
+      <h2>摩根大通（JPMorgan Chase）</h2>
+      <p><strong>数据对应报告期：</strong>① 美股 13F：2026 年 Q2（截至 2026-06-30）；Q3（截至 2026-09-30）<strong>尚未到 SEC 披露期，数据缺失</strong>。② 港股：港交所权益披露，2026-09-01 至 2026-10-16。③ A 股：最新可得为 2026 年一季报（2026-03-31）。</p>
+
+      <h3>本期要点</h3>
+      <ul>
+        <li>Q2 13F 前五大重仓：微软（占组合 5.31%）、英伟达（5.15%）、谷歌-A（5.07%）、苹果（4.38%）、HDFC 银行（2.97%），科技巨头为绝对核心。</li>
+        <li>Q2 加仓集中于科技：谷歌 +2,146 万股、微软 +1,982 万股、苹果 +1,341 万股、美光 +229 万股、AMD +297 万股、META +133 万股、博通 +216 万股。</li>
+        <li>Q2 减持：亚马逊 -121 万股、索尼 -73 万股、礼来 -38 万股。</li>
+        <li>港股 9-10 月呈<strong>高频双向调整</strong>：对 01208、03636、01385 等标的多日交替增减持；9-28 单日增持重庆农商行好仓；部分披露附注显示同一时期存在空仓（淡仓）门槛变化，多空结构需结合披露原文阅读。</li>
+      </ul>
+
+      <h3>关键持仓变更明细</h3>
+      <table>
+        <tr><th>标的/品种</th><th>方向/增减</th><th>数量或比例变化</th><th>来源与披露日期</th></tr>
+        <tr><td>谷歌-A GOOGL（美股 13F）</td><td><span class="tag tag-ok">增持</span></td><td>Q2 +2,146.76 万股，占组合 5.07%（持仓市值约 279 亿美元）</td><td>SEC 13F Q2（截至 2026-06-30），moomoo 汇总</td></tr>
+        <tr><td>微软 MSFT（美股 13F）</td><td><span class="tag tag-ok">增持</span></td><td>Q2 +1,982.25 万股，占组合 5.31%，第一大重仓（市值约 292 亿美元）</td><td>同上</td></tr>
+        <tr><td>英伟达 NVDA（美股 13F）</td><td><span class="tag tag-ok">增持</span></td><td>Q2 +634.47 万股，占组合 5.15%（市值约 283 亿美元）</td><td>同上</td></tr>
+        <tr><td>苹果 AAPL（美股 13F）</td><td><span class="tag tag-ok">增持</span></td><td>Q2 +1,341.29 万股，占组合 4.38%（市值约 241 亿美元）</td><td>同上</td></tr>
+        <tr><td>美光 / AMD / META / 博通（美股 13F）</td><td><span class="tag tag-ok">增持</span></td><td>分别 +228.93 万 / +296.70 万 / +133.10 万 / +216.14 万股</td><td>同上</td></tr>
+        <tr><td>亚马逊 / 索尼 / 礼来（美股 13F）</td><td><span class="tag tag-warn">减持</span></td><td>分别 -121.19 万 / -72.96 万 / -37.54 万股</td><td>同上</td></tr>
+        <tr><td>重庆农商行 03618.HK</td><td><span class="tag tag-ok">增持好仓</span></td><td>2026-09-28 +74.92 万股 @6.3091 港元；好仓 1.261 亿股，4.98% → 5.01%</td><td>港交所权益披露（格隆汇转述），2026-10-02</td></tr>
+        <tr><td>01208.HK</td><td><span class="tag tag-shift">双向调整</span></td><td>9/22 +2,808 万 → 5.06%；9/24 -2,002 万 → 4.94%；9/25 +3,066 万 → 5.18%；9/30 -2,184 万 → 4.94%；10/1 +1,586 万 → 5.07%（并披露空仓达 1% 以上）</td><td>港交所权益披露（东方财富 F10 汇总），2026-09-22 ~ 10-01</td></tr>
+        <tr><td>01385.HK</td><td><span class="tag tag-shift">双向调整</span></td><td>9/28 +19.9 万 → 5.01%；9/30 -25.47 万 → 4.95%；10/16 +78.38 万 @24.7005 → 5.13%（并披露空仓达 1% 以上）</td><td>港交所权益披露（东方财富 F10 汇总），2026-09-28 ~ 10-16</td></tr>
+        <tr><td>03636.HK</td><td><span class="tag tag-shift">双向调整</span></td><td>9/11 +61.81 万 → 7.73%；9/25 -71.68 万 → 5.82%；10/15 +78.42 万 @6.2831 → 3.08%（附注：cease to have notifiable interest，口径需留意）</td><td>港交所权益披露（东方财富 F10 汇总），2026-09-01 ~ 10-15</td></tr>
+        <tr><td>00902.HK</td><td><span class="tag tag-ok">增持</span></td><td>2026-09-02 +3,825 万股 @5.5162（场外 5.5145）港元；持股 2.454 亿股，5.21%</td><td>港交所权益披露（东方财富 F10 汇总），2026-09-02</td></tr>
+        <tr><td>宁沪高速 600377（A 股）</td><td><span class="tag tag-warn">减持</span></td><td>2026Q1 自持 -4.82% 至 7,123 万股（占流通股 1.42%）</td><td>公司一季报（截至 2026-03-31），披露 2026-04-29/30</td></tr>
+      </table>
+
+      <h3>数据缺口</h3>
+      <ul>
+        <li>Q3 13F（截至 2026-09-30）<strong>数据缺失</strong>——与贝莱德同理，须待 11 月中旬 SEC 披露。</li>
+        <li>A 股最新披露为 2026 年一季报；近三个月内（7-10 月）无新的 A 股十大流通股东变动公开披露，三季报待 10 月底。</li>
+        <li>港股部分披露的「补充资料」显示同一公司同时存在好仓与淡仓变化，东方财富转述仅展示好仓（L）部分，多空净敞口无法从转述中还原。</li>
+      </ul>
+    </section>
+
+    <section id="orient">
+      <h2>东方港湾（但斌）</h2>
+      <p><strong>数据对应报告期：</strong>① 海外基金 Oriental Harbor Investment Fund 美股 13F：2026 年 Q3（截至 2026-09-30），SEC 披露日 2026-10-22——<strong>四家中唯一已覆盖三季度的美股口径</strong>。② A 股/港股私募持仓：随上市公司定期报告可见，三季报尚未披露完毕，<strong>本期数据缺失</strong>。</p>
+
+      <h3>本期要点</h3>
+      <ul>
+        <li>Q3 末海外基金共持有 <strong>13 只美股，市值约 14.69 亿美元（约 98 亿元人民币）</strong>，较 Q2 调仓换股动作不大，但对个股加减仓明显，整体延续 AI 主线。</li>
+        <li><strong>首次买入 SpaceX</strong>（SPCX，6 月上市），但斌 8 月 18 日曾发文确认「战略布局 SpaceX 的开始」；<strong>苹果为 Q2 清仓后 Q3 买回</strong>。</li>
+        <li>清仓迈威尔科技（MRVL）、Arm Holdings ADR；大幅加仓 Meta、亚马逊；小幅加仓英伟达（+13.72%）、谷歌-C、美光、闪迪、台积电。</li>
+        <li>减持英特尔、Lumentum、AMD、博通。</li>
+        <li>A 股方面：但斌 8 月 11 日公开回应称 7 月深度回调中「没有大幅减仓，仅极小比例结构性微调」，长江东方港湾 2 号保持满仓，A 股本土 AI 产业链 2026 年起全面重仓。</li>
+      </ul>
+
+      <h3>关键持仓变更明细（海外基金 13F，Q3 2026）</h3>
+      <table>
+        <tr><th>标的</th><th>方向/增减</th><th>数量或比例变化</th><th>来源与披露日期</th></tr>
+        <tr><td>谷歌 Alphabet</td><td><span class="tag tag-ok">增持</span></td><td>仍为第一大重仓，占组合约 27%（较 Q2 +4 个百分点），加仓约 10.54%</td><td>SEC 13F Q3，披露 2026-10-22（媒体转述：中国基金报等）</td></tr>
+        <tr><td>英伟达 NVDA</td><td><span class="tag tag-ok">增持</span></td><td>+13.72%，升至第二大重仓</td><td>同上</td></tr>
+        <tr><td>SpaceX（SPCX）</td><td><span class="tag tag-new">新买入</span></td><td>首次买入，具体股数以 13F 原始文件为准（数据缺失）</td><td>同上</td></tr>
+        <tr><td>苹果 AAPL</td><td><span class="tag tag-new">重新买入</span></td><td>Q2 清仓后 Q3 买回，具体股数以 13F 原始文件为准（数据缺失）</td><td>同上</td></tr>
+        <tr><td>Meta / 亚马逊</td><td><span class="tag tag-ok">大幅增持</span></td><td>具体幅度以 13F 原始文件为准（数据缺失）</td><td>同上</td></tr>
+        <tr><td>美光 / 闪迪 / 台积电 / 谷歌-C</td><td><span class="tag tag-ok">小幅增持</span></td><td>具体幅度以 13F 原始文件为准（数据缺失）</td><td>同上</td></tr>
+        <tr><td>迈威尔科技 MRVL / Arm ADR</td><td><span class="tag tag-warn">清仓</span></td><td>Q3 全部退出</td><td>同上</td></tr>
+        <tr><td>英特尔 / Lumentum / AMD / 博通</td><td><span class="tag tag-warn">减持</span></td><td>具体幅度以 13F 原始文件为准（数据缺失）</td><td>同上</td></tr>
+      </table>
+
+      <h3>A 股 / 港股私募持仓</h3>
+      <div class="callout callout-warn">
+        <strong>数据缺失：</strong>A 股上市公司 2026 年三季报须于 10 月底前披露完毕，截至本期（10-24）尚未能检索到东方港湾产品在 A 股十大流通股东中的 Q3 变动明细；中国香港港股持仓亦无公开披露渠道。可参照的公开信息仅有但斌的管理人表态（7 月回调未大幅减仓、满仓 AI 产业链，2026-08-11）与业绩统计（私募排排网：截至 2026-10-16，83 只主观多头产品年内收益均值约 8.26%、近三年约 106.26%，其中 75 只由但斌管理）。
+      </div>
+
+      <h3>数据缺口</h3>
+      <ul>
+        <li>13F 原始文件的逐标的股数/市值明细未在本期核实，媒体转述未给出 SpaceX、苹果等新买标的的具体数量，均标注「数据缺失」，不做估算。</li>
+        <li>A 股三季报十大流通股东变动：待 10 月底披露后，下一期周报覆盖。</li>
+        <li>港股私募持仓：数据缺失（无公开渠道）。</li>
+      </ul>
+    </section>
+
+    <section id="notes">
+      <h2>口径与数据盲区说明</h2>
+      <ul>
+        <li><strong>13F 披露节奏</strong>：美股 13F 按季度申报，季末后 45 天截止。贝莱德、摩根大通的 Q3（2026-09-30）文件未到披露期，本节采用 Q2（2026-06-30）口径；东方港湾海外基金已提前披露 Q3。13F 只覆盖美股多头（部分含期权），不含期货/非美市场。</li>
+        <li><strong>港交所权益披露</strong>：触发式披露（好仓/淡仓跨过 5% 等整数门槛才须申报），只反映门槛事件而非全部交易；媒体转述常只展示好仓（L）部分，同一机构可能同时持有淡仓。</li>
+        <li><strong>期货席位数据</strong>：交易所会员成交持仓排名为日度快照，本刊只取到零散日期，无法给出连续三个月趋势；席位数据为全公司客户头寸加总，不等于自营观点。</li>
+        <li><strong>私募持仓</strong>：中国内地私募无强制持仓披露，仅随上市公司定期报告的十大流通股东可见，且存在披露滞后与名单截断（仅前十大）。</li>
+        <li><strong>媒体转述风险</strong>：本刊数字均注明来源与日期，未能回溯到原始披露的（如 13F 逐标的明细）一律标「数据缺失」，不做推算。</li>
+      </ul>
+    </section>
+
+    <section id="refs">
+      <h2>参考链接</h2>
+      <ul>
+        <li>新浪财经 · 沪金 AU2708 持仓分析（2026-10-16）：<a href="https://vip.stock.finance.sina.com.cn/q/view/vFutures_Positions_cjcc.php?t_breed=AU2708&t_date=2026-10-16">vip.stock.finance.sina.com.cn</a></li>
+        <li>叩富问财 · 合成橡胶前 20 期商动态（数据时间 2026-10-12）：<a href="https://licai.cofool.com/user/guide_view_3503091.html">licai.cofool.com</a></li>
+        <li>奇货可查 · 中财期货席位持仓列表（2026-10-22）：<a href="https://x.qhkch.com/broker/position?_reload=y&amp;broker=%E4%B8%AD%E8%B4%A2%E6%9C%9F%E8%B4%A7">x.qhkch.com</a></li>
+        <li>中国基金报 · 贝莱德 Q2 13F 持仓公布（2026-08 中旬）：<a href="https://www.chnfund.com/article/ARf197e049-9903-41f3-c641-3a22fc031e61">chnfund.com</a></li>
+        <li>工商时报 · 贝莱德 Q2 猛买半导体（2026-08-11）：<a href="https://www.ctee.com.tw/news/20260811701114-430702">ctee.com.tw</a></li>
+        <li>上海证券报（网易转载）· 海外资管 Q2 调仓风向（2026-08-19）：<a href="https://www.163.com/dy/article/L4M6G41O0552C2FY.html">163.com</a></li>
+        <li>腾讯新闻（格隆汇）· 中伟新材获贝莱德增持（2026-10-02）：<a href="https://news.qq.com/rain/a/20261002A0AHX600">news.qq.com</a></li>
+        <li>网易（格隆汇）· 金力永磁获贝莱德增持（2026-10-02）：<a href="https://c.m.163.com/news/a/L8978DDA0519D4UH.html">c.m.163.com</a></li>
+        <li>网易（格隆汇）· 先导智能获贝莱德增持（2026-10-02）：<a href="https://www.163.com/dy/article/L8950TUI05198ETO.html">163.com</a></li>
+        <li>东方财富港股 F10 · 00902 / 01787 股东增减持（汇总至 2026-10-06）：<a href="https://emweb.securities.eastmoney.com/PC_HKF10/pages/home/index.html?code=01787">emweb.securities.eastmoney.com</a></li>
+        <li>格隆汇 · 重庆农商行获摩根大通增持（2026-10-02）：<a href="https://www.gelonghui.com/news/5320464">gelonghui.com</a></li>
+        <li>东方财富港股 F10 · 01208 / 01385 / 03636 股东增减持（汇总至 2026-10-16）：<a href="https://emweb.eastmoney.com/PC_HKF10/CoreReading/index?code=01208">emweb.eastmoney.com</a></li>
+        <li>moomoo · JPMorgan Chase &amp; Co. 13F 持仓（2026Q2）：<a href="https://www.moomoocn.com/hans/quote/institution-tracking/all-institutions/658776">moomoocn.com</a></li>
+        <li>同花顺 · 宁沪高速 2026 一季报十大流通股东（2026-04-29）：<a href="https://yuanchuang.10jqka.com.cn/20260429/c676395524.shtml">yuanchuang.10jqka.com.cn</a></li>
+        <li>中国基金报 · 但斌旗下美股基金三季度持仓出炉（2026-10-22/23）：<a href="https://www.chnfund.com/article/AR446d8767-7b5d-8860-5169-3a247a1794b4">chnfund.com</a></li>
+        <li>私募排排网（头条转载）· 但斌三季度美股持仓（2026-10-23）：<a href="https://www.toutiao.com/article/7699780660826833443">toutiao.com</a></li>
+        <li>新浪财经 · 但斌回应 7 月回调未大幅减仓（2026-08-11）：<a href="https://wap.cj.sina.cn/7x24/5035907">wap.cj.sina.cn</a></li>
+      </ul>
+    </section>
+
+    <footer>
+      Equation · 机构持仓变更周报 <strong>第 2 期</strong> · 生成于 2026-10-24<br />
+      入口：观察中心 → <em>机构持仓变更周报</em>
+    </footer>
+  </div>
+<script>
+(function() {
+  var currentFile = document.location.pathname.split('/').pop();
+  var nav = document.getElementById('version-nav');
+  fetch('institution-holdings-report-latest.json', { cache: 'no-store' })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      if (!nav || !data.versions) return;
+      var bust = encodeURIComponent(data.updated || data.latest || '');
+      var html = '<strong>📚 历史版本：</strong>';
+      data.versions.forEach(function(v) {
+        if (v.file === currentFile) {
+          html += '<span style="color:#166534;font-weight:600">' + v.label + ' ← 当前</span> ';
+        } else {
+          html += '<a href="' + v.file + '?v=' + bust + '">' + v.label + '</a> ';
+        }
+      });
+      nav.innerHTML = html;
+    })
+    .catch(function() { nav.style.display = 'none'; });
+})();
+</script>
+</body>
+</html>

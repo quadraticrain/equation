@@ -1,0 +1,35 @@
+{
+  "updated": "2026-11-14",
+  "title": "宽基 ETF 周度净申赎",
+  "unit": "亿元",
+  "points": [
+    {
+      "label": "10/19–10/23",
+      "value": 517,
+      "basket": "宽基指数 ETF（Wind）",
+      "approx": false
+    },
+    {
+      "label": "10/26–10/30",
+      "value": 781,
+      "basket": "16 只核心宽基合计（Wind）",
+      "approx": true
+    },
+    {
+      "label": "11/2–11/6",
+      "value": 2035,
+      "basket": "宽基 ETF（Wind）",
+      "approx": false
+    },
+    {
+      "label": "11/9–11/13",
+      "value": -432,
+      "basket": "宽基 ETF（Wind）",
+      "approx": false
+    }
+  ],
+  "footnotes": [
+    "口径：份额变动 × 单位净值 / IOPV 测算，Wind 等数据商申赎口径，非官方披露。",
+    "* 10/26–10/30 该周未披露宽基大类口径，取 16 只核心宽基合计；标的范围与其余各周略有差异，方向可比、绝对量不可直接相减。"
+  ]
+}

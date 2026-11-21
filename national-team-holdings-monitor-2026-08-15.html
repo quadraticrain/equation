@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>国家队持仓监控周报 v5（2026-08-15）</title>
+  <style>
+    :root {
+      --bg: #f5f6f8; --card: #fff; --text: #1a1a2e; --muted: #6b7280;
+      --border: #e5e7eb; --primary: #1677ff; --success: #389e0d; --warning: #d48806;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
+      background: var(--bg); color: var(--text); line-height: 1.65; font-size: 15px;
+    }
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 24px 16px 80px; }
+    header {
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%);
+      color: #fff; padding: 32px 24px; border-radius: 12px; margin-bottom: 20px;
+    }
+    header h1 { margin: 0 0 8px; font-size: 1.65rem; font-weight: 600; }
+    header p { margin: 0 0 6px; opacity: 0.92; font-size: 0.95rem; }
+    .badge {
+      display: inline-block; padding: 3px 11px; border-radius: 999px; font-size: 12px;
+      background: rgba(255,255,255,0.14); margin-right: 8px; margin-top: 12px;
+    }
+    nav.toc {
+      background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+      padding: 14px 18px; margin-bottom: 20px; font-size: 14px;
+    }
+    nav.toc a { color: var(--primary); text-decoration: none; margin-right: 14px; }
+    nav.toc a:hover { text-decoration: underline; }
+    section {
+      background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+      padding: 20px 24px; margin-bottom: 18px;
+    }
+    h2 { margin: 0 0 14px; font-size: 1.15rem; border-left: 4px solid var(--primary); padding-left: 12px; }
+    h3 { margin: 16px 0 8px; font-size: 1rem; color: #374151; }
+    ul, ol { margin: 8px 0; padding-left: 22px; }
+    li { margin-bottom: 7px; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; margin: 10px 0; }
+    th, td { border: 1px solid var(--border); padding: 9px 11px; text-align: left; vertical-align: top; }
+    th { background: #f9fafb; font-weight: 600; }
+    tr:nth-child(even) td { background: #fafafa; }
+    .tag { display: inline-block; padding: 1px 8px; border-radius: 4px; font-size: 12px; font-weight: 500; }
+    .tag-ok { background: #d9f7be; color: #135200; }
+    .tag-warn { background: #ffe58f; color: #874d00; }
+    .callout { border-radius: 8px; padding: 13px 15px; margin: 12px 0; font-size: 14px; }
+    .callout-info { background: #e6f4ff; border-left: 4px solid var(--primary); }
+    .callout-warn { background: #fffbe6; border-left: 4px solid var(--warning); }
+    .timeline { list-style: none; padding: 0; margin: 0; }
+    .timeline li { padding: 11px 0 11px 18px; border-left: 2px solid var(--border); margin-left: 8px; }
+    .timeline .date { font-size: 12px; color: var(--muted); }
+    .timeline .title { font-weight: 600; margin: 3px 0; }
+    .timeline .desc { font-size: 14px; color: #4b5563; }
+    a { color: var(--primary); }
+    footer { text-align: center; color: var(--muted); font-size: 13px; padding: 22px 0; }
+    .version-nav {
+      background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px;
+      padding: 12px 16px; margin-bottom: 16px; font-size: 14px;
+    }
+    .version-nav strong { color: #166534; }
+    .version-nav a { color: #166534; margin-right: 16px; }
+    @media (max-width: 768px) {
+      .wrap { max-width: 100%; padding: 0 0 72px; }
+      header { border-radius: 0; padding: 20px 10px; margin-bottom: 12px; }
+      nav.toc {
+        border-radius: 0; border-left: none; border-right: none;
+        padding: 12px 10px; margin-bottom: 12px;
+      }
+      section {
+        border-radius: 0; border-left: none; border-right: none;
+        padding: 14px 10px; margin-bottom: 12px;
+      }
+      h2 { padding-left: 10px; }
+      table { font-size: 12px; }
+      th, td { padding: 6px 8px; }
+      th:first-child, td:first-child { padding-left: 6px; }
+      th:last-child, td:last-child { padding-right: 6px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="version-nav" id="version-nav"></div>
+
+    <header>
+      <h1>国家队持仓监控周报</h1>
+      <p><strong>第五版</strong> · 数据截止 2026-08-15 · 每周由 Cursor 云端 Agent 重新生成</p>
+      <p style="opacity:0.8;font-size:13px">公开信息整理，不构成投资建议。覆盖：中央汇金、汇金资管、证金、中国国新、中国诚通</p>
+      <span class="badge">v5.0</span>
+      <span class="badge">静态页</span>
+      <span class="badge">2026 中报密集披露期（8 月底截止）</span>
+    </header>
+
+    <nav class="toc">
+      <strong>目录</strong>
+      <a href="#summary">本周结论</a>
+      <a href="#entities">监控主体</a>
+      <a href="#etf">ETF通道快照</a>
+      <a href="#baseline">底账快照</a>
+      <a href="#events">已核实事件</a>
+      <a href="#signals">舆情待核实</a>
+      <a href="#blind">数据盲区</a>
+      <a href="#refs">参考链接</a>
+    </nav>
+
+    <section id="summary">
+      <h2>本周结论（可执行摘要）</h2>
+      <ol>
+        <li><strong>诚通官宣千亿级再贷款增持弹药，平准 2.0 定向输血再升级：</strong>8 月 8 日中国诚通宣布拟使用 1000 亿元股票回购增持再贷款资金增持上市公司股票，旗下诚通金控、诚旸投资继 8 月 7 日增持后继续大额增持 ETF 与央企股票。这是继 7 月 19 日国新「已用再贷款超 500 亿」+ 诚通「累计买入近百亿」之后，国资平台的又一次明确加码，属于「定向输血而非大水漫灌」的典型干预信号，且资金体量从此前的「已动用」升级为「拟动用千亿额度」。</li>
+        <li><strong>汇金资管、证金双双退出贵州茅台十大股东——「锁底仓、动浮筹」的调仓信号：</strong>8 月 14 日茅台半年报显示，中央汇金资产管理有限责任公司（Q1 末持股 0.83%，第五大股东）与中国证券金融股份有限公司（0.32%，第十大股东）均退出前十大股东，华夏上证 50ETF、华泰柏瑞沪深 300ETF 同步退出。需注意「退出前十」不等于「清仓」——第十大股东持股比例仅约 0.2%，减持小部分即会跌出前十，媒体与机构普遍解读为长期持仓兑现浮盈的正常资产管理行为，而非方向性看空。</li>
+        <li><strong>宽基 ETF 连续净流出，性质更接近「市场资金结构性调整」而非「国家队离场」：</strong>8 月 10–13 日宽基 ETF 连续净流出（近 5 日累计约 747.8 亿元），但半导体设备、黄金股等主题 ETF 仍在净流入。媒体复盘口径认为净流出并非汇金主导，更多是 8 月首周反弹后的获利了结与风格再平衡。结合上周「汇金系净赎回基本归零」，国家队在反弹中未现大规模撤退。</li>
+        <li><strong>央行下半年工作会议确认两项稳市工具继续发力，扩容预期升温：</strong>8 月 1 日央行明确「发挥好两项支持资本市场货币政策工具作用，稳定和增强资本市场信心」。截至 6 月末互换便利累计操作超 5000 亿元、回购增持再贷款累计发放逾 3000 亿元；市场预期互换便利第三期规模或扩至 8000 亿–1 万亿元、费率下调（机构估算，待官方确认）。</li>
+        <li><strong>市场进入盘整「休养」阶段，科技股内部分化：</strong>上周（8 月首周）大幅反弹后，本周指数普遍微跌（上证 −0.33%、科创 50 −1.51%、创业板 +1.77%），涨跌对半开、幅度均不大。科技股分化明显——算力硬件（「易中天」为代表）走强，集成电路板块回调；传统消费、医药、金融平稳。这更接近「大涨大跌后的正常盘整」，而非趋势逆转。</li>
+      </ol>
+      <div class="callout callout-info">
+        <strong>读法提示：</strong>本周信号的关键词是「结构性」而非「方向性」——诚通在加码（定向央企/科技），汇金资管与证金在兑现个股浮盈（茅台退出前十），宽基 ETF 在净流出（市场资金获利了结）。三件事叠加指向同一结论：国家队仍在运作，但节奏从 7 月的「集中托底」转为「高抛低吸 + 结构调仓」。中报窗口（8 月底截止）仍是接下来两周最关键的信息源，Q2 完整持仓将陆续浮出水面。
+      </div>
+    </section>
+
+    <section id="entities">
+      <h2>监控主体说明</h2>
+      <div class="callout callout-info">
+        <strong>平准机制背景：</strong>国家队非单一账户，而是分层协同的逆周期调节体系。<strong>平准 1.0</strong>（2015–2025）：汇金直接买个股/ETF 托市，资金来源临时协调；<strong>平准 2.0</strong>（2026 起）：央行股票回购增持专项再贷款 → 商业银行 → 国新/诚通等国资平台，定向输血而非大水漫灌，低估值央企 + 错杀硬科技双主线。<br />
+        <strong>分工差异：</strong>汇金是逆周期调节的「温度计」（高位减持降温、低位申购托底）；国新/诚通是产业资本的「精准注射器」（官宣增持、定向买入央企核心资产与硬科技赛道）。
+      </div>
+      <table>
+        <thead>
+          <tr><th>主体</th><th>全称 / 角色</th><th>本期要点（截至 2026-08-15）</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>中央汇金</strong></td>
+            <td>中央汇金投资有限责任公司<br />国有金融资本持股平台 / 类平准基金</td>
+            <td>7 月中旬逆势净买入宽基 ETF 约 1762 亿元（兴业证券口径）；8 月首周汇金系宽基净赎回基本归零；个股底仓（国有大行等）连续多季度未变；主导中金「三合一」重组（证监会受理中）</td>
+          </tr>
+          <tr>
+            <td><strong>汇金资管</strong></td>
+            <td>中央汇金资产管理有限责任公司<br />汇金旗下资管主体</td>
+            <td>Q2 退出贵州茅台前十大股东（Q1 末持 1039.71 万股 / 0.83%）；上半年宽基 ETF 减持主力之一（媒体口径：持仓由 2025 年末约 1785 亿份降至约 1016 亿份，减持超 40%，属「有序减持」）；Q2 曾新进海康威视、增持隆基绿能</td>
+          </tr>
+          <tr>
+            <td><strong>证金</strong></td>
+            <td>中国证券金融股份有限公司<br />66.7% 股权拟划转汇金</td>
+            <td>Q2 退出贵州茅台前十大股东（Q1 末持 403.75 万股 / 0.32%）；延续 Q1 减持白酒趋势（此前已减五粮液、近乎清仓中石化）；国有大行持仓稳定；2015 年救市自主盘基本出清</td>
+          </tr>
+          <tr>
+            <td><strong>中国国新</strong></td>
+            <td>中国国新控股有限责任公司<br />国务院国资委国有资本运营平台（平准 2.0）</td>
+            <td>7 月 19 日官宣已使用再贷款超 500 亿元增持央企股票，表态「坚决维护资本市场核心资产战略价值」；本周无新增独立公告，延续「用好用足再贷款 + 自有资金继续增持」口径</td>
+          </tr>
+          <tr>
+            <td><strong>中国诚通</strong></td>
+            <td>中国诚通控股集团有限公司<br />国务院国资委国有资本运营平台（平准 2.0）</td>
+            <td><strong>8 月 8 日官宣拟使用 1000 亿元股票回购增持再贷款资金增持上市公司股票</strong>；旗下诚通金控、诚旸投资继 8/7 增持后继续大额增持 ETF 与央企股票（新华社口径）；叠加 7/19「累计买入近百亿」，诚通为本轮平准 2.0 增持力度最明确的主体</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="callout callout-info" style="margin-top:12px">
+        <strong>协同动向：</strong>社保基金与险资作为长线资金配合平准 2.0。新「国九条」出台两年多来，社保、保险、年金等中长期资金持有 A 股流通市值增长 85%，净买入 A 股约 1.3 万亿元。贵州茅台中报中，中国人寿旗下一普通保险产品大举加仓超 291 万股（险资接棒部分减持筹码的个例，仅作背景参考）。
+      </div>
+    </section>
+
+    <section id="etf">
+      <h2>ETF 通道快照</h2>
+
+      <h3>本周宽基 ETF 资金流向（8 月 10–14 日 · 媒体口径）</h3>
+      <table>
+        <thead><tr><th>时间</th><th>宽基 ETF 动向</th><th>关键数据</th></tr></thead>
+        <tbody>
+          <tr><td>2026-08-10（周一）</td><td>宽基指数 ETF 净流出</td><td>单日净流出 78.66 亿元；近 5 个交易日累计净流出约 747.8 亿元</td></tr>
+          <tr><td>2026-08-12（周三）</td><td>宽基型 ETF 净流出</td><td>单日净流出 124.30 亿元</td></tr>
+          <tr><td>2026-08-13（周四）</td><td>宽基 ETF 净流出</td><td>单日净流出 128.87 亿元；股票 ETF 整体净流出 177.30 亿元</td></tr>
+          <tr><td>本周（整体）</td><td>结构性取舍</td><td>宽基连续净流出，但半导体设备 ETF、黄金股 ETF 等主题品种仍净流入，显示资金做结构性调仓而非全面撤退</td></tr>
+        </tbody>
+      </table>
+
+      <h3>承接上周的 ETF 全景（8 月首周 → 本周）</h3>
+      <table>
+        <thead><tr><th>时间窗口</th><th>ETF 资金动向</th><th>关键数据</th></tr></thead>
+        <tbody>
+          <tr><td>2026-07 全月</td><td>股票型 ETF 天量净流入</td><td>净流入 4,778 亿元（单月历史新高）；汇金系重点持仓 ETF 约 1,762 亿（兴业证券口径）</td></tr>
+          <tr><td>2026-08-03（周一）</td><td>反弹首日净流入 307 亿</td><td>科创 50ETF 华夏 +39.97 亿、沪深 300ETF 华泰柏瑞 +27.25 亿</td></tr>
+          <tr><td>2026-08-04~07</td><td>反弹后获利了结</td><td>全周股票型 ETF 净流出 789 亿元；汇金系净赎回大幅收窄、基本归零</td></tr>
+          <tr><td>2026-08-10~13</td><td>宽基持续净流出</td><td>近 5 日累计净流出约 747.8 亿元（媒体口径）；主题 ETF 结构性流入</td></tr>
+        </tbody>
+      </table>
+      <div class="callout callout-info">
+        <strong>统计口径说明：</strong>ETF 份额与净申赎数据综合自东方财富、同花顺、Wind 及媒体公开统计。本周宽基净流出数据（78.66 亿 / 124.30 亿 / 128.87 亿）来自新浪财经复盘口径，不同数据源对同一窗口的产品数、份额调整方式可能存在差异，交叉引用时已标注来源。汇金系口径为兴业证券研究院跟踪的汇金重点持仓 ETF 清单。
+      </div>
+    </section>
+
+    <section id="baseline">
+      <h2>底账快照（2026 年一季度 · 十大流通股东口径 + Q2 中报增量）</h2>
+      <div class="callout callout-info">
+        <strong>说明：</strong>二季度完整持仓待上市公司中报披露（8 月底截止）。以下 Q1 底账为最新完整快照；Q2 增量信息（ETF 流向、中报披露的股东变动）单独标注来源。截至 8 月 15 日，中报已进入密集披露尾声，贵州茅台等权重股 Q2 股东变动已可见。
+      </div>
+      <table>
+        <thead><tr><th>指标</th><th>数值</th><th>来源口径</th></tr></thead>
+        <tbody>
+          <tr><td>现身 A 股公司数</td><td>861 家</td><td>Choice / 私募排排网（Q1）</td></tr>
+          <tr><td>合计持股市值（Q1 末）</td><td>约 4.40 万亿元</td><td>Choice</td></tr>
+          <tr><td>持股总股数（Wind）</td><td>约 5,746 亿股</td><td>Wind / 财新</td></tr>
+          <tr><td>较 2024 年末市值变化</td><td>−5,041 亿元</td><td>Choice</td></tr>
+          <tr><td>汇金持股市值（Q2 末）</td><td>约 2.85 万亿元（较 Q1 +820 亿）</td><td>证券时报</td></tr>
+          <tr><td>汇金系金融板块占比</td><td>超过八成</td><td>百度财经 / 证券时报</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Q2 中报增量（截至 2026-08-15 已核实）</h3>
+      <table>
+        <thead><tr><th>标的</th><th>主体</th><th>Q2 变动</th></tr></thead>
+        <tbody>
+          <tr><td>贵州茅台</td><td>汇金资管 / 证金</td><td><strong>双双退出前十大股东</strong>（Q1 末分别 0.83% / 0.32%）；华夏上证 50ETF、华泰柏瑞沪深 300ETF 亦退出；中国人寿旗下保险产品加仓超 291 万股</td></tr>
+          <tr><td>海康威视</td><td>汇金资管</td><td>Q2 新进第八大流通股东（6,470 万股，此前已披露）</td></tr>
+          <tr><td>隆基绿能</td><td>汇金资管</td><td>Q2 增持 2,578 万股（此前已披露）</td></tr>
+          <tr><td>五粮液</td><td>证金</td><td>Q2 减持 1,111.97 万股（8,716→7,604 万股，−12.76%）</td></tr>
+          <tr><td>中国石化</td><td>证金</td><td>Q2 近乎清仓（23.25→4.26 亿股，此前已披露）</td></tr>
+        </tbody>
+      </table>
+
+      <h3>代表个股（国家队重仓 · 最新可核实口径）</h3>
+      <table>
+        <thead><tr><th>标的</th><th>主体</th><th>要点</th></tr></thead>
+        <tbody>
+          <tr><td>中国银行</td><td>汇金 / 证金 / 汇金资管</td><td>汇金持股 1,887.92 亿股（58.59%），Q1 股数未变</td></tr>
+          <tr><td>农业银行</td><td>汇金 / 社保 / 证金 / 汇金资管</td><td>汇金持股约 1,405 亿股，零调仓</td></tr>
+          <tr><td>工商银行</td><td>汇金 / 证金 / 社保</td><td>汇金持股 34.79%（1,240 亿股），证金持股 0.68%，Q1 均未变</td></tr>
+          <tr><td>建设银行</td><td>汇金 / 证金 / 汇金资管</td><td>汇金持股 54.61%（1,429 亿股）；证金持股 0.84%，Q1 未变</td></tr>
+          <tr><td>中国平安</td><td>汇金资管</td><td>约 4.7 亿股，第五大股东，Q2 小幅低吸</td></tr>
+          <tr><td>贵州茅台</td><td>汇金资管 / 证金</td><td>Q2 双双退出前十大股东（详见上表，退出前十 ≠ 清仓）</td></tr>
+          <tr><td>中金公司</td><td>中央汇金</td><td>约 19.36 亿股第一大股东；三合一重组证监会受理中</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="events">
+      <h2>近期已核实事件</h2>
+      <ul class="timeline">
+        <li>
+          <div class="date">2026-08-08</div>
+          <div class="title"><span class="tag tag-ok">已核实</span> 中国诚通 · 拟用 1000 亿再贷款增持股票（新华社）</div>
+          <div class="desc">中国诚通宣布，根据人民银行、金融监管总局、证监会关于股票回购增持再贷款的相关规定，拟使用再贷款资金 1000 亿元用于增持上市公司股票。旗下诚通金控、诚旸投资继 8 月 7 日增持后，8 月 8 日继续大额增持交易型开放式指数基金（ETF）及中央企业上市公司股票，促进资本市场稳定运行。</div>
+        </li>
+        <li>
+          <div class="date">2026-08-14</div>
+          <div class="title"><span class="tag tag-ok">已核实</span> 汇金资管、证金退出贵州茅台前十大股东（中报）</div>
+          <div class="desc">贵州茅台 2026 年半年报：中央汇金资产管理有限责任公司（Q1 末持 1,039.71 万股 / 0.83%）、中国证券金融股份有限公司（403.75 万股 / 0.32%）均退出前十大股东；华夏上证 50ETF、华泰柏瑞沪深 300ETF 同步退出。茅台上半年营收 907.03 亿元（+1.47%）、净利润 445.17 亿元（−1.95%），近十年首次半年度「增收不增利」。</div>
+        </li>
+        <li>
+          <div class="date">2026-08-10 ~ 13</div>
+          <div class="title"><span class="tag tag-ok">已核实</span> 宽基 ETF 连续净流出 · 主题 ETF 结构性流入</div>
+          <div class="desc">8/10 宽基指数 ETF 净流出 78.66 亿元（近 5 日累计 747.8 亿）；8/12 净流出 124.30 亿；8/13 净流出 128.87 亿（股票 ETF 整体净流出 177.30 亿）。半导体设备 ETF、黄金股 ETF 等主题品种仍净流入，显示资金做结构性调仓而非全面撤退。</div>
+        </li>
+        <li>
+          <div class="date">2026-08-01</div>
+          <div class="title"><span class="tag tag-ok">已核实</span> 央行下半年工作会议 · 明确发挥两项稳市工具作用</div>
+          <div class="desc">人民银行 2026 年下半年工作会议提出「发挥好两项支持资本市场货币政策工具的作用，稳定和增强资本市场信心」。截至 6 月末，互换便利（SFISF）累计操作超 5000 亿元、覆盖 40 余家头部机构；股票回购增持再贷款累计发放逾 3000 亿元、覆盖超千家上市公司。</div>
+        </li>
+        <li>
+          <div class="date">2026-08-05</div>
+          <div class="title"><span class="tag tag-ok">已核实</span> 央行 5000 亿买断式逆回购 · 呵护 8 月流动性</div>
+          <div class="desc">央行 8 月 5 日开展 5000 亿元 3 个月期（92 天）买断式逆回购操作，净投放 2000 亿元，连续第二个月加量续做。8 月中长期到期流动性约 1.9 万亿元，呵护态度明确，为市场资金面提供支撑。</div>
+        </li>
+        <li>
+          <div class="date">2026-07-19 ~ 08-05</div>
+          <div class="title"><span class="tag tag-ok">已核实</span> 120+ 家上市公司密集回购增持 · 央国企成主力</div>
+          <div class="desc">Wind 统计：截至 8 月 5 日年内 934 家公司回购，合计 931.51 亿元；7 月单月 563 家披露回购方案（上限 1,691.88 亿）+ 92 家增持方案（上限 123.19 亿）。国新、诚通率先出手后，形成「国家队托底 + 上市公司跟进 + 长期资金配置」多层梯队。</div>
+        </li>
+        <li>
+          <div class="date">2026-07-19</div>
+          <div class="title"><span class="tag tag-ok">已核实</span> 中国国新 + 中国诚通 · 超 600 亿增持计划（此前已收录）</div>
+          <div class="desc">国新已用再贷款超 500 亿、诚通累计买入近百亿，两大国资平台同步表态继续增持央国企及 ETF。8 月 8 日诚通进一步升级为「拟用 1000 亿再贷款」。</div>
+        </li>
+      </ul>
+    </section>
+
+    <section id="signals">
+      <h2>舆情 · 待核实</h2>
+      <div class="callout callout-warn">媒体报道与机构估算，<strong>非公告精确持仓</strong>，请勿与底账混读。</div>
+      <ul class="timeline">
+        <li>
+          <div class="date">2026-08 上旬</div>
+          <div class="title"><span class="tag tag-warn">媒体口径</span> 汇金 ETF 持仓「有序减持」至约 1016 亿份</div>
+          <div class="desc">新浪财经复盘口径：中央汇金资产管理有限责任公司 ETF 持仓由 2025 年末约 1,785.14 亿份降至 2026 年 8 月初约 1,016 亿份，减持超 40%；另有标题口径称「半年减持宽基 ETF 超 90%」（该口径混用不同主体/标的，数字存疑）。核心可采信信号是「汇金在反弹后有序减持、未清仓」，与 ETF 份额净流出相互印证，但精确仓位需等基金中报。</div>
+        </li>
+        <li>
+          <div class="date">2026-08 上旬</div>
+          <div class="title"><span class="tag tag-warn">机构估算</span> 互换便利第三期或扩容至 8000 亿–1 万亿</div>
+          <div class="desc">媒体援引市场预期：央行正研究互换便利第三期操作，规模有望扩至 8000 亿–1 万亿元并下调费率；股票回购增持再贷款利率或降至 1.0%，审批流程简化。此为市场预期，未经官方确认，标注「机构估算」。</div>
+        </li>
+        <li>
+          <div class="date">2026-08-15</div>
+          <div class="title"><span class="tag tag-warn">市场观察</span> 经济日报：多重稳市信号释放</div>
+          <div class="desc">经济日报复盘：从政治局会议到监管座谈、从金融政策到央国企增持，稳市「组合拳」持续发力；社保、保险、年金等中长期资金持有 A 股流通市值增长 85%、净买入约 1.3 万亿元。长鑫科技 7/27 登陆科创板（最大 IPO）、8/10 宇树科技申购（人形机器人第一股）、燧原科技 IPO 注册生效，硬科技供给扩容。</div>
+        </li>
+        <li>
+          <div class="date">2026-08-14</div>
+          <div class="title"><span class="tag tag-warn">市场观察</span> 茅台「退出前十」被误读为「清仓」</div>
+          <div class="desc">部分自媒体将「退出前十大股东」表述为「集体清仓」，存在误读。每经等媒体澄清：第十大股东持股比例仅约 0.2%，汇金/证金减持小部分即跌出前十，不等于清仓；「锁底仓、动浮筹」更接近机构常规调仓逻辑。本页以「退出前十」为准，不作清仓定性。</div>
+        </li>
+      </ul>
+    </section>
+
+    <section id="blind">
+      <h2>数据盲区与下次更新</h2>
+      <div class="callout callout-info">
+        <ul>
+          <li><strong>2026 二季度完整持仓：</strong>上市公司 2026 年中报预计 8 月底前陆续披露完毕。截至 8 月 15 日，贵州茅台等权重股 Q2 股东变动已可见，但国家队/社保 Q2 完整调仓名单尚未全部出炉，仍需等剩余中报。</li>
+          <li><strong>汇金 ETF 精确仓位：</strong>跌破 20% 单一持有人披露线的宽基 ETF，需等<strong>基金 2026 年中报（约 8 月底）</strong>才能精确还原剩余仓位。「汇金 ETF 持仓降至 1016 亿份」等数字为媒体复盘口径（非公告确认），精确仓位待基金中报。</li>
+          <li><strong>低于 5% 的分散交易</strong>通常无强制公告，本页无法完整覆盖。</li>
+          <li><strong>国新 / 诚通增持明细：</strong>目前公告仅披露总额（国新超 500 亿、诚通累计近百亿 + 拟再贷款 1000 亿），未披露个股与 ETF 清单。盘面反推存在不确定性。</li>
+          <li><strong>政策底 vs 市场底时间差：</strong>历史复盘（2008/2015/2018）显示政策底确立后，市场常有 2–3 个月震荡筑底。当前处于政策密集出台后的盘整期，这一时间差现象仅供背景参考，不构成任何操作依据。</li>
+          <li><strong>下周报计划：</strong>中报披露进入尾声（8 月底截止），预计下周将有更多 Q2 国家队持仓数据可纳入，届时本页将同步更新底账表格与时间线。</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="refs">
+      <h2>参考链接</h2>
+      <ul>
+        <li><a href="http://www.cctgroup.com.cn/" target="_blank" rel="noopener">中国诚通官网：拟再贷款资金 1000 亿元增持股票（2026-08-08）</a></li>
+        <li><a href="https://www.stheadline.com/zh-hans/stock-market/3445328/" target="_blank" rel="noopener">星岛头条：中国诚通拟动用 1000 亿股票回购增持再贷款（新华社）</a></li>
+        <li><a href="https://new.qq.com/rain/a/20260814A0EQSG00" target="_blank" rel="noopener">21 世纪经济报道：中央汇金、证金公司退出贵州茅台前十股东（2026-08-14）</a></li>
+        <li><a href="https://www.toutiao.com/article/7674037850538541583" target="_blank" rel="noopener">每日经济新闻：贵州茅台半年报，汇金、证金退出前十大流通股东（2026-08-15）</a></li>
+        <li><a href="https://www.sina.cn/news/detail/5327699541491776.html" target="_blank" rel="noopener">新浪财经：央行两项稳市工具拟扩容，万亿增量资金待入场（2026-08）</a></li>
+        <li><a href="https://cj.sina.com.cn/article/norm_detail?url=https%3A%2F%2Ffinance.sina.com.cn%2Fjjxw%2F2026-08-15%2Fdoc-ininkmqs1955369.shtml" target="_blank" rel="noopener">经济日报：多重稳市信号释放，资本市场着力强韧性、提信心（2026-08-15）</a></li>
+        <li><a href="https://www.ce.cn/xwzx/gnsz/gdxw/202608/t20260805_3128892.shtml" target="_blank" rel="noopener">中国经济网：央行加量续做 3 个月期买断式逆回购（2026-08-05）</a></li>
+        <li><a href="https://k.sina.com.cn/article_7879922977_1d5ae152106801i9tq.html" target="_blank" rel="noopener">新浪财经：中央汇金半年减持宽基 ETF 复盘（含本周宽基净流出数据）</a></li>
+        <li><a href="https://k.sina.com.cn/article_7879922977_1d5ae152106801i9ue.html" target="_blank" rel="noopener">新浪财经：中央汇金 ETF 持仓降至 1016 亿份（媒体口径）</a></li>
+        <li><a href="https://news.qq.com/rain/a/20260810A09NO900" target="_blank" rel="noopener">腾讯新闻：A 股积极信号来了——7 月回购增持潮复盘（2026-08-10）</a></li>
+        <li><a href="https://gu.qq.com/resources/shy/news/detail-v2/index.html?t=1#/index?_tentrees_trans=0&id=SN20260815153937a70590eb" target="_blank" rel="noopener">上海证券报：大幅震荡后 A 股进入休养阶段（2026-08-15）</a></li>
+      </ul>
+    </section>
+
+    <footer>
+      Equation · 国家队持仓监控周报 <strong>v5</strong> · 生成于 2026-08-15<br />
+      入口：指标大盘 → <em>A 股市场温度 → 国家队持仓</em>
+    </footer>
+  </div>
+<script>
+(function() {
+  var currentFile = document.location.pathname.split('/').pop();
+  var nav = document.getElementById('version-nav');
+  fetch('national-team-holdings-latest.json', { cache: 'no-store' })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      if (!nav || !data.versions) return;
+      var bust = encodeURIComponent(data.updated || data.latest || '');
+      var html = '<strong>📚 历史版本：</strong>';
+      data.versions.forEach(function(v) {
+        if (v.file === currentFile) {
+          html += '<span style="color:#166534;font-weight:600">' + v.label + ' ← 当前</span> ';
+        } else {
+          html += '<a href="' + v.file + '?v=' + bust + '">' + v.label + '</a> ';
+        }
+      });
+      nav.innerHTML = html;
+    })
+    .catch(function() { nav.style.display = 'none'; });
+})();
+</script>
+</body>
+</html>

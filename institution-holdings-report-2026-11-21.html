@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>机构持仓变更周报 · 第 6 期（2026-11-21）</title>
+  <style>
+    :root {
+      --bg: #f5f6f8; --card: #fff; --text: #1a1a2e; --muted: #6b7280;
+      --border: #e5e7eb; --primary: #1677ff; --success: #389e0d; --warning: #d48806;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
+      background: var(--bg); color: var(--text); line-height: 1.7; font-size: 17px;
+    }
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 24px 16px 80px; }
+    header {
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+      color: #fff; padding: 32px 24px; border-radius: 12px; margin-bottom: 20px;
+    }
+    header h1 { margin: 0 0 8px; font-size: 1.85rem; font-weight: 600; line-height: 1.3; }
+    header p { margin: 0 0 6px; opacity: 0.92; font-size: 1rem; }
+    .badge {
+      display: inline-block; padding: 3px 12px; border-radius: 999px; font-size: 13px;
+      background: rgba(255,255,255,0.14); margin-right: 8px; margin-top: 12px;
+    }
+    nav.toc {
+      background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+      padding: 14px 18px; margin-bottom: 20px; font-size: 16px;
+    }
+    nav.toc a { color: var(--primary); text-decoration: none; margin-right: 14px; }
+    nav.toc a:hover { text-decoration: underline; }
+    section {
+      background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+      padding: 20px 24px; margin-bottom: 18px;
+    }
+    h2 { margin: 0 0 14px; font-size: 1.3rem; border-left: 4px solid var(--primary); padding-left: 12px; line-height: 1.35; }
+    h3 { margin: 16px 0 8px; font-size: 1.12rem; color: #374151; line-height: 1.4; }
+    p { font-size: 16px; }
+    ul, ol { margin: 8px 0; padding-left: 22px; font-size: 16px; }
+    li { margin-bottom: 7px; font-size: 16px; }
+    table { width: 100%; border-collapse: collapse; font-size: 16px; margin: 10px 0; }
+    th, td { border: 1px solid var(--border); padding: 9px 11px; text-align: left; vertical-align: top; }
+    th { background: #f9fafb; font-weight: 600; }
+    tr:nth-child(even) td { background: #fafafa; }
+    .tag { display: inline-block; padding: 1px 8px; border-radius: 4px; font-size: 13px; font-weight: 500; }
+    .tag-ok { background: #d9f7be; color: #135200; }
+    .tag-warn { background: #ffe58f; color: #874d00; }
+    .tag-new { background: #ffd6e7; color: #9d2152; }
+    .tag-kr { background: #e6f4ff; color: #0958d9; }
+    .tag-shift { background: #f0e6ff; color: #531dab; }
+    .callout { border-radius: 8px; padding: 13px 15px; margin: 12px 0; font-size: 16px; }
+    .callout-info { background: #e6f4ff; border-left: 4px solid var(--primary); }
+    .callout-warn { background: #fffbe6; border-left: 4px solid var(--warning); }
+    a { color: var(--primary); }
+    footer { text-align: center; color: var(--muted); font-size: 14px; padding: 22px 0; line-height: 1.7; }
+    .version-nav {
+      background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px;
+      padding: 12px 16px; margin-bottom: 16px; font-size: 16px;
+    }
+    .version-nav strong { color: #166534; }
+    .version-nav a { color: #166534; margin-right: 16px; }
+    .prod { font-size: 15px; color: #374151; }
+    @media (max-width: 768px) {
+      .wrap { max-width: 100%; padding: 0 0 72px; }
+      header { border-radius: 0; padding: 20px 10px; margin-bottom: 12px; }
+      nav.toc { border-radius: 0; border-left: none; border-right: none; padding: 12px 10px; margin-bottom: 12px; }
+      section { border-radius: 0; border-left: none; border-right: none; padding: 14px 10px; margin-bottom: 12px; }
+      h2 { padding-left: 10px; }
+      table { font-size: 14px; }
+      th, td { padding: 6px 8px; }
+      th:first-child, td:first-child { padding-left: 6px; }
+      th:last-child, td:last-child { padding-right: 6px; }
+      .prod { font-size: 13px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="version-nav" id="version-nav"></div>
+
+    <header>
+      <h1>机构持仓变更周报</h1>
+      <p><strong>第 6 期</strong> · 数据截止 2026-11-20 · 每周六 09:01 由 WorkBuddy AI 定时任务重新生成</p>
+      <p style="opacity:0.8;font-size:14px">公开信息整理，不构成投资建议。覆盖东方港湾（但斌旗下基金）/ 中财期货 / 贝莱德 / 摩根大通近三个月主要持仓变更</p>
+      <span class="badge">静态页</span>
+      <span class="badge">每周六 09:01 更新</span>
+      <span class="badge">东方港湾置顶</span>
+      <span class="badge">四大机构</span>
+    </header>
+
+    <nav class="toc">
+      <strong>目录</strong>
+      <a href="#summary">本期结论</a>
+      <a href="#orient">东方港湾（但斌旗下基金）</a>
+      <a href="#zhongcai">中财期货</a>
+      <a href="#blackrock">贝莱德（BlackRock）</a>
+      <a href="#jpmorgan">摩根大通（JPMorgan Chase）</a>
+      <a href="#notes">口径与数据盲区</a>
+      <a href="#refs">参考链接</a>
+    </nav>
+
+    <section id="summary">
+      <h2>本期结论</h2>
+      <ol>
+        <li><strong>本期起章节顺序调整：东方港湾（但斌旗下基金）固定为第 1 节。</strong>该节同时改为「落到产品层面」——每条持仓都标注持有产品名称；产品名称在公开披露中无法核实的，一律填「产品未披露」，不做推断。</li>
+        <li><strong>东方港湾本期只有一处新增披露，且是首次出现的载体类型。</strong>2026-11-20 首批主动 ETF 上市交易公告书披露前十大份额持有人，东方港湾旗下产品出现在摩根基金（中国）「大盘成长主动ETF摩根」名单中，持有 716.46 万份、占场内份额 0.36%、列第 7 大份额持有人。<strong>公告书未公开产品全称，本节记为「产品未披露」。</strong>美股 13F 本期无新申报（仍为 9-30 报告期、10-22 申报：13 只 / 14.69 亿美元 / 环比 −10.96%）。</li>
+        <li><strong>东方港湾 A 股与港股：本期无新增披露。</strong>2026 年三季报十大流通股东名单中，中际旭创、新易盛、胜宏科技、江苏雷利均未见东方港湾旗下产品，只能判定「未出现在前十大」，不可写作「清仓」；港股未检索到 5% 及以上权益披露，标数据缺失。</li>
+        <li><strong>中财期货席位本周仍集中在 PVC 与沪银，且两侧方向不同。</strong>11-20 PVC 持卖单量 186,467 手继续居全市场第 1（前一交易日 187,866 手，减 1,399 手）；11-20 沪银持卖单量 18,622 手列第 5（+1,048 手），而 11-10 同一席位在沪银持买单量榜列第 6（9,351 手），<strong>两处为不同方向榜单、不同时点，不做净额合并</strong>。11-19 红枣持卖单量 4,999 手列第 9（−838 手）。</li>
+        <li><strong>贝莱德本周增量全部来自港股权益披露，13F 无新申报。</strong>11-13 至 11-17 共 9 笔申报，幅度最大一笔为<strong>胜宏科技 H 由 5.16% 降至 1.20%（−3.96pp，11-17）</strong>；海螺水泥 H 由 5.50% 降至 4.99%（11-16，跌破 5%，此后减持不再需披露）、ASMPT 6.12%→5.54%、中国太保 H 7.08%→6.91%；增持侧为宁德时代 H +0.61pp、比亚迪 H +0.70pp、中远海能 H +1.27pp、洛阳钼业 H +0.13pp。</li>
+        <li><strong>摩根大通港股本周双向、且同一标的数日内反向。</strong>11-16 剑桥科技 H 由 8.38% 升至 9.11%（均价 56.9230 港元买入），11-17 即回落至 8.23%（均价 58.4890 港元卖出）；同期百济神州 H 9.85%→10.20%、澜起科技 H 7.17%→7.78%、哔哩哔哩-W 增持 97.36 万股（14.93%→15.22%），天齐锂业 H 12.27%→11.89%、国药控股 H 5.00%→4.96%（跌破 5%）。13F 同样无新申报。</li>
+      </ol>
+      <div class="callout callout-info">
+        <strong>与第 5 期的主要差异：</strong>① 章节顺序按用户 2026-11-20 的指定改为<strong>东方港湾置顶</strong>，静态页 <code>#orient</code> 紧随「本期结论」，推送摘要顺序同步；② 东方港湾新增「持有产品」列，并把只给合计口径的写法撤下，产品名不可考者填「产品未披露」；③ 两家外资机构 13F 本期均无新申报，13F 表格沿用 9-30 报告期存量，周内增量全部来自港股权益披露；④ 中财期货维持交易所「前 20 名单边手数」口径，继续不采用第三方折算的「净持仓 / 亿元净市值」数据。
+      </div>
+    </section>
+
+    <section id="orient">
+      <h2>1. 东方港湾（但斌旗下基金）</h2>
+      <p><strong>数据对应报告期：</strong>① 美股 13F-HR —— 报告期 <strong>2026-09-30</strong>，SEC 申报日 <strong>2026-10-22</strong>（本期无新申报）；② 主动 ETF 前十名份额持有人 —— <strong>2026-11-20</strong> 上市交易公告书披露；③ A 股 —— <strong>2026 年三季报</strong>（截至 9-30 的前十大流通股东，10 月底前披露完毕）；④ 港股 —— 港交所权益披露（5% 及以上事件）。</p>
+
+      <div class="callout callout-info">
+        <strong>本节写法说明（产品层面口径）：</strong>东方港湾是<strong>私募管理人</strong>，旗下多只私募证券投资基金分别持有 A 股 / 港股标的，季报不披露私募持仓。因此本节每一条都标注「由哪一只产品持有」，产品全称照抄上市公司定期报告「前十大流通股东」的登记名称；港股 13F 部分的持有主体是海外基金，单独标明。公开披露中拿不到产品全称的，填「产品未披露」，<strong>不缩写、不推测、不合并</strong>。
+      </div>
+
+      <h3>本期要点</h3>
+      <ul>
+        <li><strong>新增披露（唯一一处）：主动 ETF 份额。</strong>2026-11-20，首批 18 只主动 ETF 上市交易公告书披露前十大份额持有人，东方港湾旗下产品持有摩根基金（中国）「大盘成长主动ETF摩根」<strong>716.46 万份</strong>，占场内份额 <strong>0.36%</strong>，列<strong>第 7 大份额持有人</strong>。这是本刊首次记录到东方港湾以 ETF 份额持有人身份出现在前十大名单中。<strong>产品全称未在公告书摘要与报道中出现，记为「产品未披露」。</strong></li>
+        <li><strong>美股 13F 无新申报，维持 9-30 存量。</strong>三季度末持有 <strong>13 只</strong>美股，申报市值 <strong>14.69 亿美元</strong>（约 98 亿元人民币），较二季度 <strong>−10.96%</strong>；持有主体为东方港湾海外基金（Oriental Harbor Investment Fund，13F 申报主体）。谷歌-C 占 26.92% 为第一大重仓，英伟达 19.16% 次之，英特尔 14.39%、美光 10.94%、闪迪 9.33%，前五大合计逾 80%。</li>
+        <li><strong>A 股：本期无新增披露。</strong>已核 2026 年三季报前十大流通股东名单的 4 只关联标的（中际旭创、新易盛、胜宏科技、江苏雷利）均未见东方港湾旗下任何产品登记名称。按口径，这只说明<strong>未进入前十大</strong>，<strong>不等于清仓</strong>。</li>
+        <li><strong>港股：数据缺失。</strong>本期未检索到东方港湾（含东方港湾（香港）投资管理有限公司）在港交所 5% 及以上权益披露的申报记录，无法确认其港股持仓的任何增减。</li>
+        <li><strong>披露节奏提醒：</strong>A 股 / 港股下一可核窗口为 2026 年年报（2027 年 4 月前披露）；13F 下一份为 2026-12-31 报告期（2027 年 2 月中旬前申报）。在此之前，本节大概率维持「无新增披露」。</li>
+      </ul>
+
+      <h3>本期新增披露 · 产品层面（披露日 2026-11-20）</h3>
+      <table>
+        <tr><th>标的 / 品种</th><th>持有产品</th><th>方向 / 增减</th><th>数量或比例</th><th>来源与披露日期</th></tr>
+        <tr>
+          <td>大盘成长主动ETF摩根（摩根基金中国，场内份额）</td>
+          <td class="prod"><span class="tag tag-kr">产品未披露</span><br />报道仅称「东方港湾旗下产品」，公告书摘要未列产品全称</td>
+          <td><span class="tag tag-new">首次披露（前十大份额持有人）</span></td>
+          <td>716.46 万份 / 占场内份额 0.36% / 第 7 大份额持有人</td>
+          <td>基金上市交易公告书，2026-11-20；份额与排名经私募排排网统计转述</td>
+        </tr>
+      </table>
+      <p style="font-size:15px;color:#6b7280">说明：该 ETF 为首批上市的主动 ETF，本次为其首份前十名持有人披露，因此没有「上期」可比的增减比例；只能确认期末份额与排名，不能推断买入时点与成本。</p>
+
+      <h3>当前已知主要持仓 · 美股 13F（报告期 2026-09-30，申报 2026-10-22，本期无新申报）</h3>
+      <p>持有产品（申报主体）：<strong>东方港湾海外基金 Oriental Harbor Investment Fund</strong>。该 13F 为基金层面合并申报，不区分境内私募产品。</p>
+      <table>
+        <tr><th>标的</th><th>持有产品</th><th>方向</th><th>数量 / 比例变化</th><th>期末持仓</th><th>来源与披露日期</th></tr>
+        <tr><td>谷歌-C GOOG</td><td class="prod">东方港湾海外基金</td><td><span class="tag tag-ok">增持</span></td><td>+10.54%（约 +11.1 万股）</td><td>3.9534 亿美元 / 26.92%（第一大重仓）</td><td>SEC 13F-HR，2026-10-22</td></tr>
+        <tr><td>英伟达 NVDA</td><td class="prod">东方港湾海外基金</td><td><span class="tag tag-ok">增持</span></td><td>+148,700 股（+13.72%）</td><td>123.25 万股 / 2.8148 亿美元 / 19.16%</td><td>SEC 13F-HR，2026-10-22</td></tr>
+        <tr><td>英特尔 INTC</td><td class="prod">东方港湾海外基金</td><td><span class="tag tag-warn">减持</span></td><td>股数减少（幅度未披露）</td><td>2.1138 亿美元 / 14.39%（第三大重仓）</td><td>SEC 13F-HR，2026-10-22</td></tr>
+        <tr><td>美光科技 MU</td><td class="prod">东方港湾海外基金</td><td><span class="tag tag-ok">增持</span></td><td>+3,306 股（至 150,893 股）</td><td>约 1.607 亿美元 / 10.94%（第四大重仓）</td><td>SEC 13F-HR，2026-10-22</td></tr>
+        <tr><td>闪迪 SNDK</td><td class="prod">东方港湾海外基金</td><td><span class="tag tag-ok">增持</span></td><td>小幅加仓（股数未披露）</td><td>9.33%（第五大重仓）</td><td>SEC 13F-HR，2026-10-22</td></tr>
+        <tr><td>苹果 AAPL</td><td class="prod">东方港湾海外基金</td><td><span class="tag tag-new">新建（回补）</span></td><td>新建约 27.4 万股</td><td>约 9,136 万美元 / 约 6.2%</td><td>SEC 13F-HR，2026-10-22</td></tr>
+        <tr><td>台积电 TSM</td><td class="prod">东方港湾海外基金</td><td><span class="tag tag-ok">增持</span></td><td>小幅加仓（股数未披露）</td><td>前五之外</td><td>SEC 13F-HR，2026-10-22</td></tr>
+        <tr><td>超威半导体 AMD</td><td class="prod">东方港湾海外基金</td><td><span class="tag tag-warn">减持</span></td><td>股数减少（幅度未披露）</td><td>前五之外</td><td>SEC 13F-HR，2026-10-22</td></tr>
+        <tr><td>亚马逊 AMZN</td><td class="prod">东方港湾海外基金</td><td><span class="tag tag-ok">增持</span></td><td>约 +135%</td><td>占比未单列（前十）</td><td>SEC 13F-HR，2026-10-22</td></tr>
+        <tr><td>SpaceX SPCX</td><td class="prod">东方港湾海外基金</td><td><span class="tag tag-new">新建</span></td><td>首次买入；媒体两口径并列：约 1,591 万美元 ／ 近 10.5 万股</td><td>约 1.1%</td><td>SEC 13F-HR，2026-10-22</td></tr>
+        <tr><td>Meta META</td><td class="prod">东方港湾海外基金</td><td><span class="tag tag-ok">增持</span></td><td>大幅加仓（股数未披露）</td><td>前十</td><td>SEC 13F-HR，2026-10-22</td></tr>
+        <tr><td>Lumentum LITE</td><td class="prod">东方港湾海外基金</td><td><span class="tag tag-warn">减持</span></td><td>股数减少（幅度未披露）</td><td>前五之外</td><td>SEC 13F-HR，2026-10-22</td></tr>
+        <tr><td>博通 AVGO</td><td class="prod">东方港湾海外基金</td><td><span class="tag tag-warn">减持</span></td><td>减至 364 股（近乎清空）</td><td>364 股</td><td>SEC 13F-HR，2026-10-22</td></tr>
+        <tr><td>迈威尔科技 MRVL</td><td class="prod">东方港湾海外基金</td><td><span class="tag tag-warn">清仓</span></td><td>全部退出（二季度末尚在持仓）</td><td>0</td><td>SEC 13F-HR，2026-10-22</td></tr>
+        <tr><td>Arm Holdings ADR ARM</td><td class="prod">东方港湾海外基金</td><td><span class="tag tag-warn">清仓</span></td><td>全部退出</td><td>0</td><td>SEC 13F-HR，2026-10-22</td></tr>
+      </table>
+
+      <h3>A 股 / 港股 · 产品层面（本期无新增披露）</h3>
+      <table>
+        <tr><th>标的</th><th>持有产品</th><th>本期状态</th><th>说明</th><th>来源与日期</th></tr>
+        <tr><td>中际旭创 300308</td><td class="prod">未出现东方港湾旗下产品</td><td><span class="tag tag-kr">未进入前十大</span></td><td>三季报前十大流通股东为国资股东、香港中央结算、易方达创业板 ETF、中国人寿等</td><td>2026 年三季报，2026-10 披露</td></tr>
+        <tr><td>新易盛 300502</td><td class="prod">未出现东方港湾旗下产品</td><td><span class="tag tag-kr">未进入前十大</span></td><td>前十大为自然人股东、香港中央结算、国泰通信设备 ETF、平安资管产品等</td><td>2026 年三季报，2026-10-29</td></tr>
+        <tr><td>胜宏科技 300476</td><td class="prod">未出现东方港湾旗下产品</td><td><span class="tag tag-kr">未进入前十大</span></td><td>前十大为控股股东、HKSCC、香港中央结算、易方达创业板 ETF、睿远成长价值等</td><td>2026 年三季报，2026-10-29</td></tr>
+        <tr><td>江苏雷利 300660</td><td class="prod">未出现东方港湾旗下产品</td><td><span class="tag tag-kr">未进入前十大</span></td><td>前十大为控股股东、机器人 ETF、香港中央结算、华商系基金等</td><td>2026 年三季报，2026-10-29</td></tr>
+        <tr><td>港股全部标的</td><td class="prod">产品未披露</td><td><span class="tag tag-kr">数据缺失</span></td><td>未检索到东方港湾 / 东方港湾（香港）在港交所的 5% 及以上权益披露申报</td><td>—</td></tr>
+      </table>
+      <p style="font-size:15px;color:#6b7280">口径提醒：「未进入前十大流通股东」仅表示持仓低于该股第十名的门槛，前十之外还有多少股不可知，<strong>不能写作「清仓」或「退出」以外的推断</strong>。上表不构成对东方港湾 A 股 / 港股持仓方向（增或减）的任何判定。</p>
+
+      <h3>历史参照 · 最近可核到的产品全称（均远早于近三个月，非当前持仓）</h3>
+      <p>下表用于展示「产品层面」应如何登记：产品名一律照抄定期报告登记名称。三条记录的最近报告期分别为 2023-03-31 与 2022-06-30，<strong>与本期无关，不得作为当前持仓引用</strong>。</p>
+      <table>
+        <tr><th>持有产品（登记全称）</th><th>标的</th><th>期末持股 / 占流通股比</th><th>股东排名</th><th>报告期</th></tr>
+        <tr><td class="prod">深圳东方港湾投资管理股份有限公司-东方港湾铠瑞墩墩私募证券投资基金</td><td>华工科技 000988</td><td>841.7 万股 / 0.84%</td><td>第 8（新进）</td><td>2023-03-31</td></tr>
+        <tr><td class="prod">深圳东方港湾投资管理股份有限公司-东方港湾铠瑞墩墩私募证券投资基金</td><td>江苏雷利 300660</td><td>102.5 万股 / 0.40%</td><td>第 9（新进）</td><td>2022-06-30</td></tr>
+        <tr><td class="prod">深圳东方港湾投资管理股份有限公司-东方港湾进化远见私募证券投资基金</td><td>果麦文化 301052</td><td>118.72 万股 / 2.15%</td><td>第 8（新进）</td><td>2023-03-31</td></tr>
+      </table>
+
+      <h3>数据缺口</h3>
+      <div class="callout callout-warn">
+        <ul>
+          <li><strong>私募无公开持仓披露义务：</strong>东方港湾不是公募，季报不披露产品持仓。可获取的信息只有三种：产品碰巧进入某只股票前十大流通股东；港股持股触及 5% 权益披露；媒体报道（多为前述两项的二次转述）。因此本节的常态是「无新增披露」，本期仅新增一条 ETF 份额持有人记录。</li>
+          <li><strong>主动 ETF 的持有产品名缺失：</strong>上市交易公告书摘要与全部可检索报道均只写「东方港湾旗下产品」，未给出登记全称；如需产品级信息，须查基金公告书原文的前十名持有人明细表（本期未取得）。</li>
+          <li><strong>13F 覆盖范围有限：</strong>仅含美股多头，不含 A 股、港股（含港股通）、债券、空头与一级市场；韩国标的（如 SK 海力士）亦不在 13F 内。</li>
+          <li><strong>不纳入本刊：</strong>但斌本人的社交平台表述、路演与访谈观点，以及管理人对持仓变动的自述，均属观点或未经申报的自述，不作持仓数据登记。</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="zhongcai">
+      <h2>2. 中财期货</h2>
+      <p><strong>数据对应报告期：</strong>交易所日度席位快照，口径为<strong>会员（期货公司）受托持仓的前 20 名排名</strong>，非单一机构自营仓位。本节有效日期为 <strong>2026-11-20（PVC、沪银）、11-19（红枣）、11-12（铝合金）、11-10（沪银，多头侧）</strong>。五家交易所仅按交易日发布前 20 名榜单，<strong>近三个月的连续时间序列数据缺失</strong>，本刊不做事后拼接与推算。</p>
+
+      <h3>本期要点</h3>
+      <ul>
+        <li><strong>PVC 空头侧继续居首。</strong>11-20 中财期货持卖单量 <strong>186,467 手</strong>，为全市场第 1；前一交易日为 187,866 手，<strong>减 1,399 手</strong>。第二至第五分别为国泰君安 110,416 手、中信 101,119 手、东证 95,284 手、永安 68,950 手，与第一名的差距仍在 7 万手以上。该品种当日主力 2701 合约收 4,784 元/吨（−0.48%），全合约持仓 87.89 万手（+4,293 手）。</li>
+        <li><strong>沪银本期落在空头榜前列。</strong>11-20 中财期货持卖单量 <strong>18,622 手</strong>，列第 5（<strong>+1,048 手</strong>）；前四为中信 33,792 手、东证 31,559 手、国泰君安 29,287 手、银河 23,008 手。同日沪银主力收 9,687 元/千克（−6.60%）。</li>
+        <li><strong>与 11-10 的沪银记录不可直接相减。</strong>11-10 中财期货在<strong>持买单量</strong>榜列第 6（9,351 手，+65 手）；11-20 的记录在<strong>持卖单量</strong>榜。两处方向标签不同、时点相差 8 个交易日，本刊<strong>并列列示、不折算净头寸</strong>。</li>
+        <li><strong>农产品端红枣小额减空。</strong>11-19 郑商所红枣主力持卖单量 4,999 手，列第 9（<strong>−838 手</strong>）；当日空头前 20 合计 138,873 手（+2,572 手），中财是空头回补席位之一。</li>
+        <li><strong>有色端仅铝合金上榜且排名靠后。</strong>11-12 上期所铝合金主力持买单量 154 手，列第 19（−24 手）。<strong>本期未见中财进入</strong>螺纹钢、铁矿石、焦炭、焦煤、及中金所 IF 的前 20 多空榜；广期所（GFEX）未检索到含中财的公开日榜——以上均标「数据缺失」，不代表无持仓。</li>
+      </ul>
+
+      <h3>关键持仓变更明细</h3>
+      <table>
+        <tr><th>品种 / 合约</th><th>维度</th><th>数值</th><th>排名</th><th>较前值</th><th>来源与披露日期</th></tr>
+        <tr><td>PVC（大商所，含远月加总）</td><td><span class="tag tag-warn">空头持仓（持卖单量）</span></td><td>186,467 手</td><td>第 1</td><td>−1,399 手</td><td>金投网 PVC 持仓数据，2026-11-20</td></tr>
+        <tr><td>沪银（上期所，ag 主力）</td><td><span class="tag tag-warn">空头持仓（持卖单量）</span></td><td>18,622 手</td><td>第 5</td><td>+1,048 手</td><td>金投网沪银空头龙虎榜，2026-11-20</td></tr>
+        <tr><td>红枣（郑商所，主力）</td><td><span class="tag tag-warn">空头持仓（持卖单量）</span></td><td>4,999 手</td><td>第 9</td><td>−838 手</td><td>曲合网 · 红枣主力持仓龙虎榜，2026-11-19</td></tr>
+        <tr><td>铝合金（上期所，主力）</td><td><span class="tag tag-ok">多头持仓（持买单量）</span></td><td>154 手</td><td>第 19</td><td>−24 手</td><td>曲合网铝合金主力持仓龙虎榜，2026-11-12</td></tr>
+        <tr><td>沪银（上期所，ag 主力）</td><td><span class="tag tag-ok">多头持仓（持买单量）</span></td><td>9,351 手</td><td>第 6</td><td>+65 手</td><td>曲合网白银主力持仓龙虎榜，2026-11-10</td></tr>
+        <tr><td>螺纹钢 rb / 铁矿石 i / 焦炭 j / 焦煤 jm</td><td><span class="tag tag-kr">数据缺失</span></td><td>本期前 20 多空榜均未列示中财</td><td>—</td><td>—</td><td>各品种主力持仓龙虎榜，2026-11-20 前后</td></tr>
+        <tr><td>IF（中金所）</td><td><span class="tag tag-kr">数据缺失</span></td><td>未检索到含中财的前 20 多空榜</td><td>—</td><td>—</td><td>—</td></tr>
+        <tr><td>广期所（GFEX）</td><td><span class="tag tag-kr">数据缺失</span></td><td>未检索到含中财的公开会员排名日榜</td><td>—</td><td>—</td><td>—</td></tr>
+      </table>
+
+      <h3>数据缺口与口径提醒</h3>
+      <div class="callout callout-warn">
+        <ul>
+          <li><strong>两套口径不可互换（沿用第 4 期起的决定）：</strong>交易所只公布「前 20 名单边手数」，第三方站点的「净持仓 / 亿元净市值」为折算或聚合口径。本期网络上仍流传「中财席位净持仓」聚合表（如铁矿石净空加仓、甲醇净空等条目），因无法与交易所原始榜单一对一核对，<strong>不入表</strong>。</li>
+          <li><strong>会员 ≠ 单一机构：</strong>期货公司席位为受托客户持仓汇总，可能含套保、套利及多个客户，无法据此还原中财期货自营或单一产品的真实仓位。</li>
+          <li><strong>单侧上榜 ≠ 净头寸方向：</strong>同一席位可能同时进入多空两侧前 20，净持仓由差额决定。本刊只登记「该侧是否上榜、手数多少、排名第几」。</li>
+          <li><strong>时间序列缺失：</strong>近三个月逐日连续性变动需逐交易日抓取五家交易所榜单，本刊仅在可核对到原始榜单的日期取数。</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="blackrock">
+      <h2>3. 贝莱德（BlackRock）</h2>
+      <p><strong>数据对应报告期：</strong>美股 13F-HR 对应 <strong>2026-09-30</strong>，申报日 <strong>2026-11-13</strong>（<strong>本期无新申报</strong>）；港交所权益披露对应 <strong>2026-11-13 ~ 11-17</strong> 的持股比例变动，于 <strong>11-18 ~ 11-20</strong> 陆续公示；A 股 QFII 对应 2026 年三季报。</p>
+
+      <h3>本期要点</h3>
+      <ul>
+        <li><strong>总量（Q3 存量）：</strong>13F 申报市值 <strong>6.79 万亿美元</strong>、持仓 <strong>5,805 只</strong>，较 Q2 的 6.73 万亿 <strong>+0.9%</strong>。按股数计新建 366 只、清仓 257 只、增持 2,850 只、减持 2,094 只；前十大合计占 30.6%。<strong>本周无新 13F 申报，上述数字为存量，不作变更解读。</strong></li>
+        <li><strong>港股最大一笔是胜宏科技 H 的减持。</strong>11-17 好仓由 <strong>5.16% 降至 1.20%</strong>（−3.96pp），为本周幅度最大的一笔申报，也是该标的本月第二次出现在权益披露中（11-上旬曾在 5.94% 附近波动，见第 3 期）。</li>
+        <li><strong>海螺水泥 H 跌破 5% 披露线。</strong>11-16 好仓 5.50%→4.99%（−0.51pp），同时淡仓（S）由 2.60% 升至 2.65%。<strong>跌破 5% 后，后续减持不再触发披露义务</strong>，该标的的可见度将下降。</li>
+        <li><strong>增持侧集中在电池与航运。</strong>宁德时代 H 5.58%→6.19%（+0.61pp，11-13）、比亚迪 H 6.91%→7.61%（+0.70pp，11-13）、中远海能 H 5.91%→7.18%（+1.27pp，11-13）、洛阳钼业 H 7.94%→8.07%（+0.13pp，11-16）。</li>
+        <li><strong>中国太保 H 一周内先升后降。</strong>11-13 由 6.86% 升至 7.03%，11-17 又由 7.08% 降至 6.91%（淡仓 0.19%→0.15%）。两次申报基准不同，本刊并列列示、不合并为净变动。ASMPT 同期由 6.12% 降至 5.54%（−0.58pp，11-17）。</li>
+      </ul>
+
+      <h3>关键持仓变更明细 · 港股权益披露（持股比例，11-13 ~ 11-17 申报）</h3>
+      <table>
+        <tr><th>标的</th><th>方向</th><th>比例变化</th><th>幅度</th><th>来源与披露日期</th></tr>
+        <tr><td>胜宏科技 H</td><td><span class="tag tag-warn">减持</span></td><td>5.16% → 1.20%</td><td>−3.96pp</td><td>港交所权益披露，2026-11-20 公示（事件日 11-17）</td></tr>
+        <tr><td>ASMPT 00522.HK</td><td><span class="tag tag-warn">减持</span></td><td>6.12% → 5.54%</td><td>−0.58pp</td><td>港交所权益披露，2026-11-20 公示（事件日 11-17）</td></tr>
+        <tr><td>海螺水泥 H</td><td><span class="tag tag-warn">减持（跌破 5%）</span></td><td>5.50% → 4.99%；淡仓 2.60% → 2.65%</td><td>−0.51pp</td><td>港交所权益披露，2026-11-19 公示（事件日 11-16）</td></tr>
+        <tr><td>中国太保 H</td><td><span class="tag tag-warn">减持</span></td><td>7.08% → 6.91%；淡仓 0.19% → 0.15%</td><td>−0.17pp</td><td>港交所权益披露，2026-11-20 公示（事件日 11-17）</td></tr>
+        <tr><td>先导智能 H</td><td><span class="tag tag-warn">减持</span></td><td>19.01% → 18.98%</td><td>−0.03pp</td><td>港交所权益披露，2026-11-18 公示（事件日 11-13）</td></tr>
+        <tr><td>中国太保 H</td><td><span class="tag tag-ok">增持</span></td><td>6.86% → 7.03%</td><td>+0.17pp</td><td>港交所权益披露，2026-11-18 公示（事件日 11-13）</td></tr>
+        <tr><td>中远海能 H 01138.HK</td><td><span class="tag tag-ok">增持</span></td><td>5.91% → 7.18%</td><td>+1.27pp</td><td>港交所权益披露，2026-11-18 公示（事件日 11-13）</td></tr>
+        <tr><td>比亚迪股份 01211.HK</td><td><span class="tag tag-ok">增持</span></td><td>6.91% → 7.61%</td><td>+0.70pp</td><td>港交所权益披露，2026-11-18 公示（事件日 11-13）</td></tr>
+        <tr><td>宁德时代 H</td><td><span class="tag tag-ok">增持</span></td><td>5.58% → 6.19%</td><td>+0.61pp</td><td>港交所权益披露，2026-11-18 公示（事件日 11-13）</td></tr>
+        <tr><td>洛阳钼业 H 03993.HK</td><td><span class="tag tag-ok">增持</span></td><td>7.94% → 8.07%；淡仓 0.10% → 0.09%</td><td>+0.13pp</td><td>港交所权益披露，2026-11-19 公示（事件日 11-16）</td></tr>
+      </table>
+
+      <h3>美股 13F 存量摘录（报告期 2026-09-30，申报 2026-11-13，本期无新申报）</h3>
+      <table>
+        <tr><th>标的</th><th>方向（Q3 对 Q2）</th><th>数量变化</th><th>期末市值 / 占比</th></tr>
+        <tr><td>英伟达 NVDA（第一大重仓）</td><td><span class="tag tag-kr">存量</span></td><td>单季股数变动未在可核来源中披露</td><td>19.409 亿股 / 4,432.6 亿美元 / 6.53%</td></tr>
+        <tr><td>闪迪 SNDK</td><td><span class="tag tag-ok">增持</span></td><td>+2,361,709 股（+22.9%）</td><td>约 41.1 亿美元</td></tr>
+        <tr><td>英特尔 INTC</td><td><span class="tag tag-ok">增持</span></td><td>+34,013,981 股（+8.0%）</td><td>约 40.9 亿美元</td></tr>
+        <tr><td>SpaceX SPCX</td><td><span class="tag tag-ok">增持</span></td><td>+23,711,262 股（+46.5%）</td><td>约 35.8 亿美元</td></tr>
+        <tr><td>苹果 AAPL</td><td><span class="tag tag-warn">减持</span></td><td>−5,919,598 股（−0.5%）</td><td>11.571 亿股 / 3,853.3 亿美元 / 5.67%</td></tr>
+        <tr><td>SPDR 标普500 ETF SPY</td><td><span class="tag tag-warn">减持</span></td><td>−4,345,500 股（−33.8%）</td><td>约 33.1 亿美元</td></tr>
+      </table>
+
+      <h3>A 股（QFII，2026 年三季报口径）</h3>
+      <ul>
+        <li>本期仍未回溯到贝莱德各实体在三季报十大流通股东中的<strong>逐标的原始清单</strong>，A 股侧标「数据缺失」。</li>
+        <li>上期记录的「维持中际旭创、新易盛底仓；加仓长鑫科技；澜起科技新增 316.72 万股」仅有单一媒体汇总来源，<span class="tag tag-kr">待核实</span>，本期不新增、不升级为已核实数据。</li>
+        <li>「贝莱德 A 股 63 只 / 7.66 亿元」与「仅长鑫科技一只即超 26 亿元」的口径冲突仍未消解，两条均<strong>不写入已核实表格</strong>。</li>
+      </ul>
+    </section>
+
+    <section id="jpmorgan">
+      <h2>4. 摩根大通（JPMorgan Chase）</h2>
+      <p><strong>数据对应报告期：</strong>美股 13F-HR 对应 <strong>2026-09-30</strong>，申报日 <strong>2026-11-12</strong>（<strong>本期无新申报</strong>）；港交所权益披露对应 <strong>2026-11-16 ~ 11-17</strong> 的持股比例变动，于 <strong>11-19 ~ 11-20</strong> 公示。</p>
+
+      <h3>本期要点</h3>
+      <ul>
+        <li><strong>总量（Q3 存量）：</strong>13F 申报市值 <strong>1.84 万亿美元</strong>，较 Q2 的 1.81 万亿 <strong>+1.66%</strong>；前十大合计占 27.89%。本周无新申报，数字为存量。</li>
+        <li><strong>剑桥科技 H 三日内反向。</strong>11-16 好仓由 8.38% 升至 9.11%（+0.73pp，买入均价 56.9230 港元）；11-17 即回落至 8.23%（−0.88pp，卖出均价 58.4890 港元）。两次申报基准独立，<strong>本刊并列列示，不折算为净增持</strong>。</li>
+        <li><strong>生物医药与半导体增持。</strong>百济神州 H 9.85%→10.20%（+0.35pp，11-16）、澜起科技 H 7.17%→7.78%（+0.61pp，11-17）、哔哩哔哩-W 以均价 95.5047 港元增持 97.36 万股，好仓 14.93%→15.22%（+0.29pp，11-17）。</li>
+        <li><strong>锂业与医药流通减持。</strong>天齐锂业 H 12.27%→11.89%（−0.38pp，卖出均价 22.3637 港元，11-16）；国药控股 H 5.00%→4.96%（−0.04pp，11-17）<strong>跌破 5% 披露线</strong>，此后减持不再需申报。</li>
+        <li><strong>A 股：数据缺失。</strong>本期未取得摩根大通各实体（JPMorgan Chase &amp; Co. / J.P. Morgan Securities / 摩根大通银行）在三季报十大流通股东中的逐标的可核清单；上期引用过的「QFII 合计 306 家 / 100.78 亿元」为全体 QFII 汇总口径，非单家数据，不重复引用。</li>
+      </ul>
+
+      <h3>关键持仓变更明细 · 港股权益披露（持股比例，11-16 ~ 11-17 申报）</h3>
+      <table>
+        <tr><th>标的</th><th>方向</th><th>比例 / 数量变化</th><th>幅度 / 均价</th><th>来源与披露日期</th></tr>
+        <tr><td>剑桥科技 H</td><td><span class="tag tag-warn">减持</span></td><td>9.11% → 8.23%</td><td>−0.88pp；卖出均价 58.4890 港元</td><td>港交所权益披露，2026-11-20 公示（事件日 11-17）</td></tr>
+        <tr><td>澜起科技 H</td><td><span class="tag tag-ok">增持</span></td><td>7.17% → 7.78%</td><td>+0.61pp</td><td>港交所权益披露，2026-11-20 公示（事件日 11-17）</td></tr>
+        <tr><td>哔哩哔哩-W 09626.HK</td><td><span class="tag tag-ok">增持</span></td><td>好仓 14.93% → 15.22%；增持 97.36 万股</td><td>+0.29pp；均价 95.5047 港元，涉资约 9,298 万港元</td><td>港交所权益披露，2026-11-20 公示（事件日 11-17）</td></tr>
+        <tr><td>国药控股 H</td><td><span class="tag tag-warn">减持（跌破 5%）</span></td><td>5.00% → 4.96%</td><td>−0.04pp</td><td>港交所权益披露，2026-11-20 公示（事件日 11-17）</td></tr>
+        <tr><td>剑桥科技 H</td><td><span class="tag tag-ok">增持</span></td><td>8.38% → 9.11%</td><td>+0.73pp；买入均价 56.9230 港元</td><td>港交所权益披露，2026-11-19 公示（事件日 11-16）</td></tr>
+        <tr><td>百济神州 H</td><td><span class="tag tag-ok">增持</span></td><td>9.85% → 10.20%</td><td>+0.35pp</td><td>港交所权益披露，2026-11-19 公示（事件日 11-16）</td></tr>
+        <tr><td>天齐锂业 H</td><td><span class="tag tag-warn">减持</span></td><td>12.27% → 11.89%</td><td>−0.38pp；卖出均价 22.3637 港元</td><td>港交所权益披露，2026-11-19 公示（事件日 11-16）</td></tr>
+      </table>
+
+      <h3>美股 13F 存量摘录（报告期 2026-09-30，申报 2026-11-12，本期无新申报）</h3>
+      <table>
+        <tr><th>标的</th><th>方向（Q3 对 Q2）</th><th>数量 / 比例变化</th><th>期末持仓</th></tr>
+        <tr><td>英伟达 NVDA</td><td><span class="tag tag-ok">增持</span></td><td>+2.84%</td><td>4.62 亿股 / 1,050.08 亿美元 / 5.70%</td></tr>
+        <tr><td>微软 MSFT</td><td><span class="tag tag-ok">增持</span></td><td>+16.87%（权重 2.76%→4.36%）</td><td>1.58 亿股 / 804.02 亿美元 / 4.36%</td></tr>
+        <tr><td>苹果 AAPL</td><td><span class="tag tag-warn">减持</span></td><td>−1.78%</td><td>2.25 亿股 / 740.16 亿美元 / 4.02%</td></tr>
+        <tr><td>美光 MU</td><td><span class="tag tag-warn">减持</span></td><td>−13.17%</td><td>权重 1.64%→1.30%</td></tr>
+        <tr><td>iShares 比特币信托 IBIT</td><td><span class="tag tag-ok">增持</span></td><td>10,407,635 → 11,408,930 股（+9.6%）</td><td>5.40 亿美元</td></tr>
+        <tr><td>Circle CRCL</td><td><span class="tag tag-warn">减持</span></td><td>2,656,085 → 99,093 股（−96%）</td><td>830 万美元</td></tr>
+      </table>
+
+      <h3>数据缺口</h3>
+      <div class="callout callout-warn">
+        <ul>
+          <li><strong>13F 为合并口径：</strong>该申报合并 JPMorgan Chase 与 17 家关联投资管理人（经纪自营、私人银行、资管等），大量记录为客户或对冲头寸，不能等同于银行自营方向；13F 只含多头与上市期权，不含空头。</li>
+          <li><strong>港股权益披露主体口径：</strong>「JPMorgan Chase &amp; Co.」的申报通常合并多家受控法团（含证券服务、资管、做市），比例变动可能来自客户持仓或托管安排，不能直接对应单一策略账户。</li>
+          <li><strong>期权结构不可还原：</strong>13F 仅披露标的股数与名义市值，不含行权价与到期日。</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="notes">
+      <h2>口径与数据盲区说明</h2>
+      <ul>
+        <li><strong>章节顺序：</strong>按用户 2026-11-20 指定，本刊固定为「东方港湾 → 中财期货 → 贝莱德 → 摩根大通」，推送摘要与静态页一致；东方港湾不会因「本期无新增披露」被后移。</li>
+        <li><strong>产品层面口径（东方港湾专章）：</strong>持仓库位登记到私募产品维度，产品全称照抄上市公司定期报告「前十大流通股东」的登记名称；同一标的被多只产品持有时逐只列出、不合并；产品名不可考者填「产品未披露」。「退出前十大流通股东」与「清仓」严格区分。</li>
+        <li><strong>披露节奏差异：</strong>美股 13F 按季申报，季度结束后 45 日内完成；港交所权益披露为跨越 5% 及整数百分比时按事件披露，同一标的可在数日内多次申报；A 股 / 港股上市公司持仓须等定期报告（季报、半年报、年报）。私募管理人本身没有持仓披露义务。</li>
+        <li><strong>期货席位口径：</strong>中财期货相关数据全部来自交易所日度「会员成交持仓排名」，为期货公司受托持仓的前 20 名汇总，不等于单一机构自营仓位，也不含未上榜持仓；交易所仅公布单边手数，不公布净头寸。</li>
+        <li><strong>不合并双向申报：</strong>同一标的在同一周出现方向相反的多次权益披露时（本期剑桥科技 H、中国太保 H），并列列示，不折算为「净增持 / 净减持」。</li>
+        <li><strong>占比与股数不同步：</strong>13F 的「组合权重」同时受股数与市值变化影响，股数减少时权重可能上升，表格中已并列标注两个维度。</li>
+        <li><strong>本刊只记录公开披露的持仓数量与比例变化</strong>，不解读变动原因，不转述任何机构或基金经理对市场、行业、个股的判断，不构成投资建议。</li>
+      </ul>
+    </section>
+
+    <section id="refs">
+      <h2>参考链接</h2>
+      <ul>
+        <li>证券时报 · 首批主动 ETF 火了：22 家私募扫货，东方港湾、玄元投资现身（2026-11-21）：<a href="https://finance.sina.com.cn/stock/roll/2026-11-21/doc-iniznakk6816561.shtml">finance.sina.com.cn</a></li>
+        <li>财联社 · 私募扎堆抢购主动 ETF，22 家现身十大持有人（2026-11-20）：<a href="https://www.cls.cn/detail/2539790">cls.cn</a></li>
+        <li>环球网 · 首批主动 ETF 前十大持有人披露（2026-11-20）：<a href="https://3w.huanqiu.com/a/c36dc8/4U6QXKQ4DkI">huanqiu.com</a></li>
+        <li>中国基金报 · 但斌旗下美股基金三季度持仓出炉（13F，2026-10-22 申报）：<a href="https://www.chnfund.com/article/AR446d8767-7b5d-8860-5169-3a247a1794b4">chnfund.com</a></li>
+        <li>新浪财经 · 但斌三季度美股持仓出炉：首次买入 SpaceX、买回苹果（2026-10-23）：<a href="https://finance.sina.com.cn/roll/2026-10-23/doc-iniweywq4946412.shtml">finance.sina.com.cn</a></li>
+        <li>东方财富 · 股东分析：东方港湾铠瑞墩墩私募证券投资基金历史十大流通股东（历史参照）：<a href="https://data.eastmoney.com/gdfx/ShareHolderDetail.html?hdCode=78218781">data.eastmoney.com</a></li>
+        <li>中证网 · 中际旭创 / 新易盛 / 胜宏科技 2026 年三季报十大流通股东（2026-10-29）：<a href="https://newzzbcx.cs.com.cn/cxnews.html?name=new20261029231917cavxrefi">cs.com.cn</a></li>
+        <li>金投网 · PVC 持仓数据与空头龙虎榜（2026-11-20）：<a href="https://quote.cngold.org/qh/dce_v2701.html">quote.cngold.org</a></li>
+        <li>金投网 · 沪银空头龙虎榜（2026-11-20）：<a href="https://quote.cngold.org/qh/shfe_ag2313.html">quote.cngold.org</a></li>
+        <li>曲合网 · 红枣主力持仓龙虎榜（2026-11-19）：<a href="https://www.quheqihuo.com/news/202611194502990.html">quheqihuo.com</a></li>
+        <li>曲合网 · 铝合金主力持仓龙虎榜（2026-11-12）：<a href="https://m.quheqihuo.com/news/202611124501707.html">quheqihuo.com</a></li>
+        <li>曲合网 · 白银主力持仓龙虎榜（2026-11-10）：<a href="https://www.quheqihuo.com/news/202611104501206.html">quheqihuo.com</a></li>
+        <li>中国基金报 · 贝莱德大幅减持胜宏科技 H 股持股比例（2026-11-20）：<a href="https://www.chnfund.com/article/8807a8a5-6ceb-6305-c3a5-3a250a614139">chnfund.com</a></li>
+        <li>同花顺 · 贝莱德对 ASMPT 多头持仓比例降至 5.54%（2026-11-20）：<a href="https://stock.10jqka.com.cn/20261120/c682055645.shtml">10jqka.com.cn</a></li>
+        <li>东方财富 · 贝莱德在海螺水泥 H 股好仓降至 4.99%（2026-11-19）：<a href="https://guba.eastmoney.com/news,600585,1798693920.html">eastmoney.com</a></li>
+        <li>东方财富 · 贝莱德在中国太保 H 股好仓降至 6.91%（2026-11-20）：<a href="https://finance.eastmoney.com/a/202611203936178289.html">eastmoney.com</a></li>
+        <li>21 财经 · 贝莱德在中远海能 H 股好仓升至 7.18%（2026-11-18）：<a href="https://m.21jingji.com/timeline/ff7806ee105ec11f68e74a903bccbcf0.html">21jingji.com</a></li>
+        <li>东方财富 · 贝莱德在比亚迪股份 H 股好仓升至 7.61%（2026-11-18）：<a href="https://finance.eastmoney.com/a/202611183934057294.html">eastmoney.com</a></li>
+        <li>东方财富 · 贝莱德在宁德时代 H 股好仓升至 6.19%（2026-11-18）：<a href="https://guba.eastmoney.com/news,300750,1798039662.html">eastmoney.com</a></li>
+        <li>新浪财经 · 摩根大通减持天齐锂业 H 股，增持百济神州、剑桥科技 H 股（2026-11-19）：<a href="https://finance.sina.com.cn/stock/estate/integration/2026-11-19/doc-inizhmki0975475.shtml">finance.sina.com.cn</a></li>
+        <li>财联社 · 摩根大通在澜起科技 H 股持股比例升至 7.78%（2026-11-20）：<a href="https://www.cls.cn/detail/2540210">cls.cn</a></li>
+        <li>财联社 · 摩根大通在剑桥科技 H 股持股比例降至 8.23%（2026-11-20）：<a href="https://www.cls.cn/detail/2540212">cls.cn</a></li>
+        <li>格隆汇 · 哔哩哔哩-W 获摩根大通增持 97.36 万股（2026-11-20）：<a href="https://finance.sina.com.cn/stock/bxjj/2026-11-20/doc-inizkywy3888848.shtml">finance.sina.com.cn</a></li>
+        <li>东方财富 · 摩根大通在国药控股 H 股好仓比例降至 4.96%（2026-11-20）：<a href="https://finance.eastmoney.com/a/202611203936177975.html">eastmoney.com</a></li>
+      </ul>
+    </section>
+
+    <footer>
+      Equation · 机构持仓变更周报 <strong>第 6 期</strong> · 生成于 2026-11-21<br />
+      入口：观察中心 → <em>机构持仓变更周报</em>
+    </footer>
+  </div>
+<script>
+(function() {
+  var currentFile = document.location.pathname.split('/').pop();
+  var nav = document.getElementById('version-nav');
+  fetch('institution-holdings-report-latest.json', { cache: 'no-store' })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      if (!nav || !data.versions) return;
+      var bust = encodeURIComponent(data.updated || data.latest || '');
+      var html = '<strong>📚 历史版本：</strong>';
+      data.versions.forEach(function(v) {
+        if (v.file === currentFile) {
+          html += '<span style="color:#166534;font-weight:600">' + v.label + ' ← 当前</span> ';
+        } else {
+          html += '<a href="' + v.file + '?v=' + bust + '">' + v.label + '</a> ';
+        }
+      });
+      nav.innerHTML = html;
+    })
+    .catch(function() { nav.style.display = 'none'; });
+})();
+</script>
+</body>
+</html>

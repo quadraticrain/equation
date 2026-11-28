@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>机构持仓变更周报 · 发刊说明</title>
+  <style>
+    :root {
+      --bg: #f5f6f8; --card: #fff; --text: #1a1a2e; --muted: #6b7280;
+      --border: #e5e7eb; --primary: #1677ff; --success: #389e0d; --warning: #d48806;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
+      background: var(--bg); color: var(--text); line-height: 1.7; font-size: 17px;
+    }
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 24px 16px 80px; }
+    header {
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+      color: #fff; padding: 32px 24px; border-radius: 12px; margin-bottom: 20px;
+    }
+    header h1 { margin: 0 0 8px; font-size: 1.85rem; font-weight: 600; line-height: 1.3; }
+    header p { margin: 0 0 6px; opacity: 0.92; font-size: 1rem; }
+    .badge {
+      display: inline-block; padding: 3px 12px; border-radius: 999px; font-size: 13px;
+      background: rgba(255,255,255,0.14); margin-right: 8px; margin-top: 12px;
+    }
+    section {
+      background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+      padding: 20px 24px; margin-bottom: 18px;
+    }
+    h2 { margin: 0 0 14px; font-size: 1.3rem; border-left: 4px solid var(--primary); padding-left: 12px; line-height: 1.35; }
+    h3 { margin: 16px 0 8px; font-size: 1.12rem; color: #374151; line-height: 1.4; }
+    p { font-size: 16px; }
+    ul, ol { margin: 8px 0; padding-left: 22px; font-size: 16px; }
+    li { margin-bottom: 7px; font-size: 16px; }
+    table { width: 100%; border-collapse: collapse; font-size: 16px; margin: 10px 0; }
+    th, td { border: 1px solid var(--border); padding: 9px 11px; text-align: left; vertical-align: top; }
+    th { background: #f9fafb; font-weight: 600; }
+    tr:nth-child(even) td { background: #fafafa; }
+    .tag { display: inline-block; padding: 1px 8px; border-radius: 4px; font-size: 13px; font-weight: 500; }
+    .tag-ok { background: #d9f7be; color: #135200; }
+    .tag-warn { background: #ffe58f; color: #874d00; }
+    .tag-new { background: #ffd6e7; color: #9d2152; }
+    .callout { border-radius: 8px; padding: 13px 15px; margin: 12px 0; font-size: 16px; }
+    .callout-info { background: #e6f4ff; border-left: 4px solid var(--primary); }
+    .callout-warn { background: #fffbe6; border-left: 4px solid var(--warning); }
+    a { color: var(--primary); }
+    footer { text-align: center; color: var(--muted); font-size: 14px; padding: 22px 0; line-height: 1.7; }
+    @media (max-width: 768px) {
+      .wrap { max-width: 100%; padding: 0 0 72px; }
+      header { border-radius: 0; padding: 20px 10px; margin-bottom: 12px; }
+      section {
+        border-radius: 0; border-left: none; border-right: none;
+        padding: 14px 10px; margin-bottom: 12px;
+      }
+      h2 { padding-left: 10px; }
+      table { font-size: 14px; }
+      th, td { padding: 6px 8px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>机构持仓变更周报</h1>
+      <p><strong>发刊说明</strong> · 覆盖中财期货 / 贝莱德 / 摩根大通 / 东方港湾近三个月主要持仓变更</p>
+      <p style="opacity:0.8;font-size:14px">公开信息整理，不构成投资建议。</p>
+      <span class="badge">静态页</span>
+      <span class="badge">每周六 09:01 更新</span>
+      <span class="badge">四大机构</span>
+    </header>
+
+    <section id="intro">
+      <h2>关于本刊</h2>
+      <p>本刊由 WorkBuddy AI 定时任务<strong>每周六 09:01</strong> 自动生成：检索公开网络信息，汇总以下四家机构<strong>近三个月的主要持仓变更</strong>，每家机构单独成节、分别列举。</p>
+      <table>
+        <thead>
+          <tr><th>机构</th><th>关注范围</th><th>主要数据来源</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>中财期货</strong></td>
+            <td>上期所 / 大商所 / 郑商所 / 中金所 / 广期所 会员成交持仓排名</td>
+            <td>各交易所会员成交持仓排名、期货业协会公开数据</td>
+          </tr>
+          <tr>
+            <td><strong>贝莱德（BlackRock）</strong></td>
+            <td>美股 13F 持仓 + 中国香港 / 中国内地持股披露</td>
+            <td>SEC 13F-HR、港交所权益披露、上市公司十大股东</td>
+          </tr>
+          <tr>
+            <td><strong>摩根大通（JPMorgan Chase）</strong></td>
+            <td>美股 13F 持仓 + 中国香港港股 / 中国内地 A 股持仓</td>
+            <td>SEC 13F-HR、港交所权益披露、上市公司十大股东</td>
+          </tr>
+          <tr>
+            <td><strong>东方港湾（但斌）</strong></td>
+            <td>中国内地 A 股 / 中国香港港股 私募持仓</td>
+            <td>上市公司定期报告十大流通股东、私募备案与媒体报道</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="callout callout-info">
+        <strong>首期报告生成中。</strong>本页为发刊说明页，最新的《机构持仓变更周报》将在下一次定时任务运行后自动发布于本页（历史各期可在页面顶部切换）。
+      </div>
+    </section>
+
+    <section id="notes">
+      <h2>口径与免责</h2>
+      <ul>
+        <li><strong>数据均来自公开信息</strong>，每条关键数据标注来源与披露日期；无法获取的数据明确列为「数据缺失」，不做推测或填充。</li>
+        <li><strong>披露存在滞后</strong>：13F 按季度披露（45 天滞后）、港交所权益披露与上市公司定期报告亦有时间差，私募持仓披露更为有限。</li>
+        <li><strong>本刊只描述公开信息与可观测信号，不构成任何投资建议。</strong></li>
+      </ul>
+    </section>
+
+    <footer>
+      Equation · 机构持仓变更周报 · 公开信息整理，不构成投资建议
+    </footer>
+  </div>
+</body>
+</html>

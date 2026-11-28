@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>XTX Markets 做市策略周报 v8（2026-11-27）</title>
+  <style>
+    :root {
+      --bg: #f5f6f8; --card: #fff; --text: #1a1a2e; --muted: #6b7280;
+      --border: #e5e7eb; --primary: #0e7490; --success: #389e0d; --warning: #d48806;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
+      background: var(--bg); color: var(--text); line-height: 1.7; font-size: 17px;
+    }
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 24px 16px 80px; }
+    header {
+      background: linear-gradient(135deg, #0f172a 0%, #134e4a 100%);
+      color: #fff; padding: 32px 24px; border-radius: 12px; margin-bottom: 20px;
+    }
+    header h1 { margin: 0 0 8px; font-size: 1.85rem; font-weight: 600; line-height: 1.3; }
+    header p { margin: 0 0 6px; opacity: 0.92; font-size: 1rem; }
+    .badge {
+      display: inline-block; padding: 3px 12px; border-radius: 999px; font-size: 13px;
+      background: rgba(255,255,255,0.14); margin-right: 8px; margin-top: 12px;
+    }
+    nav.toc {
+      background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+      padding: 14px 18px; margin-bottom: 20px; font-size: 16px;
+    }
+    nav.toc a { color: var(--primary); text-decoration: none; margin-right: 14px; }
+    nav.toc a:hover { text-decoration: underline; }
+    section {
+      background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+      padding: 20px 24px; margin-bottom: 18px;
+    }
+    h2 { margin: 0 0 14px; font-size: 1.3rem; border-left: 4px solid var(--primary); padding-left: 12px; line-height: 1.35; }
+    h3 { margin: 16px 0 8px; font-size: 1.12rem; color: #374151; line-height: 1.4; }
+    p { font-size: 16px; }
+    ul, ol { margin: 8px 0; padding-left: 22px; font-size: 16px; }
+    li { margin-bottom: 7px; font-size: 16px; }
+    table { width: 100%; border-collapse: collapse; font-size: 16px; margin: 10px 0; }
+    th, td { border: 1px solid var(--border); padding: 9px 11px; text-align: left; vertical-align: top; }
+    th { background: #f9fafb; font-weight: 600; }
+    tr:nth-child(even) td { background: #fafafa; }
+    .tag { display: inline-block; padding: 1px 8px; border-radius: 4px; font-size: 13px; font-weight: 500; }
+    .tag-ok { background: #d9f7be; color: #135200; }
+    .tag-warn { background: #ffe58f; color: #874d00; }
+    .tag-tech { background: #cffafe; color: #155e75; }
+    .tag-fin { background: #e6f4ff; color: #0958d9; }
+    .tag-new { background: #ffd6e7; color: #9d2152; }
+    .callout { border-radius: 8px; padding: 13px 15px; margin: 12px 0; font-size: 16px; }
+    .callout-info { background: #ecfeff; border-left: 4px solid var(--primary); }
+    .callout-warn { background: #fffbe6; border-left: 4px solid var(--warning); }
+    .timeline { list-style: none; padding: 0; margin: 0; }
+    .timeline li { padding: 11px 0 11px 18px; border-left: 2px solid var(--border); margin-left: 8px; }
+    .timeline .date { font-size: 13px; color: var(--muted); }
+    .timeline .title { font-weight: 600; margin: 3px 0; font-size: 16px; }
+    .timeline .desc { font-size: 16px; color: #4b5563; }
+    a { color: var(--primary); }
+    footer { text-align: center; color: var(--muted); font-size: 14px; padding: 22px 0; line-height: 1.7; }
+    .version-nav {
+      background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px;
+      padding: 12px 16px; margin-bottom: 16px; font-size: 16px;
+    }
+    .version-nav strong { color: #166534; }
+    .version-nav a { color: #166534; margin-right: 16px; }
+    .quote {
+      background: #f8fafc; border-left: 3px solid #94a3b8; padding: 11px 15px;
+      margin: 10px 0; font-size: 16px; color: #334155; border-radius: 4px;
+    }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 15px; }
+    @media (max-width: 768px) {
+      .wrap { max-width: 100%; padding: 0 0 72px; }
+      header { border-radius: 0; padding: 20px 10px; margin-bottom: 12px; }
+      nav.toc {
+        border-radius: 0; border-left: none; border-right: none;
+        padding: 12px 10px; margin-bottom: 12px;
+      }
+      section {
+        border-radius: 0; border-left: none; border-right: none;
+        padding: 14px 10px; margin-bottom: 12px;
+      }
+      h2 { padding-left: 10px; }
+      table { font-size: 14px; }
+      th, td { padding: 6px 8px; }
+      th:first-child, td:first-child { padding-left: 6px; }
+      th:last-child, td:last-child { padding-right: 6px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="version-nav" id="version-nav"></div>
+
+    <header>
+      <h1>XTX Markets 做市策略周报</h1>
+      <p><strong>第 8 期</strong> · 数据截止 2026-11-27 · 每周五 09:01 由 WorkBuddy AI 定时任务重新生成</p>
+      <p style="opacity:0.8;font-size:14px">公开信息整理，不构成投资建议。覆盖：XTX Markets 做市策略 / 技术体系 / 财务数据 / Alexander Gerko 动态，并对公开叙述做信息交叉验证与数学模型合理性检验</p>
+      <span class="badge">v8.0</span>
+      <span class="badge">静态页</span>
+      <span class="badge">全球算法做市商</span>
+    </header>
+
+    <nav class="toc">
+      <strong>目录</strong>
+      <a href="#summary">本期结论</a>
+      <a href="#profile">公司与人物</a>
+      <a href="#focus">本期焦点</a>
+      <a href="#strategy">做市策略拆解</a>
+      <a href="#math">数学模型合理性检验</a>
+      <a href="#financials">财务与规模数据</a>
+      <a href="#blind">数据盲区</a>
+      <a href="#refs">参考链接</a>
+    </nav>
+
+    <section id="summary">
+      <h2>本期结论</h2>
+      <ol>
+        <li><strong>跟了六期的「卡亚尼投运公告」本周落地：11-24，XTX 启用了自有首座数据中心——22.5MW IT 容量、15,000 平方米、3 个机房大厅、193 公顷园区，已投超 €4 亿、目标超 €10 亿、共 5 座。</strong>关键句来自官网新闻稿：「for the first time, compute is housed in the firm's own data centre infrastructure」。这句话把此前七期的「租算力」叙事正式归档：XTX 从「买算力的人」变成「自己盖机房、自己承担电力与许可风险的人」。同期披露：第二座 2027 年投运；第三座在建、目标 2028 年中，但<strong>「电力供应仍不确定」</strong>——电网与接入只覆盖前两座；另有 400kV 输电线至 Otanmäki 变电站的征地许可仍在芬兰许可机构流程中（环评意见 2026-08-07） <span class="tag tag-ok">已核验（官网新闻稿 + Bloomberg 11-24 + FinanceMagnates + Data Center Dynamics + Data Phoenix + Yle 六源一致）</span>。</li>
+        <li><strong>同一座数据中心牵出本报告八期以来第一份可核验的「单位经济」：XTX Finland Oy 在爱尔兰起诉戴尔，1,680 台英伟达 GPU 服务器、$5.49 亿固定价，戴尔要求追加 $6,200–7,000 万。</strong>《金融时报》11-22 首发，中文端（央广网 / 证券时报 / 央视财经 / 环球网 / 中国能源网）多源转载并补充细节：合同约 2025-11 议定、XTX 另付 $500 万锁价、交付延误约两个月、争议款 $7,000 万已入第三方托管、案件由爱尔兰高等法院商业法庭快速通道（2026-06-15 由 Rory Mulcahy 法官受理）、<strong>12 月开庭、尚无实体裁决</strong>。戴尔称无法独自消化零部件成本；XTX 拒绝置评 <span class="tag tag-ok">已核验（FT 原发 + 央广网/证券时报/央视财经/环球网四源，金额、台数、追加区间完全一致）</span> <span class="tag tag-warn">「2025-11 议定」「Rory Mulcahy 受理」「托管」三项细节目前仅见于单一聚合站转述，标注待核实</span>。</li>
+        <li><strong>自建机房不是「省钱」故事，是「把租约风险换成折旧 + 供应链敞口」的故事。</strong>三个独立事实指向同一件事：①戴尔在固定价合同上要求 11–13% 追加；②同期报道戴尔/HPE/联想/超微对部分客户要求 25–45% 涨价；③11-26 报道至少两家英伟达服务器合作厂商自 11-20 起暂停向东南亚四国发货。<strong>XTX 拿到的 11–13% 是这轮涨价的下限而非上限</strong>——但本报告无法判定这是固定价条款生效、订单更早，还是配置差异所致，不作归因 <span class="tag tag-ok">已核验（FT / 央广网 / 证券时报 / 国际金融报多源）</span>。</li>
+        <li><strong>六期悬案闭合：《Let There Be Light》欧洲版 #89 于 11-24 出刊（10 月数据），XTX SI 仍是第四大 ELP SI，10 月 ADVT 环比 +11.47%；六家 ELP SI 的场所成交占比创纪录 6.62%。</strong>同月 HRT +15.94%（六家中最大）、Jane Street JX-EU +11.35%、Citadel Connect Europe 保持第二。这与 #88（9 月数据）的「HRT 扩大领先、后三者同月均失份额」形成反转：10 月三家同时回升。<strong>但绝对份额仍不披露</strong>——只能拿到排名与环比，拿不到百分点 <span class="tag tag-ok">已核验（Rosenblatt LTB 欧洲 #89 原文摘要，2026-11-24）</span> <span class="tag tag-warn">6.62% 为单一机构口径，无第二家独立复核</span>。</li>
+        <li><strong>竞对收入口径全面刷新，XTX 的「增速不慢但基数被拉开」已成事实。</strong>HRT 2026 前 9 个月 $214 亿（2025 全年 $123 亿，+74% 于九个月内完成）；Citadel Securities 前 9 个月净交易收入超 $150 亿（Q3 超 $34 亿、+29%，净利约 $11.9 亿、+13%，已超 2025 全年纪录）；Jane Street 至 8 月中已超 $400 亿（2025 全年 $396 亿）。<strong>XTX 2025 全年 $53 亿（UK 三实体口径）</strong>——增速 43% 不低，但 HRT 九个月就做了 XTX 四年的量 <span class="tag tag-ok">已核验（Bloomberg 11-24 经 BigGo/Macrostream/Finwire 三源转述；The Inference 汇总 JS/HRT 口径）</span> <span class="tag tag-warn">各家口径不同（集团总收入 vs 净交易收入 vs UK 三实体净收入），不可直接相除</span>。</li>
+        <li><strong>财务基线补录（非本周新增，前七期均缺）：Gerko 2025 年个人分红 £8.95 亿（2024 £6.83 亿，+31%），另 23 名员工共分 £8.33 亿、人均约 £3,620 万；2025 年分红总额约 £18 亿，2026-01 追加 £3.31 亿、2026-03 追加 £2.61 亿；英国公司税约 £5.8 亿。</strong>《星期日泰晤士报》2026 富豪榜列其身家 £160.06 亿、英国第 8（年增 £72.61 亿）。<strong>本报告标注：这些数字最早见 2026-08-29 报道，不属本周新增，本期作为「财务基线补齐」收录</strong> <span class="tag tag-ok">已核验（HK01 / 香港经济日报 / 华英网 / CryptoBriefing 四源一致，均溯源 Companies House 已披露的 FY2025 账目）</span> <span class="tag tag-warn">「250 名员工」「400PB 存储」与官网 300 人 / 1EB+ 冲突，属媒体旧口径，本报告不采用</span>。</li>
+        <li><strong>11-26，XTX 首次把象棋赞助扩到英国以外：与新加坡国际象棋总会共建「Mind Sports 国家训练中心」，2027 年中开业，XTX 为主要出资方；同稿首次出现具名「APAC 首席执行官 Ted Yang」。</strong>该中心将由国际象棋、象棋、围棋、桥牌四项共用，落地于前 Tanjong Katong 女子中学校区 A 座。把它与 11-20 披露的「Trading Desk（新加坡）」并读，新加坡在 XTX 的组织权重正在从「一个交易时区」升级为「APAC 总部职能」 <span class="tag tag-ok">已核验（新加坡国际象棋总会官网新闻稿，2026-11-26，含双方具名引语）</span> <span class="tag tag-warn">单一发布方，无第二家独立媒体报道</span>。</li>
+        <li><strong>市场背景：11-20 VIX 盘中冲 40.03（52 周最高）收 35.89，一周内两度 30+ 后回落至 28.29——这是一次标准的「风险吸收窗口」。</strong>11-25 道指 +0.33% 报 50,182.95（盘中一度 −1,100 点）、纳指 −0.62% 报 23,585.80（盘中 −4.6%）、标普 −0.25% 报 7,182.78；10 月核心 PCE 同比 3.3%（三年最高、超预期 0.1pp）、整体 3.8%；12-08/09 加息 25bp 概率 97.8–98.1%；11-26 感恩节休市 <span class="tag tag-ok">已核验（Yahoo Finance / WSJ / 证券时报 / 中新社 / Vista Partners 多源，指数点位与 VIX 一致）</span> <span class="tag tag-warn">VIX 11-25 收盘存在 28.29 与 27.98 两个版本，采信 28.29（Yahoo + WSJ 双源）</span>。</li>
+        <li><strong>无变动四项，明确记录：</strong>①官网首页 6 项口径（$250bn / 25,000+ GPU / 1EB+ / 53,000+ 工具 / 35 国 / 300 人 / &gt;£4 亿公益）与 11-20 逐字一致，<strong>连续第八周零变动</strong>；②Companies House 最新 filing 仍是 <strong>2026-10-02 CS01</strong>，<strong>连续第八周无新 filing</strong>；③模型架构 / 特征 / 损失 / 频率 / 持仓约束仍<strong>零公开</strong>；④Gerko 本人<strong>仍无一手公开表态</strong>（本周唯一具名高管发声是 COO Mike Irwin 与 APAC CEO Ted Yang）。<strong>唯一变动：在招岗位 6 → 7，新增「Systems Engineer – Research Technology（伦敦）」，但其 requisition ID（7634431003）早于上期在招的两个岗位（7645996003 / 7798502003），说明这不是新开的编制，而是重新挂出或被上期漏记——二选一无法判定，本报告不做猜测。</strong></li>
+      </ol>
+      <div class="callout callout-info">
+        <strong>读法提示：</strong>本期是八期以来<strong>第一次拿到「XTX 自己花钱买了什么、花多少钱、卡在哪」的一手数据</strong>。前七期的瓶颈一直是「算力规模只有官网一句 25,000+ GPU」；本期因为两件事同时发生——数据中心投运 + 戴尔诉讼——算力从「形容词」变成了「可做除法的数字」：1,680 台 / $5.49 亿 / 22.5MW / 417PB / 17,000 盘 / 26 吨。<strong>本期最重要的判断变化有三处：</strong>第一，<strong>「自建」不等于「更便宜」</strong>——戴尔要求 11–13% 追加，即便 XTX 已额外付 $500 万锁价，说明「固定价格」在这个供应链周期里是<strong>可谈判的意向</strong>而不是硬约束；第二，<strong>「220MW 目标 vs 22.5MW 现实」</strong>把卡亚尼从「一次性工程」重新定义为「一个每 12 个月才交付一座 22.5MW 的爬坡过程」，且后三座电力未落定；第三，<strong>XTX 在欧洲 SI 的第四名位置在 10 月稳住并回升（+11.47%），但竞对 HRT 单月 +15.94%</strong>——「稳住名次」与「缩小差距」是两回事，不要把前者读成后者。<strong>下一观察窗口：</strong>①<strong>12 月戴尔案开庭</strong>（决定 11–13% 追加是否成立，直接改变 €10 亿预算的实际执行价）；②<strong>12-06 纳斯达克 23/5 上线</strong>（官方时区已校正为 21:00–03:55 ET）；③<strong>12-08/09 FOMC</strong>（25bp 概率已 97.8–98.1%，几无悬念）；④卡亚尼第三座 400kV 线许可进展；⑤Trading Desk 是否补齐（已连续两期在招）。
+      </div>
+    </section>
+
+    <section id="profile">
+      <h2>公司与人物简介（★ = 本期更新）</h2>
+      <table>
+        <tr><th style="width:130px">项目</th><th>内容</th></tr>
+        <tr><td>XTX Markets</td><td>2015 年创立的算法做市商，总部伦敦。用机器学习对股票、固定收益、外汇、大宗商品、加密货币 5.3 万余种工具生成价格预测，在交易所与另类交易场所交易，并向客户直接提供流动性。无外部投资人，属 XTX Holdings（开曼注册、英国税务居民）集团</td></tr>
+        <tr><td>★自有算力（本期首次有实物与金额）</td><td>芬兰卡亚尼园区 193 公顷，首座数据中心 <strong>2026-11-24 投运</strong>：22.5MW IT 容量、15,000㎡、3 个机房大厅；已投 <strong>超 €4 亿</strong>（绝大多数给了芬兰承包商，YIT 为总包，首座主合同约 €1 亿，2024-12 签订）；总规划 <strong>超 €10 亿 / 5 座</strong>；第二座 2027 年、第三座目标 2028 年中。此前算力全部租自欧洲多地机房，本次为<strong>首次自有</strong>。冷却不用水；正研究把余热免费供给卡亚尼市</td></tr>
+        <tr><td>★卡亚尼的人与运营</td><td>现场已雇 <strong>30+ 全职</strong>（工程师、运营、安保、维护），园区上限 50 人；建设高峰期在场 400+ 人；<strong>Jukka-Pekka Partanen</strong> 任 XTX Markets Finland 负责人（官网新闻稿具名）；COO <strong>Mike Irwin</strong> 为本次公开发言人</td></tr>
+        <tr><td>★组织形态（第三次补充）</td><td>v6「无人工报价员、有 7×24 人在环监督」→ v7「Trading Desk = real-time control layer，拥有干预权」→ <strong>v8 补充：APAC 已设具名 CEO（Ted Yang），新加坡同时承载 Trading Desk 岗位与对外机构合作</strong>。仍不披露 Trading Desk 人数与干预权限边界。准确表述维持：<strong>报价与下单由模型生成，但存在 24 小时值班、可执行干预的交易台；「无人」指无人工报价，不是无人工介入</strong></td></tr>
+        <tr><td>★招聘职能链</td><td>11-27 复核：在招 <strong>7 个</strong>（上期 6）。新增 <strong>Systems Engineer – Research Technology（伦敦，Research Technology 团队）</strong>；保留 Trading Desk（新加坡）、C++ Software Engineer（新加坡，Tradingdev ETD Tech）、Datacentre Operations Engineer（新加坡）、Quality Engineer Data Center Ops（芬兰）、Software Developer – Shared Engineering（伦敦）、Technology Procurement Specialist（伦敦）。<strong>「建 → 采 → 运 → 守台」四段结构齐备，且新加坡占 3 席、芬兰 1 席、伦敦 3 席</strong></td></tr>
+        <tr><td>Alexander Gerko</td><td>1979 年生于莫斯科，莫斯科国立大学数学博士（交换代数 / 同调维数），新经济学院经济学硕士。2004 德意志银行，2009 GSA Capital 主管做市，2015 创立 XTX。持约 75% 股权，2022 年放弃俄罗斯国籍、入英籍。与妻子 Elena 创办 1729 Maths School（伦敦北，2026 年 9 月开学）</td></tr>
+        <tr><td>★Gerko 财务与身份（基线补录）</td><td>2025 年个人分红 <strong>£8.95 亿</strong>（≈$12 亿），2024 年 £6.83 亿；公司 2025 年分红约 £18 亿 + 2026-01 £3.31 亿 + 2026-03 £2.61 亿；英国公司税约 <strong>£5.8 亿</strong>。《星期日泰晤士报》2026 富豪榜 <strong>£160.06 亿、英国第 8</strong>（年增 £72.61 亿）。2026-06 在 £2,250 万 GSA 递延利润税案中<strong>终审败诉</strong>（13 名原 GSA 交易员共同；争点是按个人所得税率还是公司税率课征）</td></tr>
+        <tr><td>★1729 Maths School 现状</td><td>已开学：300 名申请者录取 <strong>27 名 11–14 岁学生</strong>，约半数寄宿；走读学费最高 £33,594 / 寄宿 £57,906；Gerko 夫妇每年出资<strong>最高 £240 万</strong>，覆盖约 1/3 学生全额助学金、近 1/2 部分资助；「A School within a School」模式，挂靠 Mill Hill 教育集团，共享约 120 英亩校园；每周数学训练约 11 小时，约为普通中学三倍</td></tr>
+      </table>
+    </section>
+
+    <section id="focus">
+      <h2>本期焦点：卡亚尼首座投运 + 戴尔 $5.49 亿服务器诉讼 + 欧洲 SI 份额闭合 + 竞对收入全面刷新</h2>
+
+      <h3>焦点一：22.5MW 落地，「租算力」时代结束，但电力成为新的约束面</h3>
+      <p>官网新闻稿（2026-11-24，伦敦/卡亚尼）的措辞值得逐句看，因为它是八期以来第一份<strong>把「算力」写成工程参数</strong>的第一方文件：</p>
+      <div class="quote">
+        「Set within a 193-hectare site, the first facility provides <strong>22.5 MW of IT power capacity</strong> and has <strong>15,000 square metres</strong> of floor space... These models require significant computational resources, and <strong>for the first time, compute is housed in the firm's own data centre infrastructure</strong>.」
+      </div>
+      <p>COO Mike Irwin 的表态罕见地强硬，且指向一个具体行政环节——<strong>征地许可（expropriation permit）</strong>，而不是笼统的「监管」：</p>
+      <div class="quote">
+        「We've already invested <strong>over €400 million</strong> in construction, overwhelmingly with Finnish companies, and have ambitions to invest <strong>billions more</strong>. Yet those ambitions are being put at risk by government bureaucracy and a worrying lack of engagement... <strong>Expropriation permits that once took months can now take years.</strong> ... This is <strong>not</strong> about demanding electricity capacity that doesn't exist. It's about the government's ability to process applications, make decisions and engage with investors...」
+      </div>
+      <p>配套事实（多源一致）：</p>
+      <ul>
+        <li><strong>电力只覆盖前两座。</strong>第三座已在建（YIT 总包，2026-06 宣布），目标 2028 年中，但「power availability remains uncertain」；此后计划<strong>每年交付一座</strong>。</li>
+        <li><strong>卡点是一条 400kV 输电线</strong>，从园区连至 Otanmäki 变电站。芬兰许可与监督机构（Finnish Permit and Supervision Agency）环评页面显示该项目仍为 pending，<strong>2026-08-07 的环评意见明确「该线路需要沿线征地许可」</strong>（Data Phoenix 直查，其他源未提及此细节）。</li>
+        <li><strong>迁移规模</strong>：6 周内从 5 公里外的租用机房搬走 <strong>417 PB</strong>，动用 <strong>385 台服务器 / 17,000 块硬盘 / 26 吨</strong>，且「未中断运营」。这一段在检验 3 做物理自洽核算。</li>
+        <li><strong>社区与生态</strong>：向卡亚尼承诺 <strong>超 €160 万</strong>（含 €52 万给卡亚尼应用科技大学升级其数据中心系统）；施工期间为沙燕筑巢停工、用嗅探犬勘测飞鼠栖息地后改线、保留树木；冷却不用水。</li>
+      </ul>
+      <div class="callout callout-warn">
+        <strong>一个必须并读的结构性事实：</strong>FinanceMagnates 指出，22.5MW 仅相当于 XTX 2024 年 4 月规划中「250MW」目标的 <strong>9%</strong>；而本报告核对 2025-01 的「5 座 + €10 亿」口径后给出另一个数：<strong>若 5 座都是首座规模，总容量 112.5MW，也只有 250MW 的 45%</strong>。这两个口径<strong>无法同时成立</strong>（见检验 4）。本报告不选边，只并列。
+      </div>
+
+      <h3>焦点二：$5.49 亿固定价合同被要求追加 $6,200–7,000 万——算力自建的隐性成本浮出水面</h3>
+      <p>FT 11-22 报道，中文端多源转述后细节比英文更完整。核心事实链：</p>
+      <table>
+        <tr><th style="width:180px">要素</th><th>内容</th><th style="width:120px">来源强度</th></tr>
+        <tr><td>原告 / 被告</td><td>XTX Finland Oy（XTX 芬兰子公司）诉 Dell Products Unlimited Company</td><td>FT 系多源一致</td></tr>
+        <tr><td>标的</td><td><strong>1,680 台搭载英伟达 GPU 的服务器</strong>，部署于卡亚尼数据中心</td><td>FT 系多源一致</td></tr>
+        <tr><td>合同金额</td><td><strong>$5.49 亿</strong>「固定价格」；XTX 另付约 <strong>$500 万</strong>「锁定价格」</td><td>FT 系多源一致</td></tr>
+        <tr><td>戴尔主张</td><td>因零部件成本上涨，按期交付需追加 <strong>$6,200 万–7,000 万</strong>（原合同 <strong>11%–13%</strong>）；称无法独自消化，并可能进一步提价</td><td>FT 系多源一致</td></tr>
+        <tr><td>XTX 主张</td><td>$500 万锁价费正是为「价格确定性」支付，戴尔不应再提价</td><td>FT 系多源一致</td></tr>
+        <tr><td>程序</td><td>爱尔兰高等法院 <strong>Commercial Court（快速通道）</strong>；约 <strong>$7,000 万</strong>存入第三方托管，交付得以继续；<strong>12 月开庭</strong>，尚无实体裁决</td><td>央广网 / 证券时报</td></tr>
+        <tr><td>受理时间 / 法官</td><td>2026-06-15 受理，Rory Mulcahy 法官；合同约 2025-11 议定；交付延误约两个月</td><td><span class="tag tag-warn">单一聚合站，待核实</span></td></tr>
+        <tr><td>行业背景</td><td>戴尔 / HPE / 联想 / 超微对部分客户要求 <strong>25%–45%</strong> 涨价；摩根大通：2024 年初至今 DRAM 涨 <strong>超 400%</strong>，GPU 服务器至少涨 20–30%；TrendForce：2025H2 服务器 DRAM 合约价累涨 64%，2026 全年预计再涨约 270%</td><td>FT / 央广网 / 证券时报</td></tr>
+      </table>
+      <p><strong>为什么这件事对做市策略研究重要：</strong>做市商的成本曲线里，「算力」原本是运营费用（OPEX，按租用机柜计价，可随规模线性调整）；自建之后它变成<strong>资本开支（CAPEX）+ 折旧 + 电力 + 许可风险</strong>，且<strong>单点延误的沉没成本极高</strong>（机房已建成，服务器不到位就是空转折旧）。本案的 $5.49 亿恰好相当于已披露 €10 亿预算的一半以上，且只覆盖一座 22.5MW 机房——<strong>「€10 亿能盖 5 座」这个口径很可能低估了设备侧支出</strong>（见检验 2）。</p>
+
+      <h3>焦点三：《Let There Be Light》欧洲版 #89 出刊，六期悬案闭合但只闭一半</h3>
+      <p>Rosenblatt 11-24 发布欧洲版 #89（10 月数据）。这是本报告自 v3 起连续六期追踪的缺口。要点：</p>
+      <ul>
+        <li><strong>ELP（电子流动性提供商）运营的系统性内部撮合商合计占场所成交 6.62%，创纪录。</strong></li>
+        <li><strong>HRT SI 的日均成交额环比 +15.94%</strong>，是与其共享数据的六家中增幅最大者。</li>
+        <li><strong>Jane Street JX-EU +11.35%、XTX SI +11.47%</strong>，分列第三、第四大 ELP SI；<strong>Citadel Connect Europe 保持第二</strong>（仅次于 HRT）。</li>
+        <li>暗池成交环比 <strong>+27.03%</strong>（大额交易 LIS 从 MiFID II 后低点反弹），但 LIS 仍只占暗池的 <strong>29.78%</strong>，为历史低位之一。</li>
+        <li>周期性拍卖簿成交 <strong>+7.07%</strong>，受 OneChronos 新上线场所带动。</li>
+      </ul>
+      <p><strong>与上期的反转：</strong>#88（9 月数据）的结论是「HRT 扩大对 Citadel Connect Europe、JX-EU、XTX SI 的领先，后三者同月均失市场份额」。#89 显示 10 月三家<strong>同时回升</strong>，但 HRT 升得更快（+15.94% vs +11.47%）——<strong>名次没变、差距仍在扩大</strong>。这一条是本期最容易被误读的数据，本报告在检验 7 给出上界推算。</p>
+
+      <h3>焦点四：竞对收入刷新——「波动率红利」被同行吃掉了更大一口</h3>
+      <table>
+        <tr><th>机构</th><th>期间</th><th>收入</th><th>同比 / 对照</th><th>备注</th></tr>
+        <tr><td><strong>Jane Street</strong></td><td>2026 年至 8 月中</td><td><strong>&gt;$400 亿</strong></td><td>2025 全年 $396 亿</td><td>8 月中即超去年全年；今年算力承诺约 <strong>$190 亿</strong>（CoreWeave $60 亿容量 + $10 亿股权 @$109 + Crusoe 五年约 $130 亿）</td></tr>
+        <tr><td><strong>HRT</strong></td><td>2026 前 9 个月</td><td><strong>$214 亿</strong></td><td>2025 全年 $123 亿（+74%）</td><td>本周向债券持有人表示继续投数据中心与算力</td></tr>
+        <tr><td><strong>Citadel Securities</strong></td><td>2026 前 9 个月</td><td><strong>&gt;$150 亿</strong>净交易收入</td><td>已超 2025 全年纪录；Q3 &gt;$34 亿（+29%）、净利约 $11.9 亿（+13%）</td><td>占美国散户股票成交 &gt;1/3；扩企业债（IG 起步）、高接触大宗、Wolfe Research 少数股权</td></tr>
+        <tr><td><strong>XTX Markets</strong></td><td>2025 全年</td><td><strong>£39.3 亿（≈$53 亿）</strong>净收入</td><td>+43–44% y/y；税后利润 £17.1 亿（+33%）</td><td><strong>UK 三实体口径</strong>，不含美国/新加坡实体，与上三行不可直接相除</td></tr>
+      </table>
+      <p>另注：Citadel 新设 <strong>Southern California Investments</strong>（由新聘 Alexey Poyarkov 领导），专做系统化股票短线，直接对标 HRT 与 Jane Street。<strong>这一条对 XTX 的含义是中性的</strong>——XTX 的竞争面在「跨资产 + SI + 客户直连」，不在美股短线；但它说明「波动率红利 → 扩编」的传导正在全行业发生。</p>
+      <p>三家做市商同时出现在 IREN 股东名册（Jane Street 6.5% / Citadel Securities 5.9% / Susquehanna 5.0%，合计 17.4%，均为 13G），而 IREN 的 $150 亿计划仍需从市场再融约 $60 亿——<strong>「做市商既是算力买家、又是算力卖方股东、还是其做市对手方」的三重身份，正在成为这个行业的新常态</strong>。XTX 是唯一没有走「入股算力供应商」路线的头部做市商（它选择自己盖）。<span class="tag tag-warn">第三方观点，未证实：本报告不对该路径优劣作结论</span></p>
+
+      <h3>本期时间线</h3>
+      <ul class="timeline">
+        <li>
+          <div class="date">2026-11-20（周五）</div>
+          <div class="title">VIX 盘中冲 40.03（52 周最高），收 35.89</div>
+          <div class="desc">11-19 收 28.44 后单日再升 26%。这是本报告记录到的 2026 年最高波动读数；同日 ANT 收 $88.91（−8.5%）。<span class="tag tag-ok">已核验（Yahoo Finance 日线 + WSJ）</span></div>
+        </li>
+        <li>
+          <div class="date">2026-11-20（周五）</div>
+          <div class="title">Nasdaq 发布 Equity Trader Alert #2026-72：隔夜时段正式定为 21:00–03:55 ET</div>
+          <div class="desc">端口 20:35–21:00 可变开放；<strong>03:55 收盘并撤销全部未成交订单</strong>；11-20 与 12-04 还有两场周末行业测试。<strong>校正 v7 的「21:00–04:00」表述</strong>——官方为 03:55 结束。<span class="tag tag-ok">已核验（Nasdaq Trader 官方公告）</span></div>
+        </li>
+        <li>
+          <div class="date">2026-11-22（周日）</div>
+          <div class="title">FT 首发：戴尔等在交付前要求 AI 服务器涨价，最高 45%；XTX 案曝光</div>
+          <div class="desc">首次给出 $5.49 亿 / 1,680 台 / 追加 $6,200–7,000 万三组数字。<span class="tag tag-ok">已核验（FT 原发，中文端四源转述一致）</span></div>
+        </li>
+        <li>
+          <div class="date">2026-11-23（周一）</div>
+          <div class="title">中文财经端集中扩散；美股盘中 V 型</div>
+          <div class="desc">证券时报 / 央视财经 / 环球网 / 中国能源网同日跟进。VIX 回落至 26.62。<span class="tag tag-ok">已核验</span></div>
+        </li>
+        <li>
+          <div class="date">2026-11-24（周二）</div>
+          <div class="title">★ 卡亚尼首座数据中心投运（22.5MW）；同日 Rosenblatt LTB 欧洲 #89 出刊；Bloomberg 报 Citadel Securities 九个月超全年纪录</div>
+          <div class="desc">三条独立信息同日落地，构成本期三大主线。<span class="tag tag-ok">已核验（六源）</span></div>
+        </li>
+        <li>
+          <div class="date">2026-11-25（周三）</div>
+          <div class="title">10 月核心 PCE 3.3%（三年最高）；三大指数 V 型分化；VIX 28.29</div>
+          <div class="desc">道指盘中一度 −1,100 点后收涨 164.25 点；纳指盘中 −4.6% 收 −0.62%；标普全球将英伟达列入「信用观察负面」。<span class="tag tag-ok">已核验（多源）</span></div>
+        </li>
+        <li>
+          <div class="date">2026-11-26（周四）</div>
+          <div class="title">★ 感恩节休市；XTX 与新加坡国际象棋总会发布共建新闻稿；报道称英伟达暂停向东南亚四国发服务器</div>
+          <div class="desc">SCF 新闻稿首次具名 APAC CEO Ted Yang。供应端扰动扩散至东南亚。<span class="tag tag-ok">已核验（SCF 官网）</span> <span class="tag tag-warn">东南亚停发货：单一媒体综述，待核实</span></div>
+        </li>
+        <li>
+          <div class="date">2026-11-27（周五）</div>
+          <div class="title">本报告生成（v8）</div>
+          <div class="desc">数据截止 11-26 收盘（美股休市，最新有效收盘为 11-25）。</div>
+        </li>
+      </ul>
+    </section>
+
+    <section id="strategy">
+      <h2>做市策略拆解（基于公开信息）</h2>
+
+      <h3>1. 自建机房改的是「成本形态」，不是「报价算法」</h3>
+      <p>把这一周的两件事放在同一张损益表上，才能看清自建的真实含义：</p>
+      <table>
+        <tr><th style="width:150px">维度</th><th>租用算力（2024 及以前）</th><th>自有算力（2026-11 起）</th><th>对做市的影响</th></tr>
+        <tr><td>成本性质</td><td>OPEX，按机柜/千瓦计价，可月度调整</td><td><strong>CAPEX + 折旧 + 电力 + 运维人力</strong>（30+ 人已雇）</td><td>固定成本占比上升 → 规模不足时单笔成本更高</td></tr>
+        <tr><td>扩缩容弹性</td><td>高（租多租少）</td><td><strong>低</strong>（一座 22.5MW 建设周期约 2 年；第三座卡在许可）</td><td>面对行情突变时，算力不能快速加码</td></tr>
+        <tr><td>供应链敞口</td><td>由机房方承担</td><td><strong>自己承担</strong>（戴尔案即为此敞口的定价）</td><td>设备涨价/延期直接进成本</td></tr>
+        <tr><td>延迟</td><td>欧洲多地租用机房（距交易所较远亦可）</td><td>芬兰卡亚尼（电力便宜、气候冷、<strong>远离主要交易所</strong>）</td><td><strong>再次验证「不拼延迟」</strong>：把机房放在电价最低而非交易所隔壁</td></tr>
+        <tr><td>战略价值</td><td>受制于第三方容量</td><td>「first time compute is housed in own DC」</td><td>研究迭代速度 → 预测精度（α），而非执行速度</td></tr>
+      </table>
+      <p>结论：<strong>卡亚尼是一个「α 投资」而不是「延迟投资」</strong>。它买的是更大的模型、更多的训练轮次、更长的历史窗口——这与官网「不拼延迟，拼预测」的自我定位一致，也与「$250bn 日成交 / 300 人 / 无人工报价员」的成本结构一致。若 XTX 真在做延迟军备竞赛，机房会建在 Mahwah / Secaucus / Slough，而不是北极圈边缘。</p>
+
+      <h3>2. 22.5MW 到底能装多少卡：一条从诉讼文件反推的算式</h3>
+      <p>这是本期最有价值的一次交叉：<strong>诉讼给出了台数，新闻稿给出了功率</strong>，两者可以相除。</p>
+      <table>
+        <tr><th>算式</th><th>结果</th><th>含义</th></tr>
+        <tr><td>22.5MW ÷ 1,680 台</td><td><strong>13.39 kW/台</strong></td><td>与 8 卡 GPU 服务器（GPU 约 5.6kW + 双路 CPU + 内存 + 网卡 + 风扇冗余）的 10–14kW 区间吻合</td></tr>
+        <tr><td>1,680 台 × 8 卡</td><td><strong>13,440 卡</strong></td><td>约占官网「25,000+ GPU」的 <strong>53.8%</strong></td></tr>
+        <tr><td>$5.49 亿 ÷ 1,680 台</td><td><strong>$326,786/台</strong></td><td>8 卡摊分 ≈ <strong>$40,848/卡</strong>（含 CPU/内存/网络/机箱/服务）</td></tr>
+        <tr><td>追加 $6,200–7,000 万 ÷ $5.49 亿</td><td><strong>11.3%–12.8%</strong></td><td>与报道「11%–13%」自洽</td></tr>
+      </table>
+      <div class="callout callout-warn">
+        <strong>必须标注的三个不确定：</strong>①「1,680 台」并未说明每台卡数，8 卡是行业最常见配置，<strong>不是已证实</strong>；②这 1,680 台是否<strong>全部</strong>装进首座机房，报道只说「部署于卡亚尼」，未说是首座；③$326,786/台里是否含网络交换机、机柜、维保，未披露。<strong>因此 13,440 卡是「配置假设下的推算」，不是披露值。</strong>若为 4 卡机，则 6,720 卡、$81,697/卡，功率密度降至 6.7kW/台——同样能塞进 22.5MW，但会空出一半机位。两种都自洽，本报告不选边。
+      </div>
+
+      <h3>3. SI 双轨：XTX 在「第四名」上稳住了，但「差距」在扩大</h3>
+      <p>XTX 的欧洲股票业务走两条腿：<strong>①作为 SI（系统性内部撮合商）直接对客户报价</strong>；<strong>②在交易所与 ATS 上做 lit/dark 报价</strong>。Rosenblatt 只覆盖前者中的「ELP 系 SI」六家。</p>
+      <ul>
+        <li><strong>名次稳定</strong>：XTX 连续两个月为第四大 ELP SI（HRT &gt; Citadel Connect Europe &gt; JX-EU &gt; XTX）。</li>
+        <li><strong>规模回升</strong>：10 月 ADVT +11.47% m/m，扭转 9 月的「失份额」。</li>
+        <li><strong>但相对落后</strong>：同月 HRT +15.94%，即<strong>「第四名」与「第一名」的环比差为 −4.47pp</strong>。在一个总量 6.62% 的池子里，这意味着 XTX 的相对位置在<strong>变差而非变好</strong>。</li>
+        <li><strong>结构性含义</strong>：ELP SI 合计 6.62% 是「占场所成交」，而欧洲股票还有 40%+ 走 OTC、约 6–7% 走暗池。SI 渠道的份额天花板由 MiFID II 的报价义务与客户结构决定，<strong>不是靠算力就能突破的</strong>。</li>
+      </ul>
+
+      <h3>4. 风险吸收：VIX 40 的那两天，就是价差窗口</h3>
+      <p>11-20 VIX 盘中 40.03、收 35.89；11-25 日内 34.95、收 28.29。两次都是「日内尖峰 → 收盘回落」。对做市商而言这是最理想的形态：<strong>价差在尖峰时走阔、成交在尖峰时放量、而收盘前波动率回落使库存重估损失可控</strong>。</p>
+      <p>这解释了为什么三家竞对同时创纪录（Citadel Q3 +29%、HRT 九个月 +74%、JS 8 月中超去年全年），也解释了 XTX 2025 年 +43% 的收入增长。<strong>但要注意：波动率红利是「行业性 β」，不是个体 α。</strong>本报告不把 XTX 的增速归因于「模型更好」——没有任何公开数据支持这一归因。</p>
+
+      <h3>5. Trading Desk 与 APAC：新加坡权重继续上升</h3>
+      <p>继 v7 发现「Trading Desk（新加坡）」后，本期又出现两个新加坡信号：</p>
+      <ul>
+        <li><strong>APAC 已有具名 CEO（Ted Yang）</strong>，且以「XTX Markets 首席执行官（APAC）」身份对外代表公司签约级合作。</li>
+        <li><strong>新加坡在招 3 席</strong>：Trading Desk、C++ Software Engineer（Tradingdev ETD Tech）、Datacentre Operations Engineer。</li>
+      </ul>
+      <p>把三条并读（Nasdaq 23/5 隔夜时段 = 北京 10:00–17:00 / 新加坡同日间；Trading Desk 上 APAC 班；APAC 设 CEO），本报告维持 v7 的判断：<strong>做市的竞争维度正从「延迟」转向「覆盖时长」，而覆盖时长的组织答案是把控制层放在「别人睡觉时你醒着」的时区</strong>。新增一点：<strong>「ETD Tech」团队在新加坡招 C++，说明新加坡不只是控制层，还在承接交易所衍生品的技术开发</strong>——这是组织实质化的信号，不只是排班。</p>
+      <div class="callout callout-info">
+        <strong>诚实边界：</strong>以上均为「外显行为」（招聘、新闻稿、监管文件、诉讼）。XTX 从未公开说明其模型的预测周期、持仓约束、库存限额或跨资产信号构造方式。<strong>任何「XTX 用 X 模型做 Y」的说法，若无第一方出处，本报告一律不采信。</strong>官网唯一第一方模型表述仍是 v7 抓到的那句谱系（计量经济学 → 树+神经网络 → 现代深度学习），本周无更新。
+      </div>
+    </section>
+
+    <section id="math">
+      <h2>数学模型合理性检验</h2>
+      <p style="color:#6b7280;font-size:15px">本节对公开数字做独立算术复核。目的不是「证明 XTX 说的是真的」，而是找出<strong>哪几个数字放在一起会打架</strong>——打架的地方才是信息，不打架的地方只是复述。</p>
+
+      <h3>检验 1：营收 / 年化名义成交额 —— 0.2–1bp 的 sanity check</h3>
+      <p>输入：FY2025 净收入 £39.3 亿（≈$53 亿，按 £3.93 亿→$5.3 亿隐含汇率 <strong>1.349</strong>）；官网「$250bn daily traded volume」。</p>
+      <table>
+        <tr><th>年化口径</th><th>年化名义成交额</th><th>净收入 / 名义额</th><th>判定</th></tr>
+        <tr><td>365 日（含周末）</td><td>$250bn × 365 = <strong>$91.25 万亿</strong></td><td>$5.3bn / $91.25tn = <strong>0.581 bp</strong></td><td>✓ 落在 0.2–1bp</td></tr>
+        <tr><td>252 交易日</td><td>$250bn × 252 = <strong>$63.0 万亿</strong></td><td>$5.3bn / $63.0tn = <strong>0.841 bp</strong></td><td>✓ 落在 0.2–1bp（接近上界）</td></tr>
+        <tr><td>365 日，按税前利润</td><td>$91.25 万亿</td><td>£22.9 亿（≈$30.9 亿）/ $91.25tn = <strong>0.339 bp</strong></td><td>✓</td></tr>
+        <tr><td>365 日，按税后利润</td><td>$91.25 万亿</td><td>£17.1 亿（≈$23.1 亿）/ $91.25tn = <strong>0.253 bp</strong></td><td>✓</td></tr>
+      </table>
+      <p><strong>结论：自洽。</strong>四组算法全部落在合理区间，且「365 日」与「252 日」的差异（0.58 vs 0.84bp）恰好说明为什么这个区间要给到 0.2–1bp 这么宽——<strong>口径差异本身就能造成 45% 的偏差</strong>。同时提醒：$250bn 是「日成交名义额」，做市商在买卖两侧各计一次，若按「单边」口径，bp 会翻倍到 1.16–1.68bp，<strong>就超出合理区间了</strong>。因此可以反推：<strong>官网的 $250bn 应为双边合计</strong>。这是一个由算术得出的、关于口径的实质结论。</p>
+
+      <h3>检验 2：戴尔合同的单位经济 + 与 22.5MW 的功率闭合</h3>
+      <p>见「策略拆解 2」的算式。这里只补三点判断：</p>
+      <ul>
+        <li><strong>功率闭合成立但不唯一。</strong>13.39 kW/台 与 8 卡 GPU 服务器吻合；若为 4 卡机则 6.7kW/台、机房只能填一半。两种配置都物理可行，<strong>算术无法判别</strong>。要判别，只能等「首座机房实际 IT 负载」披露——目前没有。</li>
+        <li><strong>$5.49 亿能否覆盖 5 座 €10 亿？</strong>不能。$5.49 亿 ≈ €5.1 亿，只买服务器（不含土建、电力、网络、冷却），且只对应一座 22.5MW。若 5 座都要同等设备，仅服务器就需约 €25 亿，是「€10 亿总预算」的 <strong>2.5 倍</strong>。<strong>说明 €10 亿口径大概率只覆盖土建与基础设施，不含 GPU 服务器</strong>——这一点在 v1–v7 从未被指出，本期由戴尔案首次量化。<span class="tag tag-warn">本报告推断，未经 XTX 确认</span></li>
+        <li><strong>$500 万锁价费的经济含义。</strong>$5M / $549M = <strong>0.91%</strong>。若最终让步 11.3%（$62M），则 0.91% 的对价未能阻止 11.3% 的追加——<strong>杠杆比约 1:12.4</strong>。但这不能说「锁价无效」：没有这 $500 万，追加幅度可能更高（同业 25–45%）。<strong>这是一个「反事实不可观测」的问题，本报告不作结论。</strong></li>
+      </ul>
+
+      <h3>检验 3：417PB 迁移的物理自洽 —— 三个独立维度同时闭合</h3>
+      <p>输入：417 PB / 385 台服务器 / 17,000 块硬盘 / 26 吨 / 6 周。</p>
+      <table>
+        <tr><th>算式</th><th>结果</th><th>与物理常识对照</th><th>判定</th></tr>
+        <tr><td>417 PB ÷ 385 台</td><td><strong>1.083 PB/台</strong></td><td>高密度存储节点（44 盘位 4U）常见 1PB 级</td><td>✓</td></tr>
+        <tr><td>17,000 ÷ 385 台</td><td><strong>44.2 盘/台</strong></td><td>44–45 盘位是主流 4U 存储机型标准配置</td><td>✓</td></tr>
+        <tr><td>417,000 TB ÷ 17,000 盘</td><td><strong>24.5 TB/盘</strong></td><td>24TB 企业级 HDD 为当前主力容量点</td><td>✓</td></tr>
+        <tr><td>26,000 kg ÷ 17,000 盘</td><td><strong>1.53 kg/盘</strong></td><td>3.5" HDD 裸盘约 0.65–0.70kg，含托架/减震/包装约 1.4–1.6kg</td><td>✓</td></tr>
+        <tr><td>417 PB ÷ (6 周 = 3.63×10⁶ s)</td><td><strong>115 GB/s ≈ 920 Gbps</strong></td><td>等效吞吐；若物理搬运（报道用词 physically transporting），则此数非链路速率</td><td>⚠ 不可判</td></tr>
+      </table>
+      <p><strong>结论：三个独立维度（盘位数、单盘容量、单盘重量）同时闭合到 5% 以内，这组数据高度可信。</strong>这是本报告八期以来遇到的自洽度最高的一组运营数据。唯一不可判的是「6 周」的性质——报道明确用 <em>physically transporting</em>（物理运输），意味 385 台整机被卡车运走，115 GB/s 只是「等效吞吐」，<strong>不能据此推断 XTX 有 920Gbps 的跨机房专线</strong>。这个区分很重要：若误读为网络传输，会高估其数据中心互联能力。</p>
+
+      <h3>检验 4：22.5MW / 112.5MW / 250MW —— 三个容量口径无法同时成立</h3>
+      <table>
+        <tr><th>口径</th><th>来源与时点</th><th>数值</th><th>与 250MW 目标的关系</th></tr>
+        <tr><td>首座实际</td><td>官网 2026-11-24</td><td>22.5 MW</td><td>9.0%</td></tr>
+        <tr><td>5 座 × 首座规模</td><td>本报告按 2025-01「5 座」推算</td><td>112.5 MW</td><td><strong>45.0%</strong></td></tr>
+        <tr><td>规划目标</td><td>2024-04 报道（FinanceMagnates 引）</td><td>250 MW</td><td>100%</td></tr>
+      </table>
+      <p><strong>矛盾：若「5 座」且每座 22.5MW，则总容量只有 250MW 的 45%。</strong>三种解释，本报告无法判别：</p>
+      <ol>
+        <li><strong>250MW 是旧口径</strong>（2024-04 提出，2025-01 的 €10 亿 / 5 座规划已下调）；</li>
+        <li><strong>后续单座更大</strong>（第二、三座功率高于 22.5MW，首座只是最小单元）；</li>
+        <li><strong>「5 座」不含后续「每年一座」的滚动扩建</strong>（官网写「further facilities planned for delivery annually thereafter」）。</li>
+      </ol>
+      <p>第三种最可能——官网原文确实是「5 座 + 此后每年一座」，那么 250MW 是一个<strong>没有时间表的长期目标</strong>，而 22.5MW 才是<strong>有交付日期的现实</strong>。<strong>本报告今后一律用「22.5MW（已投运）/ 年度新增一座」表述，不再引用 250MW 作为可比基准。</strong></p>
+
+      <h3>检验 5：Glosten–Milgrom 与 Avellaneda–Stoikov —— 自建 DC 改的是 α，不是 π</h3>
+      <p><strong>Glosten–Milgrom（1985）</strong>框架下，做市商的最优价差 ≈ 逆向选择成本 + 订单处理成本 + 库存成本。逆向选择项与「知情交易者占比 π」和「信息优势幅度」成正比。<strong>自建数据中心、把模型从四代谱系推进到更深网络，提高的是「预测精度」</strong>——即降低自身相对于知情流的劣势，等价于<strong>压低单位成交的逆向选择损失</strong>，而不是降低 π 本身（π 由市场结构决定，不由你机房多大决定）。</p>
+      <p>这给出一条<strong>可证伪推论</strong>：若 XTX 的算力投入真在提升预测精度，则其<strong>单位名义成交的净收入（bp）应随时间上升或至少不下降</strong>。实测：FY2025 = 0.581bp（365 日口径）。FY2024 用同样方法：£2.70 亿 → 实际是 £27.0 亿收入（+43% 后为 £39.3 亿），$36.4 亿 / $91.25tn = <strong>0.399 bp</strong>。<strong>→ 2024 年 0.40bp → 2025 年 0.58bp，+45%。</strong>这个方向与「模型在变强」一致，但<strong>同样与「2025 年波动率更高、价差更宽」一致</strong>——两个解释不可分离，因此<strong>不能作为算力有效的证据</strong>。本报告只记录事实，不作因果断言。<span class="tag tag-warn">重要：不要把这个 bp 上升读成「模型变强」</span></p>
+      <p><strong>Avellaneda–Stoikov（2008）</strong>框架下，最优报价半价差 δ* ≈ ½(γσ²(T−t) + (2/γ)ln(1+γ/k))。库存风险项<strong>正比于 σ²</strong>。11 月 VIX 从 18.70（11-12）→ 40.03 盘中（11-20）→ 28.29（11-25），σ 峰值约为月初的 <strong>2.14 倍，σ² 约 4.6 倍</strong>。按 A–S，最优价差应同比走阔。<strong>这与三家竞对 Q3/Q4 收入创纪录在方向上一致</strong>——做市收入对波动率的一阶敏感性是正的。这条检验的价值在于：<strong>它把「创纪录收入」还原为「波动率红利」而非「技术优势」，从而否定了任何把行业性收入读成个体 α 的叙事。</strong></p>
+
+      <h3>检验 6：净利率下滑 3.9pp —— 与 CAPEX 前置是否自洽</h3>
+      <table>
+        <tr><th>指标</th><th>FY2024</th><th>FY2025</th><th>变动</th></tr>
+        <tr><td>净收入</td><td>£27.0 亿</td><td>£39.3 亿</td><td>+45.6%</td></tr>
+        <tr><td>税后利润</td><td>£12.8 亿</td><td>£17.1 亿</td><td>+33.6%</td></tr>
+        <tr><td><strong>净利率</strong></td><td><strong>47.41%</strong></td><td><strong>43.51%</strong></td><td><strong>−3.90 pp</strong></td></tr>
+        <tr><td>英国公司税（估）</td><td>—</td><td>约 £5.8 亿</td><td>隐含税率 25.3%（对标英国 25% 主税率 ✓）</td></tr>
+      </table>
+      <p><strong>税率自洽性极好：</strong>£5.8 亿 ÷（£17.1 亿 ÷ 0.75）= £5.8 亿 / £22.8 亿 = <strong>25.4%</strong>，与英国 2023 年起 25% 主税率吻合到 0.4pp。这说明「£17.1 亿税后利润 + £5.8 亿公司税」这组数字<strong>内部一致</strong>，不是拼凑的。</p>
+      <p><strong>净利率下滑的三个候选解释（无法分离）：</strong>①卡亚尼 €4 亿 CAPEX 开始计提折旧（2026-11 投运，FY2025 应只有少量在建利息资本化）；②薪酬/分红结构变化（2025 年分红 £18 亿，本身是税后分配，不进损益）；③2024 年基数含一次性项目。<strong>本报告判断：仅凭两期数据无法归因，标注为待验证。</strong>可证伪点：<strong>2026 年报若见「行政费用/折旧占比」继续上升且净利率再降 2pp 以上，则支持「CAPEX 前置」解释。</strong></p>
+
+      <h3>检验 7：XTX 欧洲 SI 份额的结构性上界推算</h3>
+      <p>已知：六家 ELP SI 合计占场所成交 <strong>6.62%</strong>；XTX 排<strong>第四</strong>；XTX 10 月 ADVT 环比 <strong>+11.47%</strong>。</p>
+      <table>
+        <tr><th>假设</th><th>推算</th><th>说明</th></tr>
+        <tr><td>六家均分</td><td>6.62% / 6 = <strong>1.10%</strong></td><td>作为「第四名」的下界（若前三家都大于均值，第四名可能低于均值，故此项不严格）</td></tr>
+        <tr><td>第四名上界</td><td>6.62% / 4 = <strong>1.655%</strong></td><td>前四名合计不超过 6.62%，故第四名 ≤ 1.655%</td></tr>
+        <tr><td>合理区间估计</td><td><strong>1.0%–1.5%</strong></td><td>HRT 与 Citadel 明显领先，XTX 与 JX-EU 接近</td></tr>
+        <tr><td>换算成金额（10 月）</td><td>1.2% × €851.3 亿 ≈ <strong>€10.2 亿/日</strong></td><td>仅 SI 渠道，<strong>不含 lit/dark/OTC</strong></td></tr>
+      </table>
+      <div class="callout callout-warn">
+        <strong>三条禁止误用：</strong>①€10.2 亿/日 <strong>不能</strong>与官网「$250bn 日成交」相加或相减——前者是欧洲股票 SI 单一渠道，后者是全球全资产双边名义额，<strong>量纲不同、口径不同、币种不同</strong>；②1.0–1.5% 是<strong>从六家合计反推的上界</strong>，不是披露值；③这条推算<strong>再次否决</strong>了第三方站点「XTX 占欧洲股票成交 11% 以上」的说法——若为 11%，则 XTX 一家就超过六家 ELP SI 合计（6.62%）的 1.66 倍，与 Rosenblatt 的分列格局在结构上互斥。
+      </div>
+
+      <h3>检验 8：Gerko 的 Anthropic 持仓 —— 「零稀释上限」本身也在缩水</h3>
+      <p>v7 曾把 Telegraph 的 $35 亿定性为「零稀释上限」。本期用市价回测这个上限：</p>
+      <table>
+        <tr><th>时点</th><th>ANT 收盘</th><th>按 $35 亿上限折算</th><th>变动</th></tr>
+        <tr><td>2026-11-19（首日）</td><td>$97.17</td><td>$3.50 bn</td><td>基准</td></tr>
+        <tr><td>2026-11-19 盘中高</td><td>$115.10</td><td>$4.15 bn（若按峰值）</td><td>+18.5%</td></tr>
+        <tr><td>2026-11-25（最新有效收盘）</td><td><strong>$82.79</strong></td><td><strong>$2.98 bn</strong></td><td><strong>−14.8%</strong></td></tr>
+        <tr><td>2026-11-25 盘中低</td><td>$73.85</td><td>$2.66 bn</td><td>−24.0%</td></tr>
+      </table>
+      <p>ANT 从发行价 $83 到 11-25 收盘 $82.79，<strong>区间涨跌幅 −0.25%</strong>，但<strong>区间振幅 49.70%</strong>（高 $115.10 / 低 $73.85）。这意味着：<strong>「上限」不是静态数字，它随市价波动 ±25%</strong>。把它当作 Gerko 净资产的固定项，会引出错误的稳定性推断。</p>
+      <p><strong>三源净值口径打架（并列，不裁决）：</strong>Bloomberg Billionaires（11-24）= <strong>$156 亿</strong>（同比 +$45.3 亿 / +40.9%）；WealthRank（11-20）= <strong>$116.8 亿</strong>；《星期日泰晤士报》2026 榜 = <strong>£160.06 亿</strong>（≈$216 亿）。差异来自：英镑/美元换算、是否对 75% 股权打折（Bloomberg 打 25% key-man 折扣）、是否含已分配现金。本报告<strong>只采信方向（大幅增长）与量级（千亿人民币级），不采信任何单一数值</strong>。</p>
+
+      <h3>检验 9：会计口径不得解读为策略收益（本期强制声明）</h3>
+      <div class="callout callout-warn">
+        <strong>以下三组数字经常被媒体混为一谈，本报告明确区分：</strong>
+        <ul style="margin-bottom:0">
+          <li><strong>£39.3 亿净收入</strong> = 做市与交易业务收入（可近似视为策略毛收入），<strong>不等于</strong>「赚了 39 亿」。</li>
+          <li><strong>£17.1 亿税后利润</strong> = 扣除薪酬、技术、行政、税后的结果，<strong>已是策略收益的净额</strong>，不能再除以名义成交额去讲「每笔赚多少」，因为分母是双边名义额（见检验 1）。</li>
+          <li><strong>£8.95 亿 Gerko 分红 / £18 亿总分红</strong> = <strong>税后利润的分配</strong>，不是新增收益。<strong>「日赚 1,989 万英镑」这类表述（媒体常用）是把「净资产年增值 ÷ 365」包装成「日赚」，属于会计口径误读</strong>——净资产增值来自估值倍数变化，不是现金流。</li>
+        </ul>
+      </div>
+      <p>同理，本报告不把「<strong>£5.8 亿公司税</strong>」解读为「策略成功」的证据；它只是税率与利润的算术结果（检验 6 已交叉验证到 0.4pp）。也不把「£160 亿身家」解读为「公司值 160 亿」——前者含 Bloomberg 对 75% 股权打的 25% key-man 折扣与已分配现金，后者是估值问题，两者不可互换。</p>
+    </section>
+
+    <section id="financials">
+      <h2>财务与规模数据（★ = 相对上期变动）</h2>
+      <table>
+        <tr><th style="width:150px">指标</th><th style="width:190px">上期 v7（2026-11-20）</th><th style="width:250px">本期 v8（2026-11-27）</th><th style="width:110px">环比</th><th>备注</th></tr>
+        <tr>
+          <td>官网日成交</td><td>$250bn</td><td>$250bn</td><td>不变（第 8 周）</td><td>算术反推为双边口径（检验 1）</td>
+        </tr>
+        <tr>
+          <td>GPU 集群</td><td>25,000+</td><td>25,000+</td><td>不变</td><td>★本期首次有可除的实物锚：1,680 台 ≈ 13,440 卡（53.8%，配置假设下）</td>
+        </tr>
+        <tr>
+          <td>可用存储</td><td>1 EB+</td><td>1 EB+</td><td>不变</td><td>★新增「417PB 已迁入卡亚尼」，与 1EB+ 不矛盾（迁移量 ≠ 总量）</td>
+        </tr>
+        <tr>
+          <td>工具数 / 国家 / 员工</td><td>53,000+ / 35 / 300</td><td>53,000+ / 35 / 300</td><td>不变</td><td>媒体仍普遍写「250 人」，与官网冲突，不采用</td>
+        </tr>
+        <tr>
+          <td>公益累计</td><td>&gt;£4 亿</td><td>&gt;£4 亿</td><td>不变</td><td>★新增芬兰 €160 万承诺、新加坡 Mind Sports 中心（金额未披露）</td>
+        </tr>
+        <tr>
+          <td><strong>★自有数据中心</strong></td><td>「第 5 周无投运公告」</td><td><strong>11-24 首座投运：22.5MW / 15,000㎡ / 3 厅 / 193 公顷</strong></td><td><strong>质变</strong></td><td>€4 亿+ 已投；第二座 2027；第三座 2028 中（电力未定）</td>
+        </tr>
+        <tr>
+          <td><strong>★算力采购</strong></td><td>无披露</td><td><strong>1,680 台 GPU 服务器 / $5.49 亿固定价；戴尔求追加 $6,200–7,000 万</strong></td><td><strong>新增</strong></td><td>爱尔兰商业法院，12 月开庭</td>
+        </tr>
+        <tr>
+          <td><strong>★欧洲 ELP SI 份额</strong></td><td>缺（LTB 欧洲最新为 #88，9 月数据）</td><td><strong>#89 出刊：六家合计 6.62%（创纪录）；XTX 第 4，ADVT +11.47%</strong></td><td><strong>闭合一半</strong></td><td>绝对份额仍不披露；推算上界 1.0–1.5%</td>
+        </tr>
+        <tr>
+          <td>在招岗位</td><td>6</td><td>7</td><td>+1</td><td>增 Systems Engineer – Research Technology（伦敦）；ID 早于上期两岗，疑为重新上架</td>
+        </tr>
+        <tr>
+          <td>Companies House</td><td>2026-10-02 CS01</td><td>2026-10-02 CS01</td><td>不变（第 8 周）</td><td>FY2025 账目 2026-04-02 已提交（AA，36 页）</td>
+        </tr>
+        <tr>
+          <td>FY2025 净收入</td><td>£39.3 亿（≈$53 亿）</td><td>£39.3 亿</td><td>不变</td><td>+43–44% y/y；bp 口径 0.581（vs 2024 的 0.399，+45%）</td>
+        </tr>
+        <tr>
+          <td>FY2025 税后利润</td><td>£17.1 亿</td><td>£17.1 亿</td><td>不变</td><td>净利率 43.51%（2024：47.41%，−3.90pp）</td>
+        </tr>
+        <tr>
+          <td><strong>★分红（补录）</strong></td><td>未收录</td><td><strong>2025 约 £18 亿；Gerko £8.95 亿；23 人共 £8.33 亿</strong></td><td><strong>新增基线</strong></td><td>2026-01 追加 £3.31 亿、2026-03 追加 £2.61 亿；公司税约 £5.8 亿（隐含税率 25.4% ✓）</td>
+        </tr>
+        <tr>
+          <td><strong>★竞对：HRT</strong></td><td>FY2025 $123 亿</td><td><strong>2026 前 9 月 $214 亿</strong></td><td><strong>+74% 于九个月</strong></td><td>本周告知债券持有人继续投算力</td>
+        </tr>
+        <tr>
+          <td><strong>★竞对：Citadel Securities</strong></td><td>FY2025 $122 亿</td><td><strong>2026 前 9 月 &gt;$150 亿净交易收入</strong></td><td><strong>已超全年</strong></td><td>Q3 &gt;$34 亿（+29%）、净利 $11.9 亿（+13%）</td>
+        </tr>
+        <tr>
+          <td><strong>★竞对：Jane Street</strong></td><td>FY2025 $396 亿</td><td><strong>2026 至 8 月中 &gt;$400 亿</strong></td><td><strong>8 月中超全年</strong></td><td>今年算力承诺约 $190 亿（含 IREN 6.5% 持股）</td>
+        </tr>
+        <tr>
+          <td>Trading Desk（新加坡）</td><td>新开（v7 发现）</td><td>仍在招</td><td>未补齐</td><td>★新增 APAC CEO 具名（Ted Yang）</td>
+        </tr>
+        <tr>
+          <td>Gerko £2,250 万税案</td><td>2026-06 终审败诉</td><td>无新进展</td><td>不变</td><td>13 名原 GSA 交易员共同被告</td>
+        </tr>
+        <tr>
+          <td>模型披露</td><td>谱系公开、参数零公开</td><td>同左</td><td>不变</td><td>Tech Blog 最新仍为 2025-09 TernFS</td>
+        </tr>
+      </table>
+
+      <h3>规模换算（本期新增，供横向参照）</h3>
+      <table>
+        <tr><th>换算项</th><th>数值</th><th>口径说明</th></tr>
+        <tr><td>净收入 / 员工</td><td>£1,310 万（按官网 300 人）<br>£1,572 万（按媒体 250 人）</td><td>差 20%，取决于采用哪个员工数；本报告用 300</td></tr>
+        <tr><td>税后利润 / 员工</td><td>£570 万（300 人）<br>£684 万（250 人）</td><td>媒体常用 250 人算出 £684 万</td></tr>
+        <tr><td>已投 CAPEX / 已投运 MW</td><td>€4 亿 / 22.5MW ≈ <strong>€1,778 万/MW</strong></td><td><strong>⚠ 不可用作单位造价</strong>：€4 亿含园区工程、前期阶段与共享基础设施（PowerlandMap 明确警告）</td></tr>
+        <tr><td>已投 / 总预算</td><td>€4 亿 / €10 亿 = <strong>40%</strong></td><td>这是可用的执行率指标</td></tr>
+        <tr><td>服务器支出 / 总预算</td><td>$5.49 亿 ≈ €5.1 亿 ≈ <strong>总预算的 51%</strong></td><td>仅一座机房的服务器，<strong>推论：€10 亿不含全部 GPU 服务器</strong></td></tr>
+      </table>
+    </section>
+
+    <section id="blind">
+      <h2>数据盲区说明</h2>
+      <ul>
+        <li><strong>★本期新增（最重要）：戴尔案的实体结果。</strong>12 月开庭，目前双方主张均<strong>只是指控</strong>。若戴尔胜，「固定价格」在本行业基本失效，所有自建机房的预算模型都要重算；若 XTX 胜，则「付锁价费」成为有效风控手段。<strong>本报告不预测判决。</strong></li>
+        <li><strong>★本期新增：1,680 台的配置未知。</strong>每台卡数、是否全部装入首座、金额是否含网络与维保，三项均未披露。故「13,440 卡」是假设推算，不是事实。</li>
+        <li><strong>★本期新增：第三座及以后的电力无着落。</strong>400kV 线至 Otanmäki 的征地许可仍在流程中（环评意见 2026-08-07）。若许可延至 2027，XTX「每年一座」的节奏将被打断，而这是其算力扩张的唯一公开路径。</li>
+        <li><strong>★本期新增：XTX SI 的绝对份额。</strong>Rosenblatt 只给排名与环比。若要拿到百分点，需订阅全文（付费墙内），本报告只能给上界推算（检验 7）。</li>
+        <li><strong>★本期新增：250MW 口径的出处。</strong>该数字来自 2024-04 的报道转述，XTX 官方从未在官网发布。本期已决定<strong>停用该基准</strong>（检验 4）。</li>
+        <li><strong>Trading Desk 的规模与权限边界。</strong>人数、是否可人工改价 / 撤单 / 调参、与 Quant 的决策分界、干预是否有金额上限、是否留痕可审计——<strong>全部零披露</strong>，已连续两期在招。</li>
+        <li><strong>模型参数。</strong>架构、特征、损失函数、预测周期、决策频率、持仓约束、库存限额、风控阈值——<strong>零公开</strong>。本报告所有关于「算力 → α」的表述均为<strong>基于外显行为（机房选址、招聘、诉讼）的推断</strong>，不是内部信息。</li>
+        <li><strong>Gerko 一手表态。</strong>本期唯一具名高管发声为 COO Mike Irwin 与 APAC CEO Ted Yang。<strong>Gerko 本人连续八期无一手公开表态</strong>；二手聚合平台的两条引语（「未来两年 50 年数学进展」「整个系要裁掉」）仍找不到一手出处，维持待核实。</li>
+        <li><strong>ANT 持股的比例与成本。</strong>只有「$1,000 万投入、当时估值约 $40 亿」这一个二手数字（Telegraph，且源媒体已就更正过「未稀释」假设）。持股比例、稀释后股数、会计计量方式<strong>全部不披露</strong>，故本报告只做区间与敏感性，不给点估计。</li>
+        <li><strong>数据质量问题（本期实测）：</strong>①VIX 2026-11-23 的 Yahoo 日线显示「最低 15.39」，但同日开盘 31.38、最高 35.08、收盘 26.62——<strong>15.39 为脏数据，本报告不采用</strong>；②VIX 11-25 收盘存在 28.29（Yahoo + WSJ）与 27.98（Vista Partners）两个版本，<strong>采信 28.29</strong>；③美国 10 年期收益率存在 4.848%（Vista）与 4.838%（国际金融报）两个版本，<strong>差异 1bp，本报告两值并列不裁决</strong>；④ANT 市值存在 $1.27 万亿（v7，@$97.17）、$1.17 万亿（AltIndex，@$75.92）、$1.8 万亿（完全摊薄）三个口径，<strong>互不相容，本报告只报股价不报市值</strong>；⑤「XTX 雇佣 250 人」在中文与港媒广泛传播，与官网 300 人冲突，<strong>属旧口径，不采用</strong>。</li>
+        <li><strong>一条方法论记录：</strong>聚合站 nrb.bg 于 11-26 把「卡亚尼投运 + €160 万承诺」标为「Unverified」，理由是「仅见两条 X 帖子」。<strong>该判断不成立</strong>——本报告已直接命中官网新闻稿原文（xtxmarkets.com/news/2026-xtx-markets-opens-first-data-centre）、Bloomberg、Yle、Data Center Dynamics 等多源。这说明：<strong>「聚合站说未核实」不等于「事实未核实」，只等于「该站没找到一手源」。</strong></li>
+      </ul>
+      <div class="callout callout-warn">
+        <strong>声明：</strong>本报告<strong>不构成任何投资建议</strong>，不预测 XTX、Anthropic、戴尔或任何标的的价格方向。XTX 为非上市公司，无公开交易标的；其内部模型零公开，任何「XTX 用了什么模型」的具体断言若无第一方出处，本报告一律视为推测。所有标注「第三方观点，未证实」的内容仅作记录，<strong>不构成本报告的结论</strong>。
+      </div>
+    </section>
+
+    <section id="refs">
+      <h2>参考链接</h2>
+      <p style="color:#6b7280;font-size:15px">按「一手 &gt; 二手 &gt; 聚合」排序。每条注明日期与关键数字，便于复核。</p>
+
+      <h3>一手来源（XTX 官方 / 交易所 / 政府登记）</h3>
+      <ol>
+        <li><a href="https://www.xtxmarkets.com/news/2026-xtx-markets-opens-first-data-centre" target="_blank" rel="noreferrer">XTX Markets 官方新闻稿（2026-11-24）| <strong>本期最重要一手文件</strong>：卡亚尼首座数据中心投运，22.5MW IT 容量、15,000㎡、193 公顷、3 厅；第二座 2027；第三座在建、2028 年中、<strong>电力不确定</strong>；已投 <strong>超 €4 亿</strong>、目标超 €10 亿、5 座、此后每年一座；<strong>30+ 全职员工</strong>、园区上限 50；COO <strong>Mike Irwin</strong> 与芬兰负责人 <strong>Jukka-Pekka Partanen</strong> 具名引语；承诺 €160 万（含 €52 万给卡亚尼应用科技大学）；不用水冷却、余热拟免费供市；施工期沙燕/飞鼠保护措施；「for the first time, compute is housed in the firm's own data centre infrastructure」</a></li>
+        <li><a href="https://www.xtxmarkets.com/" target="_blank" rel="noreferrer">XTX Markets 官网首页（2026-11-27 直抓）| 6 项口径<strong>连续第 8 周零变动</strong>：1 EB+ 可用存储 / 25,000+ GPU / $250bn 日成交 / 35 国 / 300 员工 / &gt;£4 亿公益；仍写「is also constructing a large-scale data centre in Finland」（新闻稿已说首座投运，首页未同步更新——<strong>官网内部口径滞后</strong>）</a></li>
+        <li><a href="https://www.xtxmarkets.com/careers" target="_blank" rel="noreferrer">XTX Markets 招聘页（2026-11-27 复核）| 在招 <strong>7 个</strong>（上期 6）：Systems Engineer – Research Technology（伦敦，7634431003）、Trading Desk（新加坡，7798502003）、C++ Software Engineer（新加坡，Tradingdev ETD Tech）、Datacentre Operations Engineer（新加坡）、Quality Engineer Data Center Ops（芬兰）、Software Developer – Shared Engineering（伦敦）、Technology Procurement Specialist（伦敦）</a></li>
+        <li><a href="https://www.xtxmarkets.com/job/?role=Trading-Desk&amp;id=7798502003" target="_blank" rel="noreferrer">XTX Markets · Trading Desk 岗位页（仍在招）| v7 的核心发现：Trading Desk = 「the real-time control layer」，可「execute or coordinate interventions」，对「a multi-billion dollar trading engine」负直接责任，覆盖 APAC 时段与周末值班；「not an incubator for algorithmic strategy design」；同页含模型谱系（计量经济学→树+神经网络→现代深度学习）与八城布点</a></li>
+        <li><a href="https://www.nasdaqtrader.com/TraderNews.aspx?id=ETA2026-72" target="_blank" rel="noreferrer">Nasdaq Trader · Equity Trader Alert #2026-72（2026-11-20）| <strong>隔夜时段官方定义：21:00–03:55 ET</strong>（不是 04:00）；20:35–21:00 端口可变开放；<strong>03:55 收盘并撤销全部未成交订单</strong>；11-20 与 12-04 尚有两场周末行业测试。<strong>本报告据此校正 v7 表述</strong></a></li>
+        <li><a href="https://find-and-update.company-information.service.gov.uk/company/12300034/filing-history" target="_blank" rel="noreferrer">Companies House · XTX Markets Technologies Ltd（12300034）| 最新 filing 仍是 <strong>2026-10-02 CS01</strong>（第 8 周无新 filing）；FY2025 全账 <strong>2026-04-02 AA（36 页）</strong>；2025-12-19 PSC04（Gerko 详情变更）、2025-12-18 PSC02（XTX Holdings 成为 PSC）</a></li>
+        <li><a href="https://singaporechess.org.sg/national-training-centre/" target="_blank" rel="noreferrer">新加坡国际象棋总会（2026-11-26）| <strong>本期新增一手</strong>：与 XTX 共建「Mind Sports 国家训练中心」，前 Tanjong Katong 女子中学校区 A 座，2027 年中开业，XTX 为主要出资方；国际象棋/象棋/围棋/桥牌四项共用；<strong>首次具名「Ted Yang, Chief Executive Officer, APAC at XTX Markets」</strong>；「首次把象棋支持扩展到英国以外」（此前为 London Chess Classic、Chessfest）</a></li>
+        <li><a href="https://www.rblt.com/market-structure-reports/let-there-be-light-european-edition-89" target="_blank" rel="noreferrer">Rosenblatt《Let There Be Light: European Edition》#89（<strong>2026-11-24 发布，10 月数据</strong>）| <strong>六期悬案闭合</strong>：ELP 系 SI 合计占场所成交<strong>创纪录 6.62%</strong>；HRT SI ADVT <strong>+15.94% m/m</strong>（六家最大）；<strong>JX-EU +11.35%、XTX SI +11.47%，分列第三、第四</strong>；Citadel Connect Europe 保持第二；暗池 <strong>+27.03%</strong>、LIS 仅占暗池 29.78%；周期拍卖 +7.07%（OneChronos 新场所）</a></li>
+        <li><a href="https://www.rblt.com/market-structure-reports" target="_blank" rel="noreferrer">Rosenblatt 报告索引（2026-11-27 核对）| 北美节奏：加拿大月报 11-24、<strong>LTB 欧洲 #89 于 11-24</strong>、LTB 美国 #85 于 11-19、ETP 月报 11-16、欧洲新闻摘要 11-13、欧洲成交量 11-10、美国成交量 11-04。<strong>欧洲版滞后已解除</strong></a></li>
+        <li><a href="https://www.1729mathsschool.org.uk/" target="_blank" rel="noreferrer">1729 Maths School 官网 | 英国首所 11–18 岁数学专修学校，Gerko 夫妇发起并资助，挂靠 Mill Hill 教育集团，「A School within a School」模式</a></li>
+        <li><a href="https://www.xtxmarkets.com/tech/" target="_blank" rel="noreferrer">XTX Tech Blog（2026-11-27 复核）| 最新仍为 <strong>TernFS（2025-09）</strong>自研分布式文件系统，<strong>2026 年无新文</strong>——技术侧公开披露已停更 14 个月</a></li>
+        <li><a href="https://www.xtxmarkets.com/news/notice-regarding-retail-cryptocurrency-scams/" target="_blank" rel="noreferrer">XTX 官网顶部公告（长期）| 「XTX does not deal with individual investors and does not accept deposits or provide retail trading services」——Bark/社交平台上冒用 XTX 名义的零售骗局仍在，本报告一并记录</a></li>
+      </ol>
+
+      <h3>数据中心与算力</h3>
+      <ol start="13">
+        <li><a href="https://www.bloomberg.com/news/articles/2026-11-24/gerko-s-xtx-opens-finnish-data-center-warns-on-permit-delays" target="_blank" rel="noreferrer">Bloomberg（2026-11-24）| Gerko 的 XTX 启用芬兰首座数据中心，警告许可延误威胁进一步投资；为卡亚尼 5 座、约 €10 亿（$11 亿）计划的首座；第二座明年完成；COO Irwin 称「invest billions more」正因「government bureaucracy and a worrying lack of engagement」面临风险</a></li>
+        <li><a href="https://www.financemagnates.com/institutional-forex/technology/xtx-markets-opens-finnish-data-center-says-red-tape-puts-expansion-at-risk" target="_blank" rel="noreferrer">FinanceMagnates（2026-11-24）| 补充关键换算：22.5MW = 250MW 目标的 <strong>9%</strong>（其自算）；€4 亿 ≈ 2025-01 预算的 <strong>40%</strong>；Yle 报道 5 座沿卡亚尼河、3 座电力未定；前 CTO <strong>Joshua Leahy 已于 2026-03 离开 XTX 及董事会</strong>；迁移细节 417PB / 385 台 / 17,000 盘 / 26 吨 / 6 周；2025 三实体净收入 £39.3 亿（+43%）、税后利润 £17.1 亿；<strong>2024 年运行 25,000+ GPU（多为英伟达）</strong></a></li>
+        <li><a href="https://www.datacenterdynamics.com/en/news/quant-trading-firm-xtx-markets-launches-225mw-data-center-in-kajaani-finland" target="_blank" rel="noreferrer">Data Center Dynamics（2026-11-24）| 工程侧细节：193 公顷、15,000㎡；<strong>YIT 为总包</strong>；第二座于 2025 年稍后宣布并开工；<strong>第三座 2026-06 宣布</strong>；不用水冷却</a></li>
+        <li><a href="https://dataphoenix.info/news/xtx-markets-first-kajaani-data-center-opening" target="_blank" rel="noreferrer">Data Phoenix（2026-11-24）| <strong>监管细节独家</strong>：芬兰许可与监督机构环评页面显示 400kV 输电线仍为 pending，线路连至 <strong>Otanmäki 变电站</strong>；该机构 <strong>2026-08-07 环评意见</strong>明确「需沿线征地许可」；YIT 首座主合同约 <strong>€1 亿（2024-12）</strong></a></li>
+        <li><a href="https://www.datacenter-intelligence.com/news/xtx-data-centre-kajaani-campus-finland" target="_blank" rel="noreferrer">Data Center Intelligence（2026-11-24）| 人力数据：<strong>30+ 常驻人员、上限 50；建设高峰期在场 400+ 人</strong>；€52 万（$568,896）给卡亚尼应用科技大学升级其数据中心系统</a></li>
+        <li><a href="https://chipdispatch.com/articles/xtx-markets-opens-first-own-data-center-22-5-mw-in-kajaani-finland" target="_blank" rel="noreferrer">Chip Dispatch（2026-11-24）| 三段机房大厅（three data halls）；余热拟免费供卡亚尼市；478 英亩 = 193 公顷口径统一；「22.5MW 只给 XTX 自有基础设施一个模板，其余四座取决于一条 400kV 线」</a></li>
+        <li><a href="https://powerlandmap.com/intelligence/kajaani-finland-ai-data-centre-grid-execution" target="_blank" rel="noreferrer">PowerlandMap（2026-11-26 核验）| <strong>方法论警告（本报告采纳）</strong>：不可把 €4 亿 ÷ 22.5MW 当单位造价，因含园区工程、未来阶段与共享基础设施；其记录已从「under construction」更新为「partially operational」，后续建筑仍作独立阶段</a></li>
+        <li><a href="https://www.privatewealthdaily.com/story/xtx-markets-launches-22-5mw-data-center-in-finland" target="_blank" rel="noreferrer">Private Wealth Daily（2026-11-24）| 指出关键经济性质：卡亚尼<strong>不产生对外租赁收入（no contracted offtake revenue）</strong>，投资回报完全依赖 XTX 自身交易经济性——这是「自建 vs 租用」的核心差别</a></li>
+        <li><a href="https://nrb.bg/en/xtx-markets-reportedly-warns-power-line-delays-threaten-finnish-expansion" target="_blank" rel="noreferrer">nrb.bg（2026-11-26）| <strong>本报告的反面样本</strong>：把卡亚尼投运与 €160 万承诺标为「Unverified」，理由是「仅见两条 X 帖子」。<strong>但官网新闻稿、Bloomberg、Yle、DCD 均已确认</strong>——「聚合站说未核实」≠「事实未核实」</a></li>
+        <li><a href="https://theinference.org/article/jane-street-hudson-river-trading-and-citadel-securities-broke-revenue-records-as-iren-still-needs-6-billion" target="_blank" rel="noreferrer">The Inference（2026-11）| 竞对收入与算力承诺汇总：<strong>JS 至 8 月中 &gt;$400 亿</strong>（2025 全年 $396 亿）、<strong>HRT 前 9 月 $214 亿</strong>（2025 全年 $123 亿）、<strong>Citadel Sec 前 9 月 &gt;$150 亿</strong>；<strong>JS 今年算力承诺约 $190 亿</strong>（CoreWeave $60 亿容量 + $10 亿股权 @$109 + Crusoe 五年约 $130 亿）；IREN 13G：JS 6.5%（27,353,819 股，11-12 事件日）、Citadel Sec 5.9%（24,892,787 股，9-30 为 17,863,909）、Susquehanna 5.0%（20,402,179 股，其中 17,978,400 为期权），合计 <strong>17.4%</strong>；IREN $150 亿计划仍需约 $60 亿</a></li>
+      </ol>
+
+      <h3>戴尔诉讼（$5.49 亿 / 1,680 台）</h3>
+      <ol start="23">
+        <li><a href="https://www.cnr.cn/tech/techgsrw/20261125/t20261125_527882534.shtml" target="_blank" rel="noreferrer">央广网（2026-11-25）| <strong>本案最完整中文报道</strong>：XTX Finland Oy 诉 Dell Products Unlimited Company；<strong>1,680 台英伟达 GPU 服务器、$5.49 亿</strong>、部署卡亚尼；XTX 另付 <strong>$500 万</strong>锁价；戴尔要求追加 <strong>$6,200–7,000 万（11%–13%）</strong>；爱尔兰高等法院商业法庭快速通道；<strong>$7,000 万入托管、交付继续、12 月开庭、无最终裁决</strong>；行业侧戴尔/HPE/联想/超微要求 25%–45% 涨价；<strong>HPE 于 2026-02 将报价有效期 30 天缩至 14 天</strong>、8 月对 &lt;$100 万订单恢复价格保护</a></li>
+        <li><a href="https://qiaoliang@stcn.com/article/detail/4348829.html" target="_blank" rel="noreferrer">证券时报（2026-11-23，引 FT 11-22）| 第二源交叉：确认 $5.49 亿固定价、$500 万锁价、$6,200–7,000 万追加；「XTX 今年 6 月因 AI 服务器价格纠纷在爱尔兰起诉美国戴尔」；戴尔暂未回应</a></li>
+        <li><a href="https://news.qq.com/rain/a/20261123A0CBZU00" target="_blank" rel="noreferrer">腾讯新闻（2026-11-23，央视财经/财联社）| 摩根大通：2024 年初至 2026 年底 DRAM 涨超 400%；GPU 服务器价格至少涨 20%–30%；部分内存密集型 CPU 节点涨至数倍</a></li>
+        <li><a href="https://www.163.com/dy/article/LCE5JD6Q0514R9OJ.html" target="_blank" rel="noreferrer">环球网/网易（2026-11-23）| 补充戴尔抗辩理由：<strong>「其他客户在寻找替代供应商后，最终接受涨价」</strong>；交易机构是 AI 服务器重要采购群体，仅次于大型云服务商</a></li>
+        <li><a href="https://cj.sina.cn/articles/view/1733360754/6750fc7202001lt7e" target="_blank" rel="noreferrer">新浪财经（2026-11-25，第一财经）| <strong>合同条款实操细节</strong>：戴尔 2026-11-13 版《Commercial Terms of Sale》——除非另有约定报价有效期 30 天，且「即使订单已被接受，供应商仍可在发货前调价甚至取消订单」；联想条款允许成本重大变化时调价；HPE 2026-02 缩至 14 天、3 月 CEO Neri 确认、6 月恢复 30 天、8 月对 &lt;$100 万恢复价格保护；联想 AI 基建潜在订单储备 &gt;5,300 亿元；戴尔 FY27Q2 新获 AI 服务器订单 $609 亿、期末在手 $950 亿；TrendForce：2025H2 服务器 DRAM 合约价累涨 64%、2026 全年预计再涨约 270%</a></li>
+        <li><a href="https://geekiki.com/blog/atualizacao-xtx-dell-commercial-court-irlanda-caucao-70-milhoes-dezembro?lang=zh-CN" target="_blank" rel="noreferrer">Geekiki（2026-11-22 后更新）| <strong>唯一给出程序细节的来源，标注待核实</strong>：案件 <strong>2026-06-15 由 Rory Mulcahy 法官受理</strong>；合同约 <strong>2025-11</strong> 议定；交付延误约两个月；戴尔称可能进一步提价；双方主张目前均<strong>只是指控</strong>，无实体裁决</a></li>
+        <li><a href="https://www.163.com/dy/article/LCELV72B0519QIKK_pdya11y.html" target="_blank" rel="noreferrer">网易（2026-11-23，央视财经）| 第四源交叉，数字与前三条完全一致（$5.49 亿 / $500 万 / $6,200–7,000 万）</a></li>
+      </ol>
+
+      <h3>财务、富豪榜与公司治理</h3>
+      <ol start="30">
+        <li><a href="https://www.hk01.com/%E5%8D%B3%E6%99%82%E5%9C%8B%E9%9A%9B/60398522/" target="_blank" rel="noreferrer">香港01（2026）| <strong>分红基线</strong>：2025 年向 Gerko 发放创纪录 <strong>£8.95 亿</strong>，2024 年 £6.83 亿（+31%）；约 £17 亿利润分配给创始人、资深量化交易员与技术开发人员，<strong>另 23 名员工共获 £8.33 亿、人均近 £3,620 万</strong>；2025 收入 +44% 至 £39 亿；芬兰 5 座数据中心、投资逾 $10 亿；投资 Anthropic 与 <strong>Wayve</strong>；<strong>£2,250 万税案今年败诉</strong>；1729 Maths School 预计 9 月开学</a></li>
+        <li><a href="https://inews.hket.com/article/4207379/" target="_blank" rel="noreferrer">香港经济日报（2026）| 《星期日泰晤士报》2026 富豪榜：Gerko 身家 <strong>£160.06 亿</strong>、英国<strong>第 8</strong>、年增 £72.61 亿（日均约 £1,989 万）；三实体 2025 净收入 £39.3 亿（+43%）、税后利润 £17.1 亿（+33%）；持 75% 股权。<strong>⚠ 该文写「约 250 名员工、400PB 数据」，与官网 300 人 / 1EB+ 冲突，属旧口径</strong></a></li>
+        <li><a href="https://pro.edgex.exchange/en-US/news/article/alex-gerko-record-895-million-xtx-payout" target="_blank" rel="noreferrer">CryptoBriefing / edgeX（2026-08-29）| <strong>本报告补录的时间锚</strong>：说明 £8.95 亿分红最早见于 8 月底报道，<strong>不属本周新增</strong>；补充「2025 分红 £18 亿 + 2026-01 £3.31 亿 + 2026-03 £2.61 亿」与「英国公司税约 £5.8 亿」；2024 年底 AI/科技投资组合 £2.623 亿（+80% y/y）</a></li>
+        <li><a href="https://www.bloomberg.com/billionaires/profiles/alexander-gerko/" target="_blank" rel="noreferrer">Bloomberg Billionaires（2026-11-24 更新）| 净资产 <strong>$156 亿</strong>、全球第 190；同比 +$45.3 亿（+40.9%）；<strong>方法：以 2025 年约 $53 亿收入（三实体）对比 Flow Traders / Virtu / Tradition / ABC arbitrage 的 EV/Sales 均值，再打 25% key-man 折扣</strong>；自 2020 年控股公司累计分红 &gt;£36 亿（$46 亿）</a></li>
+        <li><a href="https://www.newcastlechinese.com/news/details.asp?id=22596" target="_blank" rel="noreferrer">英国纽卡斯尔留学服务中心（2026）| 1729 已开学：<strong>300 名申请者录取 27 名 11–14 岁学生</strong>，约半数寄宿；走读学费最高 £33,594、寄宿 £57,906；<strong>Gerko 夫妇每年出资最高 £240 万</strong>，约 1/3 全额助学金、近 1/2 部分资助；每周数学训练约 11 小时（普通中学三倍）；半数课程由帝国理工与伦敦玛丽女王大学博士研究员带领</a></li>
+        <li><a href="https://www.financemagnates.com/tag/court/" target="_blank" rel="noreferrer">FinanceMagnates 法院标签页（长期）| Gerko 与 12 名前 GSA Capital 交易员就 £2,250 万递延交易利润税的最高法院上诉记录（2025-06-18 立案）；争点为 HMRC 按个人所得税率而非公司税率课征是否构成双重征税</a></li>
+        <li><a href="https://finance.biggo.com.tw/news/c8179e98-6ee5-4eca-9af9-f7bc6ece62fa" target="_blank" rel="noreferrer">BigGo 财经（2026）| 财富路径与学术背景交叉：1979 年生于莫斯科，莫斯科国立大学数学博士（交换代数 / 同调维数），Mathematics Genealogy Project 登记为数学家；2004 德意志银行、2009 GSA Capital、2015 创立 XTX</a></li>
+      </ol>
+
+      <h3>市场背景（本周）</h3>
+      <ol start="37">
+        <li><a href="https://hk.finance.yahoo.com/quote/%5EVIX/history/?p=%5EVIX" target="_blank" rel="noreferrer">Yahoo Finance · VIX 日线（2026-11-27 抓取）| <strong>完整序列</strong>：11-12 收 18.70 → 11-19 收 28.44 → <strong>11-20 收 35.89（日内高 40.03，52 周最高）</strong> → 11-23 收 26.62 → 11-24 收 26.36 → <strong>11-25 收 28.29（+7.32%，日内 27.49–34.95）</strong> → 11-26 收 26.80。<strong>⚠ 11-23 显示最低 15.39 为脏数据（同日开盘 31.38、最高 35.08），不采用</strong></a></li>
+        <li><a href="https://www.wsj.com/market-data/quotes/index/VIX" target="_blank" rel="noreferrer">WSJ · VIX 报价页（2026-11-25）| 第二源独立确认 11-25 收 <strong>28.29</strong>（前收 26.36、开 28.16、日内 27.49–34.95）；52 周区间 13.38–40.03；1 个月 +45.45%、3 个月 +83.11%、年初至今 +89.23%</a></li>
+        <li><a href="https://vistapglobal.com/stocks-close-mixed-on-wednesday-november-25-2026-as-hot-pce-inflation-new-tariff-plans-and-an-ai-sell-off-test-wall-street-amd-eprx-googl-modd-nvda-ser-spcx-vix" target="_blank" rel="noreferrer">Vista Partners（2026-11-25 收盘综述）| 指数：道指 50,182.95（+0.33%）、标普 7,182.78（−0.25%）、纳指 23,585.80（−0.62%）、<strong>罗素 2000 2,705.84（+0.78%）</strong>；10 年期 4.8480%（−5.6bp）；黄金 $3,600.70；BTC $60,139；原油 $84.11；<strong>新关税提案</strong>（对华/欧盟等最高 20%，半导体/汽车/钢铝豁免）；Q3 GDP 上修至 +4.3%；初请失业金 18.9 万（近 1960 年代末以来最低）；储蓄率 4.1%。<strong>⚠ 该源 VIX 记 27.98，与 Yahoo/WSJ 的 28.29 冲突，本报告采信后者</strong></a></li>
+        <li><a href="https://www.stcn.com/article/detail/4354267.html" target="_blank" rel="noreferrer">证券时报（2026-11-26）| 10 月 PCE 同比 <strong>3.8%</strong>、核心 PCE <strong>3.3%</strong>（三年来最高、超预期 0.1pp）；CME FedWatch 截至 11-26：<strong>12 月加息 25bp 概率约 98.1%</strong>；褐皮书显示各辖区投入成本与售价压力普遍；威廉姆斯 11-23 称通胀仍过高、预计年底 3.5%</a></li>
+        <li><a href="https://www.chinanews.com/cj/2026/11-26/10738062.shtml" target="_blank" rel="noreferrer">中国新闻网（2026-11-26）| 第三源：12 月加息 25bp 概率 <strong>97.8%</strong>；通胀已连续 5 年多高于 2% 目标；<strong>2026-09 已加息 25bp（2023-07 以来首次）</strong>；市场分歧转向 2027（高盛：12 月 + 2027-03；德银：再加 2027-01）</a></li>
+        <li><a href="https://www.ifnews.com/news.html?aid=889682&amp;cid=49" target="_blank" rel="noreferrer">国际金融报（2026-11-27）| 11-26 感恩节美股/美债休市；欧股 11-26 大涨（DAX +2.14%、CAC +1.61%、FTSE +1.75%、Stoxx50 +2.11%）；亚太：恒指 22,226.88（+1.19%）、恒生科技 3,417.38（+1.16%）、沪指 3,476.88（+0.01%）、日经 57,499.16（+0.86%）、KOSPI 4,711.21（+0.29%）；美元指数 103.78；<strong>美国 10 年期 4.838%（与 Vista 的 4.848% 差 1bp，并列不裁决）</strong>；黄金现货 $3,566.84；WTI $84.91；布伦特 $96.57；<strong>「英伟达暂停向东南亚四国发货 AI 服务器」</strong>（引述：至少两家服务器厂商自 11-20 起停止发往东南亚全部货物并暂停接单）</a></li>
+        <li><a href="https://gu.qq.com/resources/shy/news/detail-v2/index.html?t=1#/index?id=SN2026112607565398cbaf95" target="_blank" rel="noreferrer">腾讯新闻（2026-11-26，每日经济新闻）| 11-25 盘中细节：道指一度跌超 1,100 点（−2.2%）、纳指 −4.6%、标普 −3.2%，随后 V 型；<strong>英伟达 −3.91%、市值 $3.61 万亿、单日蒸发约 $1,468 亿</strong>；<strong>标普全球 11-25 将英伟达列入「信用观察负面」（AA 级，90 天内或下调）</strong>；存储股：闪迪 −5.57%、美光 −4.53%；费半 −0.65%（日内最大跌超 8%）；纳斯达克中国金龙指数 +1.87%</a></li>
+        <li><a href="https://www.163.com/dy/article/LCL51OUV0519DDQ2.html" target="_blank" rel="noreferrer">第一财经/网易（2026-11-26）| 交叉确认 11-25 收盘三指数；<strong>Anthropic 涨 1.08%，据称正在苏黎世扩建以招揽 AI 研究人才</strong>；伯里称组合「暂时几乎全部做多」；PCE 同比由 3.7% 升至 3.8%、核心由 3.1% 升至 3.3%</a></li>
+        <li><a href="https://www.macrostream.ai/articles/6b05f546cdb682e4b86a287b" target="_blank" rel="noreferrer">Macrostream（2026-11-24，引 Bloomberg）| Citadel Securities 前 9 月净交易收入 <strong>&gt;$150 亿</strong>、已超 2025 全年；Q3 &gt;$34 亿（+29%）、净利约 $11.9 亿（+13%）；占美国散户股票成交 &gt;1/3；扩企业债（IG 起步，聘高盛 Nikhil Choraria）、高接触大宗、Wolfe Research 少数股权</a></li>
+        <li><a href="https://alpha-maven.com/story/hedge-fund/the-week-in-hedge-funds-weekend-edition-16-22-nov-linkedin" target="_blank" rel="noreferrer">AlphaMaven（2026-11-24，16–22 日周报）| <strong>Citadel 新设 Southern California Investments</strong>（Alexey Poyarkov 领导），做加州系统化股票短线，直接对标 HRT 与 Jane Street；对冲基金以十年最快速度抛售科技股，看多/看空比创 2016 年有记录以来最低；台湾加权上周跌 17.5%（1991 年以来最大单周跌幅）</a></li>
+        <li><a href="https://gu.qq.com/resources/shy/news/detail-v2/index.html?t=1#/index?id=SN20261003123526a4631436" target="_blank" rel="noreferrer">腾讯新闻（2026-10-03，23/5 深度）| <strong>隔夜时段的微观结构</strong>：SEC 数据 Q2 海外投资者占隔夜成交 <strong>37%</strong>、机构账户仅 <strong>7%</strong>；2026-08 仅 <strong>15 只股票</strong>贡献隔夜成交一半（常规时段需 256 只）；DTCC 已于 6 月转 24×5；Themis 的 Saluzzi 认为「机构没兴趣在流动性低、价差宽的市场交易」——本报告检验 5 的 A–S 推论与此一致</a></li>
+        <li><a href="https://www.nasdaq.com/economic-institute/the-print/all-about-how-235-trading-will-work" target="_blank" rel="noreferrer">Nasdaq 经济研究所（长期）| 23/5 机制白皮书：12-06 起 21:00–04:00 有 <strong>5 家交易所</strong>（Nasdaq、NYSE Arca、Cboe EDGX、MEMX、24X）持续报价与成交，TRF 与 SIP 同步开放；采用<strong>固定 LULD 波幅</strong>；官方开收盘、VWAP、日内高低仍以 9:30–16:00 为准；公司无法选择退出 23/5</a></li>
+        <li><a href="https://governancebeat.cooley.com/23x5-trading-is-almost-here-practical-considerations" target="_blank" rel="noreferrer">Cooley（2026-11）| 上市公司实务影响：股票分割/代码变更/大额分红等会触发<strong>强制隔夜停牌</strong>（Nasdaq Rule 4120），20:00 停至次日 08:00；股权激励计划中「fair market value」若定义为「官方收盘价」则无需改，若写「close of trading」需复核；<strong>T+1 结算不变</strong></a></li>
+        <li><a href="https://digital.china.com/caijing/2026-11/18/content_1120265710.html" target="_blank" rel="noreferrer">中华网（2026-11-18，证券日报）| 中文侧影响评估：冬令时隔夜时段 = 北京时间 10:00–17:00（夏令时 9:00–16:00）；QDII 场外基金净值规则不变；<strong>境内跨境 ETF 的 IOPV 与做市商定价效率可能改善</strong>，但 QDII 额度型溢价不因此消除</a></li>
+      </ol>
+
+      <h3>长期反面样本（供口径比对，非事实来源）</h3>
+      <ol start="51">
+        <li><a href="https://www.quantvero.com/quant-trading/hft-prop-trading-firms/" target="_blank" rel="noreferrer">QuantVero「Top 10 HFT Firms」（长期）| 称 XTX「占欧洲股票成交 11% 以上」「约 100 名员工」——<strong>员工数与官网 300 人冲突；11% 与 Rosenblatt #89 的六家 ELP SI 合计 6.62%（XTX 第 4）在结构上互斥</strong>。本报告不采用其中任何数字</a></li>
+        <li><a href="https://www.hk01.com/%E5%8D%B3%E6%99%82%E5%9C%8B%E9%9A%9B/60398522/" target="_blank" rel="noreferrer">（同第 30 条）港媒口径样本 | 「仅 250 名员工」「400PB 数据」——<strong>分子是账面数字、分母是旧员工数</strong>，是「人多摊薄」叙事的典型误用；本报告一律用官网 300 人与 1EB+</a></li>
+      </ol>
+    </section>
+
+    <footer>
+      Equation · XTX Markets 做市策略周报 <strong>v8</strong> · 生成于 2026-11-27<br />
+      入口：观察中心 → <em>XTX 做市策略周报</em>
+    </footer>
+  </div>
+<script>
+(function() {
+  var currentFile = document.location.pathname.split('/').pop();
+  var nav = document.getElementById('version-nav');
+  fetch('xtx-strategy-report-latest.json', { cache: 'no-store' })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      if (!nav || !data.versions) return;
+      var bust = encodeURIComponent(data.updated || data.latest || '');
+      var html = '<strong>📚 历史版本：</strong>';
+      data.versions.forEach(function(v) {
+        if (v.file === currentFile) {
+          html += '<span style="color:#166534;font-weight:600">' + v.label + ' ← 当前</span> ';
+        } else {
+          html += '<a href="' + v.file + '?v=' + bust + '">' + v.label + '</a> ';
+        }
+      });
+      nav.innerHTML = html;
+    })
+    .catch(function() { nav.style.display = 'none'; });
+})();
+</script>
+</body>
+</html>

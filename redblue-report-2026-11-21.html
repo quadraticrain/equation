@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>低买 / 分层卖出 红蓝对抗周报 · 2026-11-21</title>
+<style>
+:root{
+  --bg:#0b0d12; --panel:#141821; --panel2:#10141c; --line:#232936;
+  --txt:#e8ebf2; --dim:#98a2b3; --dim2:#6b7688;
+  --red:#f6465d; --green:#2ebd85; --amber:#f5b544; --blue:#4f8cff; --purple:#a78bfa;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--txt);
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  line-height:1.7;font-size:15px;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1080px;margin:0 auto;padding:32px 20px 80px}
+h1{font-size:24px;margin:0 0 6px;letter-spacing:.5px}
+h2{font-size:19px;margin:44px 0 14px;padding-left:11px;border-left:4px solid var(--amber);letter-spacing:.3px}
+h3{font-size:16px;margin:26px 0 10px;color:#cfd6e4}
+h4{font-size:14.5px;margin:18px 0 8px;color:var(--dim)}
+p{margin:10px 0}
+small{color:var(--dim);font-size:12.5px}
+.meta{color:var(--dim);font-size:13px;margin-bottom:26px}
+code{background:#1b2130;border:1px solid var(--line);padding:1px 6px;border-radius:4px;font-size:12.5px;
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:#c9d4e8}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:18px 20px;margin:14px 0}
+.grid{display:grid;gap:12px}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g2{grid-template-columns:repeat(2,1fr)}
+@media(max-width:760px){.g3,.g2{grid-template-columns:1fr}}
+table{width:100%;border-collapse:collapse;font-size:13px;margin:12px 0;display:block;overflow-x:auto}
+th,td{padding:7px 9px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+th{color:var(--dim);font-weight:600;background:var(--panel2);position:sticky;top:0}
+td:first-child,th:first-child{text-align:left}
+tr:hover td{background:#171d29}
+.pos{color:var(--red)}   /* 涨=红 */
+.neg{color:var(--green)} /* 跌=绿 */
+.mut{color:var(--dim)}
+.tag{display:inline-block;padding:1px 8px;border-radius:20px;font-size:11.5px;border:1px solid}
+.t-stay{color:#2ebd85;border-color:#2ebd8555;background:#2ebd8514}
+.t-watch{color:#f5b544;border-color:#f5b54455;background:#f5b54414}
+.t-esc{color:#f6465d;border-color:#f6465d55;background:#f6465d14}
+.t-no{color:#2ebd85;border-color:#2ebd8533;background:#2ebd850d}
+.t-yes{color:#f6465d;border-color:#f6465d33;background:#f6465d0d}
+.t-n{color:#98a2b3;border-color:#98a2b333;background:#98a2b30d}
+.dash{display:grid;grid-template-columns:1.1fr 1fr 1.6fr;gap:12px;margin:8px 0 6px}
+@media(max-width:760px){.dash{grid-template-columns:1fr}}
+.dbox{border-radius:10px;padding:16px 18px;border:1px solid var(--line);background:var(--panel)}
+.dbox .k{font-size:11.5px;color:var(--dim);letter-spacing:1.2px;text-transform:uppercase}
+.dbox .v{font-size:26px;font-weight:700;margin:4px 0 2px;letter-spacing:.5px}
+.dbox.stage{border-color:#f5b54444;background:linear-gradient(180deg,#f5b54412,#141821)}
+.dbox.stage .v{color:var(--amber)}
+.dbox.stay{border-color:#2ebd8544;background:linear-gradient(180deg,#2ebd8512,#141821)}
+.dbox.stay .v{color:var(--green)}
+.dbox.gap{border-color:#4f8cff33;background:linear-gradient(180deg,#4f8cff0f,#141821)}
+.dbox.gap .v{font-size:15px;font-weight:600;line-height:1.5;letter-spacing:0}
+ul,ol{margin:8px 0 8px 22px;padding:0}
+li{margin:5px 0}
+blockquote{margin:14px 0;padding:10px 16px;border-left:3px solid var(--purple);
+  background:#a78bfa0d;color:#d6d9e3;border-radius:0 6px 6px 0;font-size:14px}
+.hr{height:1px;background:var(--line);margin:30px 0}
+.kpi{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0}
+.kpi div{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:8px 14px;font-size:13px}
+.kpi b{font-size:16px;display:block;margin-top:2px}
+.note{font-size:12.5px;color:var(--dim);border-top:1px dashed var(--line);padding-top:8px;margin-top:10px}
+.warn{border-color:#f6465d44;background:#f6465d0a}
+.pill{font-size:11px;padding:0 6px;border-radius:4px;background:#4f8cff14;color:#7ba7ff;border:1px solid #4f8cff33}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>低买 / 分层卖出 · 红蓝对抗周报</h1>
+<div class="meta">2026-11-21（第 5 期 / 双主线改造后第 1 期实跑）· 只读复盘 · 主线 A 窗口期限 · 主线 B ML 必要性</div>
+
+<!-- ================= 阶段仪表盘 ================= -->
+<div class="dash">
+  <div class="dbox stage">
+    <div class="k">当前阶段</div>
+    <div class="v">S1 · 规则参数化期</div>
+    <div style="font-size:13px;color:var(--dim)">多标的、固定窗口、模块按市场分区互不冲突</div>
+  </div>
+  <div class="dbox stay">
+    <div class="k">三态结论</div>
+    <div class="v">STAY</div>
+    <div style="font-size:13px;color:var(--dim)">无升级条件命中 · 复杂度预算 <b style="color:#e8ebf2">L0</b></div>
+  </div>
+  <div class="dbox gap">
+    <div class="k">距下一阶段最关键的 1 个差距</div>
+    <div class="v">交易类独立信号 <b style="color:#f5b544">123/年</b>，E1 要求 300 —— 差 <b style="color:#f5b544">177</b>（缺口 59%）；且 E6 自有行情库仅 143 交易日，差 357。</div>
+  </div>
+</div>
+
+<blockquote>
+<b>本期一句话：</b>主线 A 做了完整窗口比较，结论是 <b>0 项切换、保留 W250</b>；更重要的是发现「S1 停摆」<b>与窗口长度无关</b>——9 只标的里，任何窗口 × 任何 σ 倍数（1.0σ/1.5σ/2.0σ）最多只能解锁 2 只，因为现价低于过去均值本身。主线 B 拿到一个结构性结论：<b>在「只改窗口 W」的政策空间里，L1 的可选自由度恒为 0</b>，所以 E4 的第二条件不是「尚未验证」，而是「结构上不可达」。
+</blockquote>
+
+<!-- ================= 01 ================= -->
+<h2>01 本期问题与数据范围</h2>
+
+<h4>本期要回答的三件事</h4>
+<ol>
+<li><b>主线 A（核心）</b>：逐股选窗在第 3 个独立期是否仍在锁箱输给统一 250？（E4 第一条件计数）</li>
+<li><b>主线 B</b>：既然锁箱增量连续为负，是否该引入 L1 线性模型？（E4 第二条件）</li>
+<li><b>阶段</b>：本周新增 4 个美股低买标的、1 个新策略模块（<code>grid_trade</code>），是否改变了阶段判定？</li>
+</ol>
+
+<h4>台账增量（2026-11-14 → 11-21，只读）</h4>
+<table>
+<tr><th>表</th><th>累计行数</th><th>本周新增</th><th>说明</th></tr>
+<tr><td>liq_arb_trade（低买）</td><td>13（上期 7）</td><td><b>+6</b></td><td>#23 阿里 L2 现货 87.30；#24 阿里 L3 真实买入 81.10×1600 股（订单号 1828500762075094675）；#25~#28 新增 QQQ / NVDA / EWY / MU 四条卖 Put（行权价 605 / 124 / 120 / 570，均 2026-12-18 到期）</td></tr>
+<tr><td>tiered_sell_trade（分层卖出）</td><td>15（上期 14）</td><td>+1</td><td>#15 PDD S2 卖现货 86.025（11-19）</td></tr>
+<tr><td>push_signal_history</td><td>1420（上期 1266）</td><td>+154</td><td>新来源 <code>grid_trade</code> 14 条（11-17~11-21），成为第 9 个推送 source</td></tr>
+<tr><td>liq_arb_config_snapshot</td><td>6（上期 4）</td><td>+2</td><td>新增 MU、07709 两条配置快照</td></tr>
+<tr><td>tiered_sell_config_snapshot</td><td><b>0</b></td><td>0</td><td>表存在但从未写入；分层卖出参数仍全在 Redis</td></tr>
+</table>
+<p><small>本周低买侧发生了两次实质升级：一是<b>标的范围从港股小盘扩到美股指数/大盘</b>（QQQ/NVDA/EWY/MU）；二是 <b>L3 首次按富途真实每手股数成交</b>（1600 股，非 100 股记账单位）。这两件事对阶段判定有影响（活跃标的 37 → 46）。</small></p>
+
+<h4>行情数据（窗口研究用）</h4>
+<table>
+<tr><th>项</th><th>取值</th></tr>
+<tr><td>来源 / 复权</td><td>本机 Futu OpenD，<b>前复权（QFQ）</b>日线，分片 540 天请求绕开 1000 根静默截断</td></tr>
+<tr><td>区间</td><td>2015-01-02 ~ <b>2026-11-20</b>（含最新交易日）</td></tr>
+<tr><td>样本</td><td>12 只标的，<b>23,380 根</b>；其中 ≥330 根可用于窗口研究的 <b>9 只</b>（23,213 根）</td></tr>
+<tr><td>不足 60 根（不参与窗口结论）</td><td>09615（57 根，2026-09 上市）、02041（53 根）、00625（57 根）</td></tr>
+<tr><td>币种 / 时区</td><td>USD（7 只）/ HKD（2 只）；交易所本地交易日，<b>跨币种不做金额相加</b></td></tr>
+<tr><td>缺失 / 跳空</td><td>单日跳空 &gt;10 自然日：仅 PDD 因中概假期出现零星缺口；无 &gt;28% 的除权性跳空（除 2022-03-16 PDD、2020-03-09 OXY 两次真实事件）</td></tr>
+<tr><td>幸存者偏差</td><td><b>存在</b>：9 只均为当前持仓/订阅标的，已退市标的未纳入。本报告只做「同标的内部窗口比较」，不跨标的横向排名，故不据此推断行业级结论</td></tr>
+</table>
+
+<div class="note">
+锁箱区间（各标的最近 20% 时间，<b>互不相同</b>）：ASML / BRK.B / NVDA / OXY / QQQ / TLT 自 2024-07-08 起；PDD 自 2025-03-25；ALB.HK 自 2025-07-03；09992 自 2025-09-12；终点统一 2026-11-20。
+</div>
+
+<!-- ================= 02 ================= -->
+<h2>02 阶段判定</h2>
+
+<h4>8 维记分卡（脚本 <code>rb_stage_scorecard.py</code> 直出，未手工重算）</h4>
+<table>
+<tr><th>#</th><th>维度</th><th>本期</th><th>上期(11-15)</th><th>变化解读</th></tr>
+<tr><td>1</td><td>活跃标的数</td><td><b>46</b>（推送）/ 13（台账）</td><td>37 / 11</td><td class="mut">低买扩到美股 4 只 + 网格新增标的</td></tr>
+<tr><td>2</td><td>独立策略模块数</td><td><b>9</b>（推送 source）/ 11（策略型 scheduler）</td><td>8 / 10</td><td class="mut">新增 <code>grid_trade</code></td></tr>
+<tr><td>3</td><td>可调参数维度</td><td><b>36</b></td><td>36</td><td class="mut">未变</td></tr>
+<tr><td>4</td><td>例外表条目</td><td><b>6</b></td><td>6</td><td class="mut">未变（<code>HKOptionAbbrOverrides</code> 5 + <code>aliasCrossRefAllowed</code> 1）</td></tr>
+<tr><td>5</td><td>独立信号数/年（<b>交易类</b>）</td><td><b>123</b>（145 天 49 个独立）</td><td>121</td><td class="mut">全推送 330、告警类 259，<b>均不可用于 E1</b></td></tr>
+<tr><td>6</td><td>同标的同日相反动作/月</td><td><b>0.0</b></td><td>0</td><td class="mut">推送双向对撞 0，台账对撞 0</td></tr>
+<tr><td>7</td><td>参数类修补提交/月</td><td><b>15.0</b>（推送呈现 16.0）</td><td>14.0 / 14.7</td><td class="mut">近 3 月 429 次提交（143/月）</td></tr>
+<tr><td>8</td><td>锁箱增量连续 0/负期数</td><td><b>3</b></td><td>2</td><td style="color:#f5b544"><b>本期首次满 3 期</b></td></tr>
+</table>
+
+<h4>E1~E6 命中表</h4>
+<table>
+<tr><th>编号</th><th>门槛</th><th>当前</th><th>差距</th><th>判定</th></tr>
+<tr><td>E1</td><td>独立信号 ≥300/年 <b>且</b> 标的 ≥20</td><td>123/年；46 只</td><td>信号差 <b>177</b></td><td><span class="tag t-no">不成立</span></td></tr>
+<tr><td>E2</td><td>参数维度 ≥60 <b>且</b> 例外表 ≥15</td><td>36 / 6</td><td>差 24 / 9</td><td><span class="tag t-no">不成立</span></td></tr>
+<tr><td>E3</td><td>同标同日相反动作 ≥5 次/月</td><td>0</td><td>差 5</td><td><span class="tag t-no">不成立</span></td></tr>
+<tr><td>E4</td><td>主线 A 连续 3 期锁箱 ≤0 <b>且</b> L1 锁箱为正且 CI 不含 0</td><td>期数 <b>3</b> ✅；L1 增量 <b>恒为 0</b>（结构性）</td><td>第二条件不可达</td><td><span class="tag t-no">不成立</span></td></tr>
+<tr><td>E5</td><td>跨策略资金分配需求</td><td>无（单池 250,000）</td><td>—</td><td><span class="tag t-no">不成立</span></td></tr>
+<tr><td>E6</td><td>特征可回溯 ≥500 交易日、无泄漏、管道可复现</td><td>自有库 <b>143</b> 交易日</td><td>差 357，且无 FeatureStore</td><td><span class="tag t-no">不成立（硬阻塞）</span></td></tr>
+</table>
+
+<h4>为什么是 STAY 而不是 WATCH</h4>
+<p>本期唯一的「新命中」是 E4 的<b>第一半</b>：锁箱增量连续第 3 期为 0/负（10-31、11-14、11-21）。按 0.4 的确认门槛，这已经够「3 期」，看起来应该 ESCALATE。但 E4 是<b>合取条件</b>——第二半「L1 线性模型锁箱增量为正且 CI 不含 0」本期不是「没测」，而是<b>测出来了且证明在结构上不可能为正</b>（见 08 节）。合取条件里有一项被证伪，E4 整体不成立。</p>
+<p>另外 E6 仍是硬阻塞：自有行情库 143 交易日（5-30 起，221 标的，每标的约 131 根），连 W250 都覆盖不了；全仓库无 FeatureStore。即便 E4 成立，E6 不解决也走不到训练。</p>
+
+<div class="card warn">
+<b>需要向相关人明确提醒的一件事（不是 ESCALATE，但是预警）：</b><br>
+「锁箱连续 3 期为负」这件事本身已经<b>排除了一个方向</b>——继续在「为每只股票挑一个更好的窗口」上投人力，回报已经是负的。这三期的证据方向完全一致：<b>逐股定窗在锁箱里输给统一 250</b>（10-31、11-14、11-21 三次独立计算）。真正的下一步不是换模型，而是换<b>锚点</b>（见 09 节 P0）。
+</div>
+
+<!-- ================= 03 ================= -->
+<h2>03 真实窗口盘点（先别把靶子打歪）</h2>
+
+<p>系统里「一年窗口」只出现在 4 个地方。ATR14、近 50 日高点、近 30 日命中等<b>都不是一年窗口</b>，上一期已纠正，本期沿用。</p>
+
+<table>
+<tr><th>参数</th><th>当前窗口</th><th>用途</th><th>代码位置</th><th>是否参与拦截</th></tr>
+<tr><td>μ / σ（分层卖出 S1）</td><td><b>365 自然日 / sample_count=250</b></td><td>S1「现价涨过 μ+2σ」门槛</td><td><code>tiered_sell_scheduler.go:337</code>、<code>tiered_sell_normal_stats.go</code></td><td><b>是</b></td></tr>
+<tr><td>year_high / band_low</td><td>一年</td><td>band_low = 一年最高价 − 2σ，<b>仅披露</b></td><td><code>tiered_sell_normal_stats.go:54</code></td><td>否（#548 起）</td></tr>
+<tr><td>一年最低（255 根）</td><td>255 交易日</td><td>「跌破一年最低 → 改买现货」开关</td><td><code>liquidation_event_arbitrage.go</code></td><td>是（恒不触发，见基线 #6）</td></tr>
+<tr><td>ATR</td><td><b>14</b></td><td>L1 折价（2×ATR）与 L2/L3/L4 层距（1.0/1.0/2.0×ATR）、S1 行权价加点</td><td><code>pkg/arbitrage/atr.go</code>、<code>params.go:27-33</code></td><td>是</td></tr>
+<tr><td>近 50 日高点、近 30 日命中</td><td>50 / 30</td><td>撬板、止盈相关</td><td>各自模块</td><td>是</td></tr>
+</table>
+
+<div class="card">
+<h4 style="margin-top:4px">口径纠正：<code>band_low</code> 不是门槛</h4>
+<p><code>tiered_sell_symbol_normal_stats.band_low</code> 的注释是「一年最高价 − 2σ（不参与拦截）」。用它当门槛会算错：例如 11-17 快照里 OXY 的 <code>band_low</code>=52.18，而真实门槛 μ+2σ = 53.68 + 2×7.16 = <b>68.00</b>。本期所有「过没过门槛」的判断都用 μ+2σ，与台账 #13 自述的「涨过门槛[526.77] μ=495.81 σ=15.48」（= 495.81 + 2×15.48）一致。</p>
+</div>
+
+<h4>统计快照覆盖：已从「几乎空白」修到「基本可用」</h4>
+<table>
+<tr><th>asof_date</th><th>覆盖标的数</th><th>标的</th></tr>
+<tr><td>2026-10-16</td><td>5</td><td>ASML, BRK.B, NVDA, OXY, PDD</td></tr>
+<tr><td>2026-10-20</td><td>5</td><td>同上</td></tr>
+<tr><td>2026-10-27</td><td>6</td><td>+TLT</td></tr>
+<tr><td>2026-11-04</td><td>6</td><td>+TLT</td></tr>
+<tr><td>2026-11-10</td><td>6</td><td>+TLT</td></tr>
+<tr><td><b>2026-11-17</b></td><td><b>7</b></td><td>+<b>QQQ（首次有行）</b></td></tr>
+</table>
+<p><small>共 35 行。相对上期「QQQ 从未有行」的结论，<b>本期已修复</b>——QQQ 在 11-17 首次落库。这意味着「stats=nil → gate=0」的数据缺失成分已基本消除，剩下的停摆要另找原因（下一节就找到了）。</small></p>
+
+<!-- ================= 04 ================= -->
+<h2>04 红军（主线 A）：为一年期辩护</h2>
+
+<h3>论点 1 ｜ 锁箱里，一年窗口打平或打赢短窗（6/9）</h3>
+<p>把每个标的的 W250 锁箱 Δ 与 W20（最短窗）对比：</p>
+<table>
+<tr><th>标的</th><th>W20 锁箱 Δ</th><th>W250 锁箱 Δ</th><th>谁更好</th></tr>
+<tr><td>ASML</td><td class="neg">−12.08%</td><td class="neg">−11.39%</td><td>250</td></tr>
+<tr><td>BRK.B</td><td class="neg">−1.97%</td><td class="pos">+0.97%</td><td><b>250</b></td></tr>
+<tr><td>NVDA</td><td class="neg">−4.51%</td><td class="neg">−0.98%</td><td><b>250</b></td></tr>
+<tr><td>OXY</td><td class="neg">−5.54%</td><td class="neg">−2.63%</td><td><b>250</b></td></tr>
+<tr><td>QQQ</td><td class="neg">−0.50%</td><td class="neg">−0.02%</td><td>250</td></tr>
+<tr><td>ALB.HK</td><td class="neg">−5.37%</td><td class="pos">+0.83%</td><td><b>250</b></td></tr>
+<tr><td>PDD</td><td class="pos">+0.96%</td><td class="pos">+0.97%</td><td>平</td></tr>
+<tr><td>TLT</td><td class="pos">+0.96%</td><td class="pos">+0.96%</td><td>平</td></tr>
+<tr><td>09992</td><td class="pos">+0.86%</td><td>锁箱 0 笔</td><td>不可比</td></tr>
+</table>
+<p><b>结论</b>：在 8 个可比的标的上，W250 <b>5 胜 2 平 1 负</b>（负的是 ASML，−11.39% vs −12.08%，差距 0.69pp）。短窗在锁箱<b>全面劣于</b>一年窗，方向与 10-31、11-14 两期一致，第三次独立复现。</p>
+
+<h3>论点 2 ｜ 全样本与锁箱结论相反，以锁箱为准正好保住 250</h3>
+<p>全样本（含训练期）的窗口平台是：W20 −6.58%、W60 −8.11%、W120 −8.05%、W250 −9.06%、W500 −8.43%。全样本看，250 是<b>最差</b>的。但锁箱里反过来：W120 −1.06%、W250 −1.41%、W500 −1.05% 组成一个平台，而 W20 掉到 −3.02%、W60 −4.08%。</p>
+<p>这条同时是红军的「防过拟合」论据：<b>如果按全样本选窗，会选到 W20，然后在锁箱里亏 3.02%（vs 250 的 −1.41%）</b>。全样本峰值是样本内幻觉，锁箱给出的排序更接近 W120~500 的平坦区。</p>
+
+<h3>论点 3 ｜ 结构性证据：窗口根本不影响同一决策日的收益</h3>
+<p>本期最重要的技术发现：在 9 只标的上，凡<b>同一决策日有多个窗口同时触发门槛</b>（共 127 个这样的点），它们的 per-trade Δ <b>127/127 完全相同</b>（差值为浮点 0）。</p>
+<div class="card" style="border-color:#4f8cff33;background:#4f8cff08">
+<b>为什么必然相同：</b>Δ = [权利金 − max(S<sub>T</sub>−K,0)]/S<sub>0</sub> − 成本，其中 K = (S<sub>t</sub> + 2×ATR14<sub>t</sub>)×1.02，权利金 = 1%×S<sub>t</sub>。<b>三个变量都只依赖 t 日的股价与 ATR，不依赖 W。</b>W 只决定「哪一天的门槛被跨过」，也就是只决定<b>入场日集合</b>，不决定条款。
+</div>
+<p>这条的直接后果：所谓「换窗口」在数学上等价于「换一批卖 Call 的日子」，而不是「换一套卖 Call 的条件」。所以——</p>
+<ul>
+<li>任何窗口研究本质上是在 <b>5~25 个入场日的子集上做选择</b>，样本量天然极小；</li>
+<li>把「窗口自适应」当作一个 ML 任务，其<b>决策自由度在结构上就是 0</b>（同一决策日选哪个 W，Δ 都一样）；</li>
+<li>红军据此说：一年期不可能是「结构性偏差」的来源，它只是众多入场日筛选规则中的一条，且锁箱表现不差。</li>
+</ul>
+
+<h3>论点 4 ｜ 缩短窗口不但救不了停摆，还会让 BRK.B 失去唯一的可卖机会</h3>
+<p>本期最硬的反例。用各窗口的 μ+2σ 门槛与 11-20 收盘价比：</p>
+<table>
+<tr><th>标的</th><th>现价</th><th>W20 门槛</th><th>W60</th><th>W120</th><th>W250</th><th>W500</th><th>可卖的窗口</th></tr>
+<tr><td>BRK.B</td><td>570.00</td><td>605.37</td><td>592.32</td><td>571.49</td><td class="pos">551.72</td><td class="pos">543.68</td><td><b>只有 250/500</b></td></tr>
+<tr><td>ASML</td><td>1266.22</td><td>1710.35</td><td>1907.80</td><td>1964.39</td><td>1985.28</td><td>1975.65</td><td>无</td></tr>
+<tr><td>NVDA</td><td>125.53</td><td>235.99</td><td>261.62</td><td>247.77</td><td>238.11</td><td>243.95</td><td>无</td></tr>
+<tr><td>OXY</td><td>53.90</td><td>65.32</td><td>64.89</td><td>64.70</td><td>68.00</td><td>63.63</td><td>无</td></tr>
+<tr><td>PDD</td><td>83.68</td><td>85.12</td><td>84.38</td><td>90.61</td><td>119.30</td><td>136.64</td><td>无</td></tr>
+<tr><td>TLT</td><td>81.45</td><td>82.65</td><td>83.12</td><td>85.54</td><td>87.48</td><td>87.34</td><td>无</td></tr>
+<tr><td>QQQ</td><td>608.45</td><td>736.19</td><td>775.16</td><td>762.81</td><td>777.48</td><td>770.78</td><td>无</td></tr>
+<tr><td>ALB.HK</td><td>83.35</td><td>111.26</td><td>119.48</td><td>129.06</td><td>167.56</td><td>170.90</td><td>无</td></tr>
+<tr><td>09992</td><td>140.40</td><td>150.49</td><td>163.51</td><td>176.02</td><td>232.64</td><td>297.88</td><td>无</td></tr>
+</table>
+<p><b>红军结论</b>：蓝军一直攻击「一年窗口让门槛高不可攀」。但把窗口缩到 20 天，9 只标的里<b>仍然 0 只能卖</b>（BRK.B 的 W20 门槛 605.37 反而比 W250 的 551.72 更高）。所以「停摆」不是窗口造成的，<b>把窗口当靶子是打歪了</b>。</p>
+
+<div class="hr"></div>
+
+<!-- ================= 05 ================= -->
+<h2>05 蓝军（主线 A）：攻击「一年适配所有股票」</h2>
+
+<h3>论点 1 ｜ 一年窗口的伤害不在「锁箱均值」，在「μ 锚点让门槛永久不可达」</h3>
+<p>红军用「锁箱 Δ」证明 250 不差，但锁箱 Δ 只在<b>已经能卖出去</b>的标的上可测。真正的损失是<b>测不到的那部分</b>：8/9 标的因为门槛不可达而在整个锁箱期<b>零信号</b>。</p>
+<table>
+<tr><th>标的</th><th>现价 / μ250</th><th>现价低于 μ250</th><th>W250 锁箱可卖笔数</th><th>锁箱期长度</th></tr>
+<tr><td>ALB.HK</td><td>83.35 / 125.78</td><td class="neg">−33.7%</td><td>1</td><td>~17 个月</td></tr>
+<tr><td>09992</td><td>140.40 / 173.13</td><td class="neg">−18.9%</td><td><b>0</b></td><td>~14 个月</td></tr>
+<tr><td>ASML</td><td>1266.22 / 1516.32</td><td class="neg">−16.5%</td><td>3</td><td>~28 个月</td></tr>
+<tr><td>NVDA</td><td>125.53 / 199.08</td><td class="neg">−37.0%</td><td>4</td><td>~28 个月</td></tr>
+<tr><td>QQQ</td><td>608.45 / 669.03</td><td class="neg">−9.1%</td><td>4</td><td>~28 个月</td></tr>
+<tr><td>PDD</td><td>83.68 / 93.75</td><td class="neg">−10.7%</td><td>1</td><td>~20 个月</td></tr>
+</table>
+<p><b>可量化的少赚</b>：QQQ 锁箱 28 个月只卖出 4 次 Call（一年 1.7 次），ASML 28 个月 3 次。而 S1 的设计意图是「涨过门槛就卖一次备兑」，实际频率低到<b>策略事实停摆</b>。这不是「少赚一点点」，是<b>整条 S1 腿没有产出</b>。</p>
+
+<h3>论点 2 ｜ 但缩短窗口不能解决（蓝军在这里必须认输一半）</h3>
+<p>下表是「窗口 × σ 倍数」的可达性矩阵，数字 = 9 只标的里现价 ≥ 门槛的只数：</p>
+<table>
+<tr><th>W</th><th>k=1.0σ</th><th>k=1.5σ</th><th>k=2.0σ（现行）</th></tr>
+<tr><td>20</td><td>1</td><td>0</td><td>0</td></tr>
+<tr><td>60</td><td>2</td><td>1</td><td>0</td></tr>
+<tr><td>120</td><td>1</td><td>1</td><td>0</td></tr>
+<tr><td>250</td><td>1</td><td>1</td><td>1</td></tr>
+</table>
+<p><b>蓝军必须承认</b>：2σ 门槛下，<b>没有任何窗口</b>能解锁超过 1 只标的；即便把缓冲降到 1σ，最多也只有 2 只。所以「一年窗口」不是停摆的充分原因。<b>真正的病根是「锚 = 过去均值 μ」这个设计</b>——只要现价低于 μ，任何 k≥0 都拦。</p>
+<p>这条与基线 #4 的后半句吻合（「叠加一年均价做锚」），本期把它从「猜测」升级为「矩阵证明」。</p>
+
+<h3>论点 3 ｜ 逐股选窗 = 63 次比较后的噪声捡漏，锁箱 5/6 为负</h3>
+<p>9 标的 × 7 窗口 = 63 个格子，每个格子只有 5~25 笔。训练期挑出的「最优窗」是：</p>
+<table>
+<tr><th>标的</th><th>训练最优 W</th><th>训练 Δ</th><th>锁箱 Δ（该 W）</th><th>锁箱 Δ（W250）</th><th>增量</th><th>锁箱笔数</th></tr>
+<tr><td>ALB.HK</td><td>120</td><td class="neg">−1.35%</td><td class="pos">+0.82%</td><td class="pos">+0.83%</td><td class="neg">−0.01pp</td><td>1 / 1</td></tr>
+<tr><td>ASML</td><td>20</td><td class="neg">−4.23%</td><td class="neg">−12.08%</td><td class="neg">−11.39%</td><td class="neg">−0.69pp</td><td>5 / 3</td></tr>
+<tr><td>BRK.B</td><td>500</td><td class="neg">−0.37%</td><td class="pos">+0.71%</td><td class="pos">+0.97%</td><td class="neg">−0.26pp</td><td>4 / 3</td></tr>
+<tr><td>NVDA</td><td>500</td><td class="neg">−12.29%</td><td class="neg">−0.94%</td><td class="neg">−0.98%</td><td class="pos">+0.04pp</td><td>5 / 4</td></tr>
+<tr><td>PDD</td><td>20</td><td class="neg">−11.54%</td><td class="pos">+0.96%</td><td class="pos">+0.97%</td><td class="neg">−0.00pp</td><td>4 / 1</td></tr>
+<tr><td>QQQ</td><td>60</td><td class="neg">−0.87%</td><td class="neg">−0.92%</td><td class="neg">−0.02%</td><td class="neg">−0.91pp</td><td>4 / 4</td></tr>
+<tr><td>OXY</td><td>750</td><td class="neg">−0.83%</td><td colspan="2" class="mut">锁箱 0 笔，不可比</td><td>—</td><td>0 / 2</td></tr>
+<tr><td>TLT</td><td>1250</td><td class="pos">+0.58%</td><td colspan="2" class="mut">锁箱 0 笔，不可比</td><td>—</td><td>0 / 3</td></tr>
+<tr><td>09992</td><td>60</td><td class="neg">−22.63%</td><td colspan="2" class="mut">W250 锁箱 0 笔，不可比</td><td>—</td><td>1 / 0</td></tr>
+</table>
+<p>可比的 6 只：<b>1 正 5 负</b>，pooled 锁箱均值 <b>−2.52%（n=24）</b> vs W250 <b>−1.71%（n=21）</b>，差 <b>−0.81pp</b>；标的级 cluster bootstrap 95% CI = <b>[−0.61pp, −0.03pp]</b>，p(增量≤0) = <b>98.9%</b>。上期同一口径是 −2.33% vs +0.21%（−2.54pp）。<b>连续第三期同向。</b></p>
+<p>而且「最优窗」在 9 只标的上是 60/120/20/500/500/750/20/60/1250 —— <b>7 种不同取值</b>。这正是「参数发散」的教科书形态：如果真有一个通用最优窗，它不会这么散；之所以这么散，是因为每个标的最优窗都在拟合自己的噪声。</p>
+
+<h3>论点 4 ｜ 均值由「被打穿」的少数笔决定，任何窗口结论都不满足最小样本要求</h3>
+<table>
+<tr><th>类别</th><th>笔数</th><th>per-trade Δ 均值</th><th>说明</th></tr>
+<tr><td>Call 到期作废（未被打穿）</td><td>63（52%）</td><td class="pos">+0.93%</td><td>标准差 0.11，几乎恒等于 1% 权利金减成本</td></tr>
+<tr><td>Call 被打穿（让出 K 以上涨幅）</td><td>59（48%）</td><td class="neg">−17.36%</td><td>最差 −87.2%（09992）</td></tr>
+<tr><td>合计（W250 全样本）</td><td>122</td><td class="neg">−7.91%</td><td>48% 的尾部事件把均值拉负</td></tr>
+</table>
+<p>Δ 的分布是<b>双峰</b>的：要么 +0.93%（白收权利金），要么 −17%（让出涨幅）。这意味着<b>每个标的的锁箱均值基本由 1~2 笔打穿事件决定</b>——ASML 锁箱 3 笔里 2 笔是 −20.73% 和 −14.42%，删掉最差一笔，均值从 −11.39% 变成 −5.7%。</p>
+<p>按 0.5 反向条件第 3 条「增量集中在少数一两笔交易或单一 regime」：<b>全部 6 个可比的标的都命中</b>。所以本期任何「某窗口更好」的说法都只能标「观察」，不能作为切换依据。</p>
+<p class="note">顺带一个必须说清的口径：Δ 的水平（−7.91%）<b>不能</b>读成「S1 实盘在亏钱」。它反映的是「用 1% 固定时间价值卖一个 spot+8% 的 60 天 Call」这个定价假设在波动率高的标的上明显偏低（属已登记 P1，基线 #5）。本报告只用它做<b>窗口之间的相对排序</b>，不与绝对收益混做。</p>
+
+<p><b>蓝军本期净战果</b>：四条论点里，第 1 条（一年窗口造成停摆）<b>被自己的第 2 条亲手削弱</b>——矩阵证明短窗同样不可达，所以「一年」不是停摆的原因；第 3 条（逐股定窗过拟合）与第 4 条（均值由打穿笔主导）成立且可复现，构成「不要为每只股票定窗」的<b>正面证据</b>。合起来，蓝军赢下的不是「换窗」，而是「别再研究窗」——这恰好也是红军的结论，只是路径不同。</p>
+
+<!-- ================= 06 ================= -->
+<h2>06 样本外窗口比较（统一口径）</h2>
+
+<h4>平台区一览（Δ 为 per-trade overlay，H=60）</h4>
+<table>
+<tr><th>W</th><th>全样本 Δ</th><th>训练 Δ</th><th>锁箱 Δ</th><th>锁箱笔数</th><th>锁箱 CVaR</th><th>结论</th></tr>
+<tr><td>20</td><td class="neg">−6.58%</td><td class="neg">−6.31%</td><td class="neg">−3.02%</td><td>47</td><td>—</td><td class="mut">训练最优，锁箱最差</td></tr>
+<tr><td>60</td><td class="neg">−8.11%</td><td class="neg">−7.22%</td><td class="neg">−4.08%</td><td>29</td><td>—</td><td class="mut">锁箱最差</td></tr>
+<tr><td>120</td><td class="neg">−8.05%</td><td class="neg">−7.44%</td><td class="neg">−1.06%</td><td>22</td><td>—</td><td>平台区上沿</td></tr>
+<tr><td><b>250（现行）</b></td><td class="neg">−9.06%</td><td class="neg">−9.20%</td><td class="neg">−1.41%</td><td>21</td><td>—</td><td><b>平台区内，保留</b></td></tr>
+<tr><td>500</td><td class="neg">−8.43%</td><td class="neg">−7.61%</td><td class="neg">−1.05%</td><td>21</td><td>—</td><td>平台区上沿</td></tr>
+<tr><td>750</td><td class="neg">−6.35%</td><td class="neg">−6.61%</td><td class="neg">−3.18%</td><td>21</td><td>—</td><td class="mut">锁箱回落</td></tr>
+<tr><td>1250</td><td class="neg">−3.19%</td><td class="neg">−6.46%</td><td class="neg">−2.79%</td><td>26</td><td>—</td><td class="mut">仅 6 只有足够历史</td></tr>
+</table>
+
+<svg viewBox="0 0 680 220" width="100%" style="margin:12px 0">
+  <rect x="0" y="0" width="680" height="220" fill="#141821" rx="8"/>
+  <text x="16" y="24" fill="#98a2b3" font-size="11.5">锁箱 per-trade Δ（%，越靠上越好）；W120~500 为平台区，W20/60 明显更差</text>
+  <!-- axis -->
+  <line x1="60" y1="180" x2="650" y2="180" stroke="#2a3040"/>
+  <line x1="60" y1="50" x2="60" y2="180" stroke="#2a3040"/>
+  <text x="28" y="184" fill="#6b7688" font-size="10">−5.0</text>
+  <text x="28" y="119" fill="#6b7688" font-size="10">−2.5</text>
+  <text x="38" y="54" fill="#6b7688" font-size="10">0</text>
+  <!-- bars: value scale: 0 at y=50, -5 at y=180 => 26px per 1pp -->
+  <!-- 比例：0pp = y50，每 1pp = 26px -->
+  <g font-size="10" text-anchor="middle">
+    <rect x="80"  y="50" width="46" height="78.5"  fill="#2ebd85" opacity="0.75"/><text x="103" y="196" fill="#98a2b3">20</text><text x="103" y="142" fill="#2ebd85">−3.02</text>
+    <rect x="160" y="50" width="46" height="106.1" fill="#2ebd85" opacity="0.75"/><text x="183" y="196" fill="#98a2b3">60</text><text x="183" y="170" fill="#2ebd85">−4.08</text>
+    <rect x="240" y="50" width="46" height="27.6"  fill="#2ebd85" opacity="0.5"/><text x="263" y="196" fill="#98a2b3">120</text><text x="263" y="91"  fill="#2ebd85">−1.06</text>
+    <rect x="320" y="50" width="46" height="36.7"  fill="#f6465d" opacity="0.85"/><text x="343" y="196" fill="#98a2b3">250</text><text x="343" y="100" fill="#f6465d">−1.41</text>
+    <rect x="400" y="50" width="46" height="27.3"  fill="#2ebd85" opacity="0.5"/><text x="423" y="196" fill="#98a2b3">500</text><text x="423" y="91"  fill="#2ebd85">−1.05</text>
+    <rect x="480" y="50" width="46" height="82.7"  fill="#2ebd85" opacity="0.75"/><text x="503" y="196" fill="#98a2b3">750</text><text x="503" y="146" fill="#2ebd85">−3.18</text>
+    <rect x="560" y="50" width="46" height="72.5"  fill="#2ebd85" opacity="0.75"/><text x="583" y="196" fill="#98a2b3">1250</text><text x="583" y="136" fill="#2ebd85">−2.79</text>
+  </g>
+  <rect x="236" y="52" width="214" height="132" fill="none" stroke="#f5b544" stroke-dasharray="4 4" opacity="0.5" rx="4"/>
+  <text x="238" y="46" fill="#f5b544" font-size="10">平台区 W120~500（差异 &lt;0.4pp，落在噪声内）</text>
+  <text x="320" y="212" fill="#f6465d" font-size="10">现行 250 在平台区内 → 无切换理由</text>
+</svg>
+
+<h4>统一最优窗也失效：训练选 W20，锁箱 −3.18%（vs 250 的 −1.71%）</h4>
+<p>如果「全系统统一一个窗」，训练期最优是 W20（训练 −6.31%，优于 250 的 −9.20%）。但换到锁箱，W20 是 <b>−3.18%</b>，比现行 250 的 −1.71% 更差 1.47pp。这是本期的第二条独立证据：<b>无论是「逐股定窗」还是「统一换窗」，训练期改进都无法复现到锁箱。</b></p>
+
+<h4>相邻 W 稳定性检验（防「噪声峰值」）</h4>
+<p>按 4.4 的要求，选窗前必须看「窗口—收益」是不是平台，而不是有没有尖峰。逐格检查锁箱相邻 W 的跳变：</p>
+<table>
+<tr><th>W → W+1 档</th><th>锁箱 Δ 变化</th><th>是否可解释</th></tr>
+<tr><td>20 → 60</td><td class="neg">−3.02% → −4.08%（−1.06pp）</td><td>不可解释：相邻档跳 1pp，说明该区是噪声</td></tr>
+<tr><td>60 → 120</td><td class="pos">−4.08% → −1.06%（+3.02pp）</td><td>跳变过大，W60 不能作为「短窗代表」的结论来源</td></tr>
+<tr><td>120 → 250</td><td class="neg">−1.06% → −1.41%（−0.35pp）</td><td><b>平台</b>：变化 &lt;0.4pp</td></tr>
+<tr><td>250 → 500</td><td class="pos">−1.41% → −1.05%（+0.36pp）</td><td><b>平台</b>：变化 &lt;0.4pp</td></tr>
+<tr><td>500 → 750</td><td class="neg">−1.05% → −3.18%（−2.13pp）</td><td>离开平台区，长窗开始纳入旧 regime</td></tr>
+</table>
+<p><b>判读</b>：只有一个连续三段（120 / 250 / 500）构成真正平台，区间内最大差 0.36pp——小于成本噪声量级与本报告的 bootstrap 宽度。其余档位之间都是 1~3pp 的跳变，属于「每格 1~5 笔」的抽样抖动。<b>平台区存在本身就是保留现行的理由</b>：在平台内部换窗，预期收益变化落在噪声内，却要付出参数维护与再验证成本。</p>
+
+<h4>H 敏感性</h4>
+<p>本期未改 H（统一 60 交易日）。理由：台账持仓期中位数仍在 30~70 日区间，且同时优化 W 与 H 会触发 4.3 的禁止条款。H=20/120 的敏感性留到月度首期做。</p>
+<p><b>为什么本期不重新选窗</b>：按 7.6，首个基线建立后每周只追加锁箱表现；只有月度首期、新标的加入或市场结构有证据变化时才重选。本期虽新增 4 只美股低买标的，但它们不进入分层卖出 universe（S1 只覆盖持有正股的 7 只），故<b>不构成重选条件</b>——重选一次就多一次多重比较，而本期已经在为「63 次比较」付代价。</p>
+
+<!-- ================= 07 ================= -->
+<h2>07 每标的窗口建议表（主线 A 核心交付）</h2>
+
+<table>
+<tr><th>标的</th><th>行业/周期依据</th><th>参数</th><th>当前 W</th><th>建议 W</th><th>H</th><th>当前窗锁箱 Δ</th><th>建议窗锁箱 Δ</th><th>差值及不确定性</th><th>独立信号数</th><th>结论</th><th>置信度</th></tr>
+<tr><td>BRK.B</td><td>综合控股，低波动</td><td>μ+2σ</td><td>250</td><td><b>250</b></td><td>60</td><td class="pos">+0.97%</td><td class="pos">+0.71%（W500）</td><td class="neg">−0.26pp，CI 跨 0</td><td>3</td><td><span class="tag t-no">保留</span></td><td>低（n=3）</td></tr>
+<tr><td>ASML</td><td>半导体设备，强周期</td><td>μ+2σ</td><td>250</td><td><b>250</b></td><td>60</td><td class="neg">−11.39%</td><td class="neg">−12.08%（W20）</td><td class="pos">+0.69pp 但方向反（250 更好）</td><td>3</td><td><span class="tag t-no">保留</span></td><td>低（2 笔打穿主导）</td></tr>
+<tr><td>NVDA</td><td>AI 算力，极高波动</td><td>μ+2σ</td><td>250</td><td><b>250</b></td><td>60</td><td class="neg">−0.98%</td><td class="neg">−0.94%（W500）</td><td class="pos">+0.04pp，CI 跨 0</td><td>4</td><td><span class="tag t-n">观察</span>（维持 250）</td><td>低</td></tr>
+<tr><td>OXY</td><td>能源，油价周期</td><td>μ+2σ</td><td>250</td><td><b>250</b></td><td>60</td><td class="neg">−2.63%</td><td>锁箱 0 笔</td><td>不可比</td><td>2</td><td><span class="tag t-no">保留</span></td><td>数据不足</td></tr>
+<tr><td>PDD</td><td>中概电商，政策敏感</td><td>μ+2σ</td><td>250</td><td><b>250</b></td><td>60</td><td class="pos">+0.97%</td><td class="pos">+0.96%（W20）</td><td class="neg">−0.00pp</td><td>1</td><td><span class="tag t-no">保留</span></td><td>数据不足（n=1）</td></tr>
+<tr><td>QQQ</td><td>纳指 100，宽基</td><td>μ+2σ</td><td>250</td><td><b>250</b></td><td>60</td><td class="neg">−0.02%</td><td class="neg">−0.92%（W60）</td><td class="neg">−0.91pp</td><td>4</td><td><span class="tag t-no">保留</span></td><td>中（唯一统计表刚覆盖）</td></tr>
+<tr><td>TLT</td><td>长债，利率周期</td><td>μ+2σ</td><td>250</td><td><b>250</b></td><td>60</td><td class="pos">+0.96%</td><td>锁箱 0 笔（W1250）</td><td>不可比</td><td>3</td><td><span class="tag t-no">保留</span></td><td>数据不足</td></tr>
+<tr><td>ALB.HK（阿里）</td><td>中概互联网</td><td>μ+2σ</td><td>250</td><td><b>250</b></td><td>60</td><td class="pos">+0.83%</td><td class="pos">+0.82%（W120）</td><td class="neg">−0.01pp</td><td>1</td><td><span class="tag t-no">保留</span></td><td>数据不足（n=1）</td></tr>
+<tr><td>09992（泡泡玛特）</td><td>消费，高波动</td><td>μ+2σ</td><td>250</td><td><b>250</b></td><td>60</td><td>锁箱 0 笔</td><td class="pos">+0.86%（W60，n=1）</td><td>不可比</td><td>0</td><td><span class="tag t-n">观察</span></td><td>数据不足</td></tr>
+</table>
+
+<div class="kpi">
+  <div>切换 <b class="pos" style="color:#2ebd85">0</b></div>
+  <div>保留 250 <b>7</b></div>
+  <div>观察（维持 250）<b>2</b></div>
+  <div>数据不足 <b>4</b></div>
+  <div>锁箱总笔数 <b>21</b></div>
+</div>
+
+<p><b>为什么 0 项切换</b>：三条独立证据同向——（1）逐股选窗锁箱 5/6 负、pooled −0.81pp、CI 不含 0 且指向负；（2）统一换窗（W20）锁箱同样劣于 250；（3）每个格子的锁箱笔数只有 1~5，均值由 1~2 笔打穿主导，不满足最小样本。按 7.7，「若无稳健样本外优势，正确结论是保留现窗」。</p>
+<p><b>置信度分级标准</b>（本表「置信度」列口径）：<b>中</b> = 锁箱 ≥4 笔且相邻 W 同向；<b>低</b> = 锁箱 3~4 笔或结论由单一笔主导；<b>数据不足</b> = 锁箱 ≤2 笔或两侧不对称（一侧 0 笔），此时「保留」是默认动作而非结论。按此标准，本期 <b>0 个标的达到「高」</b>——这正是「不切换」的技术理由：连一个高置信度的格子都没有。</p>
+
+<!-- ================= 08 ================= -->
+<h2>08 主线 B：引入机器学习的必要性</h2>
+
+<h3>B-1 规则已经做到哪一步（L0 基线，唯一对照）</h3>
+<table>
+<tr><th>指标</th><th>L0（现行规则 + W250）</th></tr>
+<tr><td>锁箱 per-trade Δ 均值</td><td class="neg">−1.71%（n=21）</td></tr>
+<tr><td>锁箱 CVaR(5%)</td><td class="neg">−20.73%（最差一格 ASML）</td></tr>
+<tr><td>信号频率</td><td>9 标的 28 个月共 21 次 = <b>0.75 次/标的/年</b></td></tr>
+<tr><td>资金利用率</td><td>极低：每笔占用 60 日名义，全年 21×60/(9×252) ≈ <b>5.6%</b></td></tr>
+<tr><td>未被打穿胜率</td><td>52%（+0.93%）／打穿 48%（−17.36%）</td></tr>
+</table>
+<p>这组数字说明 L0 的问题<b>不是「不够聪明」，而是「几乎不出手」</b>。一年 21 次决策的样本量，任何模型都学不出东西。</p>
+
+<h3>B-2 规则还差什么（把「做不到」具体化为可测失败模式）</h3>
+<table>
+<tr><th>失败模式</th><th>本期实测</th><th>是否 ML 可解</th></tr>
+<tr><td>跨标的参数发散</td><td>逐股最优 W = 60/120/20/500/500/750/20/60/1250（<b>7 种取值 / 9 标的</b>）</td><td><b>名义上可解</b>，但见 B-3：自由度结构性为 0</td></tr>
+<tr><td>同日冲突动作</td><td><b>0 次/月</b>（推送 0，台账 0）</td><td>不需要解——问题不存在</td></tr>
+<tr><td>多维交互无法表达</td><td>现行门槛只用了 μ 与 σ 两个统计量；未用趋势/波动 regime/持仓成本</td><td>可解，但需 ≥300 独立信号（E1）</td></tr>
+<tr><td>例外表膨胀</td><td>6 条（5+1），3 个月未增</td><td>未到需要 ML 的规模</td></tr>
+<tr><td>门槛不可达导致零出手</td><td>2σ 下 9 只仅 1 只可卖；28 个月 0~4 笔/标的</td><td><b>不可解</b>——这是锚点设计问题，换模型无效</td></tr>
+</table>
+
+<h3>B-3 本期核心发现：L1 在「只改 W」的政策空间里自由度恒为 0</h3>
+<div class="card" style="border-color:#a78bfa44;background:#a78bfa0a">
+<p style="margin-top:0"><b>命题</b>：对任意标的、任意决策日 t，若多个窗口同时触发门槛，则它们的 per-trade Δ <b>完全相同</b>。因此「用特征自适应地选窗口」在数学上不可能产生任何收益增量。</p>
+<p><b>验证</b>：9 只标的、7 个窗口、23,213 根日线，共 <b>127</b> 个「同日多窗触发」点，Δ 差值为 <b>127/127 全等</b>（机器比对，非目测）。</p>
+<p><b>原因</b>：Δ 只依赖 (S<sub>t</sub>, ATR14<sub>t</sub>, S<sub>T</sub>)，W 只进入「门槛是否被跨过」这一 0/1 判断。</p>
+</div>
+<p>为了让这条结论可被反证，我仍然把 L1 模型实跑了一遍（16 参数线性 + ridge，训练 776 行、锁箱 155 行）：</p>
+<table>
+<tr><th>项</th><th>值</th></tr>
+<tr><td>模型</td><td>Δ ~ W 桶(短/中/长) × (rv20, 回撤) + rv20 + rv250 + rv20/rv250 + 回撤 + 门槛距离 + log(W/250)，ridge λ=3</td></tr>
+<tr><td>训练 / 锁箱</td><td>776 行 / 155 行（锁箱独立决策点 <b>21</b>）</td></tr>
+<tr><td>锁箱内改变窗口的点</td><td>3 / 21（其余 18 个点仍选 250）</td></tr>
+<tr><td><b>锁箱增量 Δ</b></td><td class="mut"><b>0.00pp — 且 3 个改变点上也恰好为 0</b></td></tr>
+<tr><td>bootstrap CI</td><td>[0, 0]（结构性取零，非抽样巧合）</td></tr>
+<tr><td>Occam 性价比</td><td>0 ÷ (16 参数 + 1 复杂度分) = <b>0</b></td></tr>
+</table>
+
+<h3>B-4 复杂度阶梯与本期预算</h3>
+<table>
+<tr><th>级</th><th>形态</th><th>相对 L0 锁箱增量</th><th>进入下一级前提</th><th>本期结论</th></tr>
+<tr><td><b>L0</b></td><td>现行规则 + W250</td><td>基线 −1.71%</td><td>—</td><td><b>保留（唯一可用）</b></td></tr>
+<tr><td>L1</td><td>线性 / 分位回归 / 2~3 特征浅树</td><td><b>0.00pp</b>（结构性为 0）</td><td>需 &gt;0 且 CI 不含 0</td><td><span class="tag t-no">不通过</span></td></tr>
+<tr><td>L2</td><td>GBDT，特征 ≤20</td><td>未测（L1 未通过即禁止跳级）</td><td>需 ≥ L1 增量的 30%</td><td><span class="tag t-n">禁止</span></td></tr>
+<tr><td>L3</td><td>LSTM/TCN</td><td>未测</td><td>需 ≥5000 独立样本</td><td><span class="tag t-n">禁止（差 2 个数量级）</span></td></tr>
+</table>
+<div class="card">
+<b>本期复杂度预算 = L0。</b>依据不是偏好，是三条反向条件同时命中：
+<ol style="margin-bottom:0">
+<li><b>独立样本 &lt; 100</b>：锁箱独立决策点 21（W250）/ 24（chosen-W）→ 「数据不足，不能判定」；</li>
+<li><b>增量 CI 含 0 或落在噪声内</b>：L1 增量结构性为 0；逐股定窗增量 −0.81pp 且 CI 不含 0（方向为负）；</li>
+<li><b>增量集中在极少数交易</b>：48% 打穿事件贡献全部方差，ASML 一格 3 笔中 1 笔即翻转结论。</li>
+</ol>
+</div>
+
+<h3>B-5 主线 B 红蓝对抗</h3>
+<h4 style="color:#2ebd85">红军（守简派）</h4>
+<ol>
+<li><b>规模没到，样本差一个数量级</b>：交易类独立信号 123/年，E1 要 300 —— 差 177（59%）；锁箱独立决策点 21 个。<b>用 21 个点训练任何模型，得到的是噪声</b>。→ 量化：需再积累约 2.5 年才能到 E1。</li>
+<li><b>增量落在噪声里，而且是负的</b>：L1 增量 <b>0.00pp</b>（结构性），逐股定窗 −0.81pp，统一换窗 −1.47pp。<b>三个方向全部 ≤0</b>，没有任何正向证据需要反驳。</li>
+<li><b>真正的回报在别处</b>：本期证明停摆与窗口、与 σ 倍数、与模型都无关，是<b>锚点设计</b>。把 1 人月投到「锚点 + 权利金定价（P1）」，预期回报远高于投到 GBDT。→ 量化：2σ 下 9 只仅 1 只可卖 vs 1σ/W60 下 2 只，锚点改造的潜在解锁面是指数级的，模型改造是 0。</li>
+<li><b>复杂化带来不可解释与运维风险</b>：E6 未满足（自有库 143 天、无 FeatureStore），一旦上线模型，特征漂移无人值守、回滚无路径。→ 量化：143 vs 500 差 357 交易日。</li>
+</ol>
+<h4 style="color:#f6465d">蓝军（升级派）</h4>
+<ol>
+<li><b>逐股最优参数已发散到无法用少数几组覆盖</b>：9 标的 7 种最优窗（60/120/20/500/500/750/20/60/1250）。这是「规模」构成 ML 理由的<b>唯一合法证据</b>（6.4 节）。→ 量化：离散度 7/9 = 78%。</li>
+<li><b>规则版增量连续 3 期为 0/负</b>：10-31、11-14、11-21 三次独立计算，逐股定窗锁箱均劣于统一 250。继续堆规则的边际回报已为负。→ 量化：−2.54pp → −0.81pp，仍为负。</li>
+<li><b>继续堆规则的隐性成本</b>：参数类修补提交 <b>15.0/月</b>（近 3 月 429 次提交，143/月），参数维度 36、例外表 6。每加一条规则要多写一个守卫测试、多一个回滚点。</li>
+<li><b>反方自陈（必须写）</b>：蓝军无法给出任何「L1 相对 L0 为正」的数字。在上面的结构性证明下，<b>蓝军本期拿不出可反证的正向证据</b>，只能主张「未来政策空间扩大后重测」。</li>
+</ol>
+<p><b>裁定</b>：红军 4:0。但蓝军的第 1、2 条是真证据，已登记为「下次重测的触发条件」——见 B-7。</p>
+
+<h3>B-6 反向条件逐条判定（0.5 节，命中即否决）</h3>
+<table>
+<tr><th>#</th><th>反向条件</th><th>本期判定</th><th>证据</th></tr>
+<tr><td>1</td><td>独立样本 &lt; 100</td><td><b>命中 → 否决</b></td><td>锁箱独立决策点 21（W250）/ 24（chosen）；训练段 101 个，但训练段不能当验证</td></tr>
+<tr><td>2</td><td>锁箱增量 CI 含 0，或增量 &lt; 成本噪声（≈0.07pp）</td><td><b>命中 → 否决</b></td><td>L1 增量 0.00pp（结构性 0）；逐股定窗 −0.81pp（方向为负，连符号都不对）</td></tr>
+<tr><td>3</td><td>增量集中在一两笔交易或单一 regime</td><td><b>命中 → 否决</b></td><td>48% 打穿事件贡献全部方差；ASML 一格 3 笔删 1 笔即从 −11.39% 变 −5.7%</td></tr>
+<tr><td>4</td><td>需要放宽风控才能提升</td><td>未命中</td><td>H3 备兑约束、A 股禁自动下单、层距 ATR 结构均未被触碰</td></tr>
+<tr><td>5</td><td>无法解释「这笔为什么要做」或不能 fail-safe 退回规则</td><td>未命中（L0 天然满足）</td><td>L0 每条推送均可追溯到 μ/σ/ATR 三个数；故障退回即规则本身</td></tr>
+<tr><td>6</td><td>模型版本/特征漂移/回滚无责任人</td><td><b>命中（工程侧空缺）</b></td><td>无 FeatureStore、自有库 143 天，无版本化特征表，谈不上责任人与回滚路径</td></tr>
+</table>
+<p>6 条里 <b>4 条命中</b>。按 0.5「命中即否决」，本期结论不是「ML 不值得」，而是<b>「连判定 ML 是否值得的数据条件都还不具备」</b>。这两句话的性质完全不同：前者是判断，后者是事实缺位。</p>
+
+<h3>B-7 什么条件下该重启论证（可反证的判据）</h3>
+<p>本任务的元目标是阶段感知——变化真的出现时要及时提醒。所以这里给出<b>可观测、可反证</b>的重启条件，而不是「感觉需要了」：</p>
+<table>
+<tr><th>判据</th><th>当前值</th><th>重启门槛</th><th>由谁判定</th></tr>
+<tr><td>锁箱独立决策点</td><td><b>21</b></td><td>≥ 100（且覆盖 ≥1 个完整牛熊）</td><td>每期报告自动出数</td></tr>
+<tr><td>交易类独立信号/年（E1）</td><td><b>123</b></td><td>≥ 300</td><td>记分卡脚本</td></tr>
+<tr><td>自有行情库深度（E6）</td><td><b>143</b> 交易日</td><td>≥ 500 且无前视泄漏</td><td>`stock_price` 日计数</td></tr>
+<tr><td>政策空间是否只剩「改 W」</td><td><b>是</b>（自由度 0）</td><td>否 —— 锚点/σ 倍数/卖价进入可调集，<b>且</b>每档都有独立锁箱</td><td>本项目设计变更评审</td></tr>
+<tr><td>规则版增量是否仍 ≤0</td><td>3 期连续为负</td><td>若出现 ≥2 期为正，则「规则还有空间」，反而<b>推迟</b> ML</td><td>每期报告</td></tr>
+</table>
+<div class="card" style="border-color:#4f8cff33;background:#4f8cff08">
+<p style="margin-top:0"><b>最容易被忽视的一条：</b>上表第 4 行。本期证明「只改窗口」的空间里 ML 不可能有增量。所以未来若有人拿「ML 提升 X%」来提案，第一句要问的是：<b>它的政策空间是什么？</b>如果只是选窗口，答案是 0；如果它能改锚点、改卖价、改层距，那才是一个真问题——但那已经越出「窗口期限」这条主线，应当单独立项、单独立锁箱，不许把窗口改进的功劳记到模型头上（6.2 第一条红线）。</p>
+</div>
+<p><b>沉默纪律</b>：上述判据未跨门槛前，本报告不以任何形式重提「该上 ML 了」。按 0.4 的降噪要求，ESCALATE 只在首次确认时强提醒一次；本期未确认，故不提醒。</p>
+
+<!-- ================= 09 ================= -->
+<h2>09 收敛与变更包</h2>
+
+<h3>三个落地方案的比较</h3>
+<table>
+<tr><th>方案</th><th>牺牲什么</th><th>换取什么</th><th>本期裁定</th></tr>
+<tr><td>A 全系统统一窗口</td><td>放弃「不同标的周期不同」的直觉</td><td>零维护成本、零过拟合风险；锁箱 −1.71% 是三者中最好的实测</td><td><b>推荐（= 现状，不动）</b></td></tr>
+<tr><td>B 行业共享窗口</td><td>行业划分本身引入主观性；半导体/能源/中概各 1~2 只，样本不足以支撑行业级估计</td><td>比 C 少一半参数</td><td>不推荐：每行业 1~2 只，等于换个名字的个股定窗</td></tr>
+<tr><td>C 个股窗口 + 行业收缩</td><td>维护 9 套参数；63 次比较过拟合；锁箱已证伪（−0.81pp）</td><td>理论上最贴合个体差异</td><td><b>不推荐</b>：锁箱证据方向为负</td></tr>
+</table>
+
+<h3>最小可验证方案</h3>
+<p><b>本期不产生任何参数变更。</b>理由：三条证据同向且都指向「保留」，任何切换都是拿 1~5 个样本的锁箱数字赌 9 套参数。</p>
+<p>真正该做的两件事，按优先级：</p>
+<div class="card" style="border-color:#f5b54444;background:#f5b54408">
+<p style="margin-top:0"><b>P0 · 锚点问题（本期新升级为 P0）</b>：S1 门槛 = μ<sub>W</sub> + kσ<sub>W</sub>，现价 &lt; μ<sub>W</sub> 时任何 k≥0 都拦。9 只里 7 只现价低于 μ250，2σ 下只有 1 只能卖。这不是「参数没调好」，是<b>设计上把「均值」当锚</b>。可选方向（需单独立项、单独立锁箱，不许与窗口混做）：① 锚改为「近 20 日高点 × 折价」；② 锚改为「持仓成本 × 目标收益率」；③ 保留 μ 但在现价低于 μ 时改用相对现价的门槛。<b>代码位置</b> <code>tiered_sell_scheduler.go:337</code>。</p>
+<p><b>P1 · 权利金定价（沿用既往登记）</b>：固定 1% 时间价值 ÷ BS 公允值在标的空间差 20 倍以上；本期 Δ 分布 48% 打穿、均值 −7.91% 主要由它造成。属定价问题，<b>不与窗口混做</b>。</p>
+<p style="margin-bottom:0"><b>P2 · 数据深度（E6 的必经台阶）</b>：<code>stock_price</code> 143 交易日 → 250 → 500。这是唯一能真正改变复杂度预算的工程动作。</p>
+</div>
+
+<h3>阶段结论与变更包</h3>
+<table>
+<tr><th>项</th><th>内容</th></tr>
+<tr><td>三态</td><td><span class="tag t-stay">STAY</span> 当前 Stage = <b>S1</b></td></tr>
+<tr><td>命中条件编号</td><td><b>无</b>（E4 第一半满 3 期，但第二半被结构性证伪 → E4 整体不成立）</td></tr>
+<tr><td>距下一阶段差距</td><td>① 交易类独立信号 123/年，差 <b>177</b>；② 自有行情库 143 交易日，差 <b>357</b>；③ 锁箱独立决策点 21，需 &gt;100 才谈得上训练</td></tr>
+<tr><td>建议复杂度级别</td><td><b>L0</b>（禁止 L1 以上进入生产；允许 L1 作为月度探索）</td></tr>
+<tr><td>影子运行方案</td><td><b>不启动</b>——没有候选模型。若下期 L1 在扩大后的政策空间出现正增量，再按「6 个月 / ≥30 笔 / 锁箱增量 ≥0.5pp」启动影子</td></tr>
+<tr><td>验收门槛（下次若启动）</td><td>锁箱增量 ≥ +0.5pp 且 CI 不含 0；CVaR 不恶化（≥ −20.73%）；冲突动作不升（保持 0）；独立决策点 ≥30</td></tr>
+<tr><td>回退条件</td><td>特征缺失率 &gt;5%、OpenD 断开、模型服务不可用 → <b>fail-safe 退回 L0 规则</b>，不是停机</td></tr>
+<tr><td>责任人</td><td>策略维护者（本人）；数据深度由运维协同</td></tr>
+<tr><td>时间窗</td><td>P0 锚点立项：下个自然月内；E1/E6 复核：每月首期</td></tr>
+</table>
+
+<h3>下一期要盯的 4 个数</h3>
+<ol>
+<li><b>锁箱期数</b>：本期满 3 期，下期起不再重复计数（E4 已因第二条件被否）。改为盯「L1 在扩大政策空间（锚/σ 倍数）下是否出现正增量」。</li>
+<li><b>独立决策点</b>：21 → 需 &gt;100 才谈训练。若锚点改造落地，这个数会跳升，那才是真正的阶段变化信号。</li>
+<li><b>real_order 条数</b>：仍为 <b>4</b>（全部是 2026-07~09 的 <code>auto_sell</code>），notify_only 1396。标签可得性零增长。</li>
+<li><b>stock_price 深度</b>：143 → 250 是 E6 的第一级台阶。</li>
+</ol>
+
+<!-- ================= 10 ================= -->
+<h2>10 附录</h2>
+
+<h3>A. 方法与不可违反的口径</h3>
+<ul>
+<li><b>无未来函数</b>：t 日收盘算 μ/σ（窗口 = [t−W, t)，严格不含 t），t 日收盘判定是否过门槛，<b>持有 H=60 个交易日</b>到 t+H 收盘结算。</li>
+<li><b>overlay 口径</b>：Δ = [权利金 − max(S<sub>T</sub>−K,0)]/S<sub>0</sub> − 成本。<b>不含持股涨跌</b>（持股是既有的，卖 Call 只是叠加）。被行权 = 按 K 交货，收回现金 + 收满权利金，<b>不亏本金</b>，只少赚 K 以上涨幅。</li>
+<li><b>条款固定</b>：K = (S<sub>t</sub> + 2×ATR14<sub>t</sub>)×1.02（<code>SellCallStrikePremiumPct</code>）；权利金 = max(S<sub>t</sub>−K,0) + 1%×S<sub>t</sub>；美股成本 0.0065/S + 3% 权利金滑点，港股 0.03%（最低 3）+ 平台 15 + 3% 滑点。</li>
+<li><b>跨 W 一致</b>：同一标的的所有 W 用同一 H、同一成本、同一仓位假设；不同 W 之间只允许入场日集合不同。</li>
+<li><b>锁箱</b>：每标的最近 20% 时间为最终锁箱，窗口只允许用训练段选；本期未对锁箱反复试参。</li>
+<li><b>bootstrap</b>：标的级 cluster（n=6，重采样 5000 次）+ 时间块（块长自适应，块数 ≥5）。重叠 H 期收益<b>不</b>当独立样本。</li>
+<li><b>只读</b>：全程仅 SELECT；未 INSERT/UPDATE/DELETE/DDL；未使用任何 <code>*_write</code> 账号；未修改任何策略配置。</li>
+</ul>
+
+<h3>B. 本周台账明细（新增 7 行）</h3>
+<table>
+<tr><th>表/ID</th><th>标的</th><th>腿/动作</th><th>价格</th><th>日期</th><th>备注</th></tr>
+<tr><td>liq #23</td><td>ALB.HK</td><td>spot_buy（L2）</td><td>87.30</td><td>11-17</td><td>100 股记账</td></tr>
+<tr><td>liq #24</td><td>ALB.HK</td><td>spot_buy（L3）</td><td>81.10</td><td>11-19</td><td><b>1600 股真实成交</b>，限价 DAY，订单号 1828500762075094675</td></tr>
+<tr><td>liq #25</td><td>QQQ</td><td>put_sell</td><td>K=605</td><td>11-21</td><td>261218P00605000，mid=18.52</td></tr>
+<tr><td>liq #26</td><td>NVDA</td><td>put_sell</td><td>K=124</td><td>11-21</td><td>261218P00124000，mid=8.82</td></tr>
+<tr><td>liq #27</td><td>EWY</td><td>put_sell</td><td>K=120</td><td>11-21</td><td>261218P00120000，mid=9.50</td></tr>
+<tr><td>liq #28</td><td>MU</td><td>put_sell</td><td>K=570</td><td>11-21</td><td>261218P00570000，mid=50.65</td></tr>
+<tr><td>tier #15</td><td>PDD</td><td>SELL_SPOT_TIERED（S2）</td><td>86.025</td><td>11-19</td><td>shares_after 100，state S2_SOLD</td></tr>
+</table>
+<p><small>四条美股 put 的 <code>mid</code> 分别为标的现价的 3.1% / 7.1% / 7.9% / 8.9%，均显著高于「固定 1% 时间价值」假设——这是 P1 定价问题的又一独立证据（真实链上价 vs 记账假设）。</small></p>
+
+<h3>C. 复现方式</h3>
+<p><code>rb_stage_scorecard.py --streak 2 --json /tmp/rb_stage_20261121.json</code>（阶段记分卡）<br>
+<code>redblue_weekly_fetch.py --days 7 --out /tmp/rb_20261121.json</code>（台账，只读）<br>
+<code>rb_window_fetch.py --start 2015-01-01 --end 2026-11-20</code>（Futu QFQ 日线）<br>
+<code>/tmp/rb_study_20261121.py</code>（本期窗口引擎，产出 <code>/tmp/rb_study_20261121.json</code>）</p>
+
+<div class="note" style="margin-top:30px">
+数据来源：Futu OpenD 前复权日线（2015-01-02 ~ 2026-11-20）+ 生产库只读（<code>investment_cache</code> / <code>trading_automation</code>，2026-11-21 19:0x 抓取）。<br>
+本报告只做研究与建议，<b>未修改任何生产参数</b>。所有「切换」建议均为 0 项。
+</div>
+
+</div>
+</body>
+</html>
